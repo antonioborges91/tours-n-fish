@@ -1,0 +1,119 @@
+/*
+|--------------------------------------------------------------------------
+| Tours N Fish - Utilities
+|--------------------------------------------------------------------------
+| Classes utilitárias reutilizáveis.
+|--------------------------------------------------------------------------
+*/
+
+/* ==========================================================================
+   BACKGROUNDS
+========================================================================== */
+
+.bg-primary {
+    background-color: var(--color-primary);
+}
+
+.bg-primary-dark {
+    background-color: var(--color-primary-dark);
+}
+
+.bg-accent {
+    background-color: var(--color-accent);
+}
+
+.bg-surface {
+    background-color: var(--color-surface);
+}
+
+.bg-white {
+    background-color: var(--color-white);
+}
+
+/* ==========================================================================
+   TEXT
+========================================================================== */
+
+.text-primary {
+    color: var(--color-primary);
+}
+
+.text-accent {
+    color: var(--color-accent);
+}
+
+.text-light {
+    color: var(--color-text-light);
+}
+
+.text-muted {
+    color: var(--color-text-muted);
+}
+
+.text-white {
+    color: var(--color-white);
+}
+
+/* ==========================================================================
+   BORDER RADIUS
+========================================================================== */
+
+.radius-sm {
+    border-radius: var(--radius-sm);
+}
+
+.radius-md {
+    border-radius: var(--radius-md);
+}
+
+.radius-lg {
+    border-radius: var(--radius-lg);
+}
+
+.radius-xl {
+    border-radius: var(--radius-xl);
+}
+
+.radius-full {
+    border-radius: var(--radius-full);
+}
+
+/* ==========================================================================
+   SHADOWS
+========================================================================== */
+
+.shadow-sm {
+    box-shadow: var(--shadow-sm);
+}
+
+.shadow-md {
+    box-shadow: var(--shadow-md);
+}
+
+.shadow-lg {
+    box-shadow: var(--shadow-lg);
+}
+
+/* ==========================================================================
+   TEXT ALIGNMENT
+========================================================================== */
+
+.text-center {
+    text-align: center;
+}
+
+.text-left {
+    text-align: left;
+}
+
+.text-right {
+    text-align: right;
+}
+
+/* ==========================================================================
+   OVERFLOW
+========================================================================== */
+
+.overflow-hidden {
+    overflow: hidden;
+}

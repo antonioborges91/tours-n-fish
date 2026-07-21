@@ -1,0 +1,22 @@
+/*
+|--------------------------------------------------------------------------
+| Reusable Sections
+|--------------------------------------------------------------------------
+*/
+
+.section {
+    padding-block: 5rem;
+}
+
+.section-title {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--color-text);
+}
+
+.section-subtitle {
+    margin-top: 1rem;
+    font-size: 1.125rem;
+    color: var(--color-text-light);
+}

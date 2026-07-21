@@ -1,0 +1,53 @@
+/*
+|--------------------------------------------------------------------------
+| Navbar
+|--------------------------------------------------------------------------
+*/
+
+.logo {
+    display: block;
+    width: auto;
+    height: 100px;
+}
+
+.nav-link {
+    position: relative;
+
+    display: inline-flex;
+    align-items: center;
+
+    font-size: 0.95rem;
+    font-weight: 600;
+
+    color: var(--color-primary-dark);
+
+    transition: color var(--transition-fast);
+}
+
+.nav-link:hover {
+    color: var(--color-primary);
+}
+
+.nav-link-active {
+    color: var(--color-primary);
+}
+
+.nav-link::after {
+    content: "";
+
+    position: absolute;
+    left: 0;
+    bottom: -6px;
+
+    width: 0;
+    height: 2px;
+
+    background: var(--color-primary);
+
+    transition: width var(--transition-fast);
+}
+
+.nav-link:hover::after,
+.nav-link-active::after {
+    width: 100%;
+}

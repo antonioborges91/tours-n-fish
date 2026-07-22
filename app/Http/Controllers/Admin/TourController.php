@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreTourRequest;
 use App\Models\Tour;
+use App\Models\TourTranslation;
 
 class TourController extends Controller
 {
@@ -22,10 +23,14 @@ class TourController extends Controller
     {
         $data = $request->validated();
 
-        $path = $request->file('cover_image')->store('tours/covers', 'public');
+        // Upload da imagem de capa
+        $coverImage = $request
+            ->file('cover_image')
+            ->store('tours/covers', 'public');
 
+        // Criar passeio
         $tour = Tour::create([
-            'cover_image'    => $path,
+            'cover_image'    => $coverImage,
             'duration'       => $data['duration'],
             'pricing_model'  => $data['pricing_model'],
             'price'          => $data['price'],
@@ -33,6 +38,26 @@ class TourController extends Controller
             'featured_home'  => $request->boolean('featured_home'),
             'available'      => $request->boolean('available'),
             'display_order'  => 0,
+        ]);
+
+        // Tradução Português
+        TourTranslation::create([
+            'tour_id'                => $tour->id,
+            'locale'                 => 'pt',
+            'name'                   => $data['pt_name'],
+            'short_description'      => $data['pt_short_description'],
+            'full_description'       => $data['pt_description'],
+            'important_information'  => $data['pt_information'],
+        ]);
+
+        // Tradução Inglês
+        TourTranslation::create([
+            'tour_id'                => $tour->id,
+            'locale'                 => 'en',
+            'name'                   => $data['en_name'],
+            'short_description'      => $data['en_short_description'],
+            'full_description'       => $data['en_description'],
+            'important_information'  => $data['en_information'],
         ]);
 
         dd($tour);

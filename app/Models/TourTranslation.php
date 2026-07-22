@@ -12,8 +12,8 @@ class TourTranslation extends Model
         'locale',
         'name',
         'short_description',
-        'description',
-        'information',
+        'full_description',
+        'important_information',
     ];
 
     public function tour(): BelongsTo

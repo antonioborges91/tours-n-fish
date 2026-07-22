@@ -12,13 +12,14 @@ class TourSchedule extends Model
         'tour_id',
         'start_time',
         'end_time',
+        'display_order',
     ];
 
     protected function casts(): array
     {
         return [
             'start_time' => 'datetime:H:i',
-            'end_time' => 'datetime:H:i',
+            'end_time'   => 'datetime:H:i',
         ];
     }
 

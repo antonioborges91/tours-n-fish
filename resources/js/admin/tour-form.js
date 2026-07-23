@@ -1,153 +1,262 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    const addButton = document.getElementById('add-schedule');
-    const container = document.getElementById('schedule-container');
-    const emptyMessage = document.getElementById('no-schedules');
+    const optionsContainer = document.getElementById('options-container');
+    const optionTemplate = document.getElementById('option-template');
+    const scheduleTemplate = document.getElementById('schedule-template');
+    const addOptionButton = document.getElementById('add-option');
+    const noOptions = document.getElementById('no-options');
 
-    addButton.addEventListener('click', () => {
+    if (
+        !optionsContainer ||
+        !optionTemplate ||
+        !scheduleTemplate ||
+        !addOptionButton
+    ) {
+        return;
+    }
+
+    let optionIndex = 0;
+
+    addOptionButton.addEventListener('click', () => {
+        addOption();
+    });
+
+    function addOption() {
+
+        noOptions?.remove();
+
+        const fragment = optionTemplate.content.cloneNode(true);
+
+        const card = fragment.querySelector('.option-card');
+
+        card.dataset.optionIndex = optionIndex;
+
+        const title = card.querySelector('h3');
+
+        title.textContent = `Opção ${optionIndex + 1}`;
+
+        prepareOptionFields(card, optionIndex);
+
+        prepareOptionButtons(card);
+
+        optionsContainer.appendChild(card);
+
+        optionIndex++;
+
+        refreshOptionTitles();
+
+    }
+
+    function prepareOptionFields(card, index) {
+
+        card.querySelectorAll('[data-field]').forEach(field => {
+
+            const fieldName = field.dataset.field;
+
+            switch (fieldName) {
+
+                case 'pt_name':
+
+                    field.name =
+                        `options[${index}][translations][pt][name]`;
+
+                    break;
+
+                case 'en_name':
+
+                    field.name =
+                        `options[${index}][translations][en][name]`;
+
+                    break;
+
+                default:
+
+                    field.name =
+                        `options[${index}][${fieldName}]`;
+
+            }
+
+        });
+
+    }
+
+    function prepareOptionButtons(card) {
+
+        const removeButton = card.querySelector('.remove-option');
+
+        removeButton.addEventListener('click', () => {
+
+            card.remove();
+
+            refreshOptionTitles();
+
+            if (
+                optionsContainer.querySelectorAll('.option-card').length === 0
+            ) {
+
+                optionsContainer.innerHTML = `
+                    <div
+                        id="no-options"
+                        class="rounded-lg border border-dashed border-gray-300 p-8 text-center text-gray-500">
+
+                        Ainda não existem opções.
+
+                    </div>
+                `;
+
+            }
+
+        });
+
+        const addScheduleButton =
+            card.querySelector('.add-schedule');
+
+        addScheduleButton.addEventListener('click', () => {
+
+            addSchedule(card);
+
+        });
+
+    }
+        function addSchedule(card) {
+
+        const optionIdx = card.dataset.optionIndex;
+
+        const scheduleList =
+            card.querySelector('.option-schedule-list');
+
+        const emptyMessage =
+            scheduleList.querySelector('.no-option-schedules');
 
         if (emptyMessage) {
             emptyMessage.remove();
         }
 
-        const row = document.createElement('div');
+        const scheduleIndex =
+            scheduleList.querySelectorAll('.schedule-row').length;
 
-        row.className = 'grid grid-cols-12 gap-4 items-end mb-4';
+        const fragment =
+            scheduleTemplate.content.cloneNode(true);
 
-        row.innerHTML = `
-            <div class="col-span-5">
-                <label class="form-label">
-                    Hora Início
-                </label>
+        const row =
+            fragment.querySelector('.schedule-row');
 
-                <input
-                    type="time"
-                    name="schedule_start[]"
-                    class="form-input">
-            </div>
+        row.dataset.scheduleIndex = scheduleIndex;
 
-            <div class="col-span-5">
-                <label class="form-label">
-                    Hora Fim
-                </label>
+        row.querySelectorAll('[data-field]').forEach(field => {
 
-                <input
-                    type="time"
-                    name="schedule_end[]"
-                    class="form-input">
-            </div>
+            const fieldName = field.dataset.field;
 
-            <div class="col-span-2">
+            field.name =
+                `options[${optionIdx}][schedules][${scheduleIndex}][${fieldName}]`;
 
-                <button
-                    type="button"
-                    class="admin-btn-danger remove-schedule">
+        });
 
-                    Remover
+        const removeButton =
+            row.querySelector('.remove-schedule');
 
-                </button>
+        removeButton.addEventListener('click', () => {
 
-            </div>
-        `;
+            row.remove();
 
-        container.appendChild(row);
+            refreshSchedules(card);
 
-    });
+        });
 
-    container.addEventListener('click', (event) => {
+        scheduleList.appendChild(row);
 
-        if (!event.target.classList.contains('remove-schedule')) {
-            return;
-        }
+    }
 
-        event.target.closest('.grid').remove();
+    function refreshSchedules(card) {
 
-        if (container.children.length === 0) {
+        const optionIdx = card.dataset.optionIndex;
 
-            container.innerHTML = `
-                <p id="no-schedules" class="text-gray-500">
+        const scheduleList =
+            card.querySelector('.option-schedule-list');
+
+        const rows =
+            scheduleList.querySelectorAll('.schedule-row');
+
+        rows.forEach((row, scheduleIndex) => {
+
+            row.dataset.scheduleIndex = scheduleIndex;
+
+            row.querySelectorAll('[data-field]').forEach(field => {
+
+                const fieldName = field.dataset.field;
+
+                field.name =
+                    `options[${optionIdx}][schedules][${scheduleIndex}][${fieldName}]`;
+
+            });
+
+        });
+
+        if (rows.length === 0) {
+
+            scheduleList.innerHTML = `
+                <div class="no-option-schedules text-gray-500">
+
                     Ainda não existem horários.
-                </p>
+
+                </div>
             `;
 
         }
 
-    });
-
-    /* -------------------------------------------------------------------------- */
-/* Galeria */
-/* -------------------------------------------------------------------------- */
-
-const addImageButton = document.getElementById('add-image');
-const galleryContainer = document.getElementById('gallery-container');
-
-addImageButton.addEventListener('click', () => {
-
-    const empty = document.getElementById('no-images');
-
-    if (empty) {
-        empty.remove();
     }
 
-    const totalImages = galleryContainer.querySelectorAll('.gallery-row').length;
+    function refreshOptionTitles() {
 
-    if (totalImages >= 5) {
+        const cards =
+            optionsContainer.querySelectorAll('.option-card');
 
-        alert('Pode adicionar no máximo 5 imagens.');
+        cards.forEach((card, optionIdx) => {
 
-        return;
-    }
+            card.dataset.optionIndex = optionIdx;
 
-    const row = document.createElement('div');
+            card.querySelector('h3').textContent =
+                `Opção ${optionIdx + 1}`;
 
-    row.className = 'gallery-row flex items-end gap-4 mb-4';
+            card.querySelectorAll('[data-field]').forEach(field => {
 
-    row.innerHTML = `
-        <div class="flex-1">
+                const fieldName = field.dataset.field;
 
-            <label class="form-label">
-                Imagem
-            </label>
+                switch (fieldName) {
 
-            <input
-                type="file"
-                name="gallery_images[]"
-                class="form-input"
-                accept="image/*">
+                    case 'pt_name':
 
-        </div>
+                        field.name =
+                            `options[${optionIdx}][translations][pt][name]`;
 
-        <button
-            type="button"
-            class="admin-btn-danger remove-image">
+                        break;
 
-            Remover
+                    case 'en_name':
 
-        </button>
-    `;
+                        field.name =
+                            `options[${optionIdx}][translations][en][name]`;
 
-    galleryContainer.appendChild(row);
+                        break;
 
-});
+                    case 'start_time':
+                    case 'end_time':
+                        break;
 
-galleryContainer.addEventListener('click', (event) => {
+                    default:
 
-    if (!event.target.classList.contains('remove-image')) {
-        return;
-    }
+                        field.name =
+                            `options[${optionIdx}][${fieldName}]`;
 
-    event.target.closest('.gallery-row').remove();
+                }
 
-    if (galleryContainer.children.length === 0) {
+            });
 
-        galleryContainer.innerHTML = `
-            <p id="no-images" class="text-gray-500">
-                Ainda não existem imagens.
-            </p>
-        `;
+            refreshSchedules(card);
+
+        });
 
     }
-
-});
+        // Cria automaticamente a primeira opção
+    addOption();
 
 });

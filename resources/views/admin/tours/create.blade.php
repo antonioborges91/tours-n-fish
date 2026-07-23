@@ -57,57 +57,18 @@
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 
-                <div>
-                    <label class="form-label">
-                        Modelo de Preço
-                    </label>
+            <div>
+                <label class="form-label">
+                    Capacidade Máxima
+                </label>
 
-                    <select
-                        name="pricing_model"
-                        class="form-select">
-
-                        <option value="boat">Barco</option>
-                        <option value="person">Pessoa</option>
-
-                    </select>
-                </div>
-
-                <div>
-                    <label class="form-label">
-                        Preço (€)
-                    </label>
-
-                    <input
-                        type="number"
-                        name="price"
-                        step="0.01"
-                        class="form-input">
-                </div>
-
-                <div>
-                    <label class="form-label">
-                        Duração
-                    </label>
-
-                    <input
-                        type="text"
-                        name="duration"
-                        placeholder="Ex.: 3 horas"
-                        class="form-input">
-                </div>
-
-                <div>
-                    <label class="form-label">
-                        Capacidade Máxima
-                    </label>
-
-                    <input
-                        type="number"
-                        name="max_capacity"
-                        class="form-input">
-                </div>
-
+                <input
+                    type="number"
+                    name="max_capacity"
+                    class="form-input">
             </div>
+
+        </div>
 
             <div class="flex items-center gap-8">
 
@@ -255,35 +216,156 @@
 
     </div>
 
-  {{-- Horários --}}
-    <div class="bg-white rounded-lg shadow p-8 mb-8">
+ {{-- Opções --}}
+<div class="bg-white rounded-lg shadow p-8 mb-8">
+
+    <div class="flex items-center justify-between mb-6">
+
+        <div>
+
+            <h2 class="text-xl font-semibold">
+                Opções
+            </h2>
+
+            <p class="text-sm text-gray-500 mt-1">
+                Cada passeio pode ter uma ou várias opções (ex.: Meio Dia, Dia Inteiro...).
+            </p>
+
+        </div>
+
+        <button
+            type="button"
+            id="add-option"
+            class="admin-btn-primary">
+
+            + Adicionar Opção
+
+        </button>
+
+    </div>
+
+    <div id="options-container">
+
+        <p
+            id="no-options"
+            class="text-gray-500">
+
+            Ainda não existem opções.
+
+        </p>
+
+    </div>
+<template id="option-template">
+
+    <div class="option-card border rounded-lg p-6 mb-6 bg-gray-50">
 
         <div class="flex items-center justify-between mb-6">
 
-            <h2 class="text-xl font-semibold">
-                Horários
-            </h2>
+            <h3 class="text-lg font-semibold">
+                Opção
+            </h3>
 
             <button
                 type="button"
-                id="add-schedule"
-                class="admin-btn-primary">
+                class="remove-option admin-btn-secondary">
 
-                + Adicionar Horário
+                Remover
 
             </button>
 
         </div>
 
-        <div id="schedule-container">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
 
-            <p id="no-schedules" class="text-gray-500">
+            <div>
+
+                <label class="form-label">
+                    Nome (PT)
+                </label>
+
+                <input
+                    type="text"
+                    data-name="pt_name"
+                    class="form-input">
+
+            </div>
+
+            <div>
+
+                <label class="form-label">
+                    Nome (EN)
+                </label>
+
+                <input
+                    type="text"
+                    data-name="en_name"
+                    class="form-input">
+
+            </div>
+
+            <div>
+
+                <label class="form-label">
+                    Duração (minutos)
+                </label>
+
+                <input
+                    type="number"
+                    min="1"
+                    data-name="duration_minutes"
+                    class="form-input">
+
+            </div>
+
+            <div>
+
+                <label class="form-label">
+                    Preço (€)
+                </label>
+
+                <input
+                    type="number"
+                    step="0.01"
+                    min="0"
+                    data-name="price"
+                    class="form-input">
+
+            </div>
+
+        </div>
+
+        <hr class="my-6">
+
+        <div class="flex items-center justify-between mb-4">
+
+            <h4 class="font-semibold">
+                Horários
+            </h4>
+
+            <button
+                type="button"
+                class="add-option-schedule admin-btn-primary">
+
+                + Horário
+
+            </button>
+
+        </div>
+
+        <div class="option-schedules">
+
+            <p class="text-gray-500 no-option-schedules">
+
                 Ainda não existem horários.
+
             </p>
 
         </div>
 
     </div>
+
+</template>
+</div>
 
     {{-- Galeria --}}
     <div class="bg-white rounded-lg shadow p-8 mb-8">

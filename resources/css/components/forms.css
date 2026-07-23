@@ -1,0 +1,16 @@
+.form-label {
+    @apply block mb-2 font-medium text-gray-700;
+}
+
+.form-input,
+.form-select {
+    @apply w-full rounded-lg border border-gray-300 px-4 py-3;
+}
+
+.form-checkbox {
+    @apply rounded border-gray-300;
+}
+
+.form-group {
+    @apply space-y-2;
+}

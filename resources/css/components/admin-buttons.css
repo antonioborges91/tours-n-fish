@@ -1,12 +1,12 @@
 /*
 |--------------------------------------------------------------------------
-| Buttons
+| Admin Buttons
 |--------------------------------------------------------------------------
 */
 
-.btn-primary,
-.btn-secondary,
-.btn-danger {
+.admin-btn-primary,
+.admin-btn-secondary,
+.admin-btn-danger {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -38,16 +38,14 @@
 /* Primary */
 /* -------------------------------------------------------------------------- */
 
-.btn-primary {
+.admin-btn-primary {
     background: var(--color-accent);
     color: var(--color-primary-dark);
 }
 
-.btn-primary:hover {
+.admin-btn-primary:hover {
     background: var(--color-accent-dark);
-
     transform: translateY(-2px);
-
     box-shadow: var(--shadow-md);
 }
 
@@ -55,14 +53,14 @@
 /* Secondary */
 /* -------------------------------------------------------------------------- */
 
-.btn-secondary {
+.admin-btn-secondary {
     background: #fff;
     color: var(--color-primary-dark);
 
-    border-color: #d1d5db;
+    border: 1px solid #d1d5db;
 }
 
-.btn-secondary:hover {
+.admin-btn-secondary:hover {
     background: #f8fafc;
 
     transform: translateY(-2px);
@@ -74,39 +72,15 @@
 /* Danger */
 /* -------------------------------------------------------------------------- */
 
-.btn-danger {
+.admin-btn-danger {
     background: #dc2626;
     color: #fff;
 }
 
-.btn-danger:hover {
+.admin-btn-danger:hover {
     background: #b91c1c;
 
     transform: translateY(-2px);
 
     box-shadow: var(--shadow-md);
-}
-
-/* -------------------------------------------------------------------------- */
-/* Icons */
-/* -------------------------------------------------------------------------- */
-
-.btn-arrow,
-.btn-icon {
-    transition: transform var(--transition-fast);
-}
-
-.btn-arrow {
-    margin-left: .35rem;
-}
-
-.btn-icon {
-    margin-left: .35rem;
-}
-
-.btn-primary:hover .btn-icon,
-.btn-primary:hover .btn-arrow,
-.btn-secondary:hover .btn-icon,
-.btn-secondary:hover .btn-arrow {
-    transform: translateX(3px);
 }

@@ -38,6 +38,8 @@ Route::middleware(['auth', 'verified'])
 
         Route::resource('blocked-dates', BlockedDateController::class);
 
+        Route::resource('tours', TourController::class);
+
         Route::resource('reservations', ReservationController::class)
             ->only(['index', 'show', 'update']);
     });

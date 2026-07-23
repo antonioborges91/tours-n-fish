@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreTourRequest;
 use App\Models\Tour;
+use App\Models\TourImage;
 use App\Models\TourSchedule;
 use App\Models\TourTranslation;
 
@@ -82,6 +83,27 @@ class TourController extends Controller
             }
         }
 
-        dd($tour);
+        // Galeria
+        if ($request->hasFile('gallery_images')) {
+
+            foreach ($request->file('gallery_images') as $index => $image) {
+
+                if (!$image) {
+                    continue;
+                }
+
+                $imagePath = $image->store('tours/gallery', 'public');
+
+                TourImage::create([
+                    'tour_id'       => $tour->id,
+                    'image'         => $imagePath,
+                    'display_order' => $index,
+                ]);
+            }
+        }
+
+        return redirect()
+            ->route('admin.tours.index')
+            ->with('success', 'Passeio criado com sucesso.');
     }
 }

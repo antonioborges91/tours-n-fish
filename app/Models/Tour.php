@@ -42,6 +42,12 @@ class Tour extends Model
         return $this->hasMany(TourImage::class);
     }
 
+    public function options(): HasMany
+    {
+        return $this->hasMany(TourOption::class)
+            ->orderBy('display_order');
+    }
+
     public function reservations(): HasMany
     {
         return $this->hasMany(Reservation::class);

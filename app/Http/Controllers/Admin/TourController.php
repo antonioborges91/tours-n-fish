@@ -109,6 +109,39 @@ class TourController extends Controller
                 ]);
             }
         }
+       // Substituir imagens existentes
+        if ($request->hasFile('gallery_replace')) {
+
+            foreach ($request->file('gallery_replace') as $imageId => $newImage) {
+
+                if (!$newImage) {
+                    continue;
+                }
+
+                $galleryImage = $tour->images()->find($imageId);
+
+                if (!$galleryImage) {
+                    continue;
+                }
+
+                // Apagar imagem antiga
+                if (
+                    $galleryImage->image &&
+                    Storage::disk('public')->exists($galleryImage->image)
+                ) {
+                    Storage::disk('public')->delete($galleryImage->image);
+                }
+
+                // Guardar nova imagem
+                $imagePath = $newImage->store('tours/gallery', 'public');
+
+                // Atualizar registo
+                $galleryImage->update([
+                    'image' => $imagePath,
+                ]);
+            }
+        }
+
         // Adicionar novas imagens à galeria
         if ($request->hasFile('gallery_images')) {
 
@@ -123,8 +156,8 @@ class TourController extends Controller
                 $imagePath = $image->store('tours/gallery', 'public');
 
                 TourImage::create([
-                    'tour_id'       => $tour->id,
-                    'image'         => $imagePath,
+                    'tour_id' => $tour->id,
+                    'image' => $imagePath,
                     'display_order' => $displayOrder++,
                 ]);
             }

@@ -454,7 +454,7 @@
 
                     <input
                         type="file"
-                        name="gallery_images[]"
+                        name="gallery_replace[{{ $image->id }}]"
                         class="form-input"
                         accept="image/*">
 

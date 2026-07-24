@@ -192,14 +192,22 @@ class TourController extends Controller
 
         $featuredHome = $request->boolean('featured_home');
         $available = $request->boolean('available');
+        $displayOrder = (Tour::max('display_order') ?? -1) + 1;
 
-        DB::transaction(function () use ($data, $coverImage, $galleryImagePaths, $featuredHome, $available) {
+        DB::transaction(function () use (
+            $data,
+            $coverImage,
+            $galleryImagePaths,
+            $featuredHome,
+            $available,
+            $displayOrder
+        ) {
             $tour = Tour::create([
                 'cover_image' => $coverImage,
                 'max_capacity' => $data['max_capacity'],
                 'featured_home' => $featuredHome,
                 'available' => $available,
-                'display_order' => 0,
+                'display_order' => $displayOrder,
             ]);
 
             $tour->translations()->createMany([
@@ -252,6 +260,40 @@ class TourController extends Controller
             ->route('admin.tours.index')
             ->with('success', 'Passeio criado com sucesso.');
     }
+   public function move(Tour $tour)
+    {
+        $direction = request('direction');
+
+        if ($direction === 'up') {
+
+            $swap = Tour::where('display_order', '<', $tour->display_order)
+                ->orderByDesc('display_order')
+                ->first();
+
+        } else {
+
+            $swap = Tour::where('display_order', '>', $tour->display_order)
+                ->orderBy('display_order')
+                ->first();
+
+        }
+
+        if ($swap) {
+
+            $currentOrder = $tour->display_order;
+
+            $tour->update([
+                'display_order' => $swap->display_order,
+            ]);
+
+            $swap->update([
+                'display_order' => $currentOrder,
+            ]);
+
+        }
+
+        return redirect()->route('admin.tours.index');
+    }
     public function destroy(Tour $tour)
     {
         DB::transaction(function () use ($tour) {
@@ -278,6 +320,15 @@ class TourController extends Controller
 
             // Eliminar o passeio
             $tour->delete();
+            Tour::orderBy('display_order')
+                ->get()
+                ->each(function ($tour, $index) {
+
+                    $tour->update([
+                        'display_order' => $index,
+                    ]);
+
+                });
 
         });
 

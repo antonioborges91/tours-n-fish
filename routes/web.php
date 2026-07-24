@@ -34,6 +34,9 @@ Route::middleware(['auth', 'verified'])
 
         Route::resource('tours', TourController::class);
 
+        Route::post('tours/{tour}/move', [TourController::class, 'move'])
+            ->name('tours.move');
+
         Route::resource('gallery', GalleryController::class);
 
         Route::resource('blocked-dates', BlockedDateController::class);

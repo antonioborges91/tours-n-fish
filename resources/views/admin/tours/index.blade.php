@@ -80,6 +80,11 @@
 
         @forelse($tours as $tour)
 
+    @php
+        $isFirst = $loop->first;
+        $isLast = $loop->last;
+    @endphp
+
             @php
 
                 $translation = $tour->translations
@@ -197,35 +202,85 @@
 
                 <td class="p-4">
 
-                    <div class="flex justify-end gap-3">
+                    <div class="flex justify-end items-center gap-2">
 
-                        <a
-                            href="{{ route('admin.tours.edit', $tour) }}"
-                            class="admin-btn-secondary">
+    @unless($isFirst)
 
-                            Editar
+        <form
+            action="{{ route('admin.tours.move', $tour) }}"
+            method="POST">
 
-                        </a>
+            @csrf
 
-                        <form
-                            action="{{ route('admin.tours.destroy', $tour) }}"
-                            method="POST"
-                            onsubmit="return confirm('Tem a certeza que pretende eliminar este passeio?');">
+            <input
+                type="hidden"
+                name="direction"
+                value="up">
 
-                            @csrf
-                            @method('DELETE')
+            <button
+                type="submit"
+                class="admin-btn-secondary">
 
-                            <button
-                                type="submit"
-                                class="admin-btn-danger">
+                ↑
 
-                                Eliminar
+            </button>
 
-                            </button>
+        </form>
 
-                        </form>
+    @endunless
 
-                    </div>
+    @unless($isLast)
+
+        <form
+            action="{{ route('admin.tours.move', $tour) }}"
+            method="POST">
+
+            @csrf
+
+            <input
+                type="hidden"
+                name="direction"
+                value="down">
+
+            <button
+                type="submit"
+                class="admin-btn-secondary">
+
+                ↓
+
+            </button>
+
+        </form>
+
+    @endunless
+
+    <a
+        href="{{ route('admin.tours.edit', $tour) }}"
+        class="admin-btn-secondary">
+
+        Editar
+
+    </a>
+
+    <form
+        action="{{ route('admin.tours.destroy', $tour) }}"
+        method="POST"
+        onsubmit="return confirm('Tem a certeza que pretende eliminar este passeio?');">
+
+        @csrf
+        @method('DELETE')
+
+        <button
+            type="submit"
+            class="admin-btn-danger">
+
+            Eliminar
+
+        </button>
+
+    </form>
+
+</div>
 
                 </td>
 

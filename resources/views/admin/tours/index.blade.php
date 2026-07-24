@@ -85,6 +85,35 @@
                 $translation = $tour->translations
                     ->firstWhere('locale', 'pt');
 
+                $option = $tour->options
+                    ->sortBy('display_order')
+                    ->first();
+
+                $formattedDuration = '—';
+
+                if ($option) {
+
+                    $minutes = (int) $option->duration_minutes;
+
+                    if ($minutes < 60) {
+
+                        $formattedDuration = $minutes . ' min';
+
+                    } else {
+
+                        $hours = intdiv($minutes, 60);
+                        $remainingMinutes = $minutes % 60;
+
+                        $formattedDuration = $hours . ' h';
+
+                        if ($remainingMinutes > 0) {
+                            $formattedDuration .= ' ' . $remainingMinutes . ' min';
+                        }
+
+                    }
+
+                }
+
             @endphp
 
             <tr class="border-t">
@@ -93,6 +122,7 @@
 
                     <img
                         src="{{ asset('storage/' . $tour->cover_image) }}"
+                        alt="{{ $translation?->name }}"
                         class="h-24 w-24 rounded-lg object-cover">
 
                 </td>
@@ -109,13 +139,21 @@
 
                 <td class="p-4">
 
-                    € {{ number_format($tour->price, 2, ',', '.') }}
+                    @if($option)
+
+                        € {{ number_format($option->price, 2, ',', '.') }}
+
+                    @else
+
+                        —
+
+                    @endif
 
                 </td>
 
                 <td class="p-4">
 
-                    {{ $tour->duration }}
+                    {{ $formattedDuration }}
 
                 </td>
 
@@ -149,7 +187,7 @@
 
                     @else
 
-                        <span class="text-gray-400 text-xl">
+                        <span class="text-gray-400">
                             ★
                         </span>
 
@@ -169,12 +207,23 @@
 
                         </a>
 
-                        <button
-                            class="admin-btn-danger">
+                        <form
+                            action="{{ route('admin.tours.destroy', $tour) }}"
+                            method="POST"
+                            onsubmit="return confirm('Tem a certeza que pretende eliminar este passeio?');">
 
-                            Eliminar
+                            @csrf
+                            @method('DELETE')
 
-                        </button>
+                            <button
+                                type="submit"
+                                class="admin-btn-danger">
+
+                                Eliminar
+
+                            </button>
+
+                        </form>
 
                     </div>
 

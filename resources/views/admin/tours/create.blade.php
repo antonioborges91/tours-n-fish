@@ -453,7 +453,7 @@
 
                     <input
                         type="file"
-                        name="gallery[]"
+                        name="gallery_images[]"
                         class="form-input"
                         accept="image/*">
 

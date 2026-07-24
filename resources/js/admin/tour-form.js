@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const addOptionButton = document.getElementById('add-option');
     const addImageButton = document.getElementById('add-image');
     const galleryContainer = document.getElementById('gallery-container');
+    const tourForm = document.getElementById('tour-form');
 
     if (!optionsContainer || !optionTemplate || !addOptionButton) {
         return;
@@ -202,14 +203,31 @@ document.addEventListener('DOMContentLoaded', () => {
 
         removeButton.dataset.initialized = 'true';
         removeButton.addEventListener('click', () => {
+            const imageId = row.dataset.imageId;
+
+            if (imageId) {
+
+                const input = document.createElement('input');
+
+                input.type = 'hidden';
+                input.name = 'gallery_delete[]';
+                input.value = imageId;
+
+                tourForm.appendChild(input);
+
+            }
+
             row.remove();
 
             if (!galleryContainer?.querySelector('.gallery-row')) {
+
                 galleryContainer?.insertAdjacentHTML(
                     'beforeend',
                     '<p id="no-images" class="text-gray-500">Ainda não existem imagens.</p>',
                 );
+
             }
+
         });
     }
 

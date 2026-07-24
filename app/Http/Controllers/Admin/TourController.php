@@ -18,7 +18,10 @@ class TourController extends Controller
 {
     public function index()
     {
-        $tours = Tour::with('translations')
+        $tours = Tour::with([
+            'translations',
+            'options',
+        ])
             ->orderBy('display_order')
             ->get();
 
@@ -103,7 +106,29 @@ class TourController extends Controller
                     ]);
                 }
             }
+            
+            if ($request->filled('gallery_delete')) {
 
+                foreach ($request->gallery_delete as $imageId) {
+
+                    $galleryImage = $tour->images()->find($imageId);
+
+                    if (! $galleryImage) {
+                        continue;
+                    }
+
+                    if (
+                        $galleryImage->image &&
+                        Storage::disk('public')->exists($galleryImage->image)
+                    ) {
+                        Storage::disk('public')->delete($galleryImage->image);
+                    }
+
+                    $galleryImage->delete();
+
+                }
+
+            }
             if ($request->hasFile('gallery_replace')) {
                 foreach ($request->file('gallery_replace') as $imageId => $newImage) {
                     if (!$newImage) {
@@ -226,5 +251,38 @@ class TourController extends Controller
         return redirect()
             ->route('admin.tours.index')
             ->with('success', 'Passeio criado com sucesso.');
+    }
+    public function destroy(Tour $tour)
+    {
+        DB::transaction(function () use ($tour) {
+
+            // Apagar imagem de capa
+            if (
+                $tour->cover_image &&
+                Storage::disk('public')->exists($tour->cover_image)
+            ) {
+                Storage::disk('public')->delete($tour->cover_image);
+            }
+
+            // Apagar imagens da galeria
+            foreach ($tour->images as $image) {
+
+                if (
+                    $image->image &&
+                    Storage::disk('public')->exists($image->image)
+                ) {
+                    Storage::disk('public')->delete($image->image);
+                }
+
+            }
+
+            // Eliminar o passeio
+            $tour->delete();
+
+        });
+
+        return redirect()
+            ->route('admin.tours.index')
+            ->with('success', 'Passeio eliminado com sucesso.');
     }
 }

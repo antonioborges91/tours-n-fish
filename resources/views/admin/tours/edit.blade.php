@@ -18,7 +18,11 @@
     </a>
 </div>
 
-<form action="{{ route('admin.tours.update', $tour) }}" method="POST" enctype="multipart/form-data">
+<form
+    id="tour-form"
+    action="{{ route('admin.tours.update', $tour) }}"
+    method="POST"
+    enctype="multipart/form-data">
     @csrf
     @method('PUT')
 
@@ -325,12 +329,14 @@
 
         <div id="gallery-container">
             @forelse ($tour->images as $image)
-                <div class="gallery-row flex items-end gap-4 mb-4">
+                <div
+                    class="gallery-row flex items-end gap-4 mb-4"
+                    data-image-id="{{ $image->id }}">
                     <div>
                         <img
-                            src="{{ asset('storage/' . $image->image) }}"
-                            alt="Imagem da Galeria"
-                            class="w-40 h-28 object-cover rounded-lg border">
+    src="{{ asset('storage/' . $image->image) }}"
+    alt="Imagem da Galeria"
+    class="w-40 h-28 object-cover rounded-lg border">
                     </div>
 
                     <div class="flex-1">

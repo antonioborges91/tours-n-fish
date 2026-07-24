@@ -7,8 +7,11 @@ use App\Http\Requests\StoreTourRequest;
 use App\Http\Requests\UpdateTourRequest;
 use App\Models\Tour;
 use App\Models\TourImage;
-use App\Models\TourSchedule;
+use App\Models\TourOption;
+use App\Models\TourOptionSchedule;
+use App\Models\TourOptionTranslation;
 use App\Models\TourTranslation;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class TourController extends Controller
@@ -31,8 +34,9 @@ class TourController extends Controller
     {
         $tour->load([
             'translations',
-            'schedules',
             'images',
+            'options.translations',
+            'options.schedules',
         ]);
 
         return view('admin.tours.edit', compact('tour'));
@@ -41,127 +45,103 @@ class TourController extends Controller
     public function update(UpdateTourRequest $request, Tour $tour)
     {
         $data = $request->validated();
-         // Atualizar imagem de capa
-        if ($request->hasFile('cover_image')) {
 
-            // Apagar imagem antiga
+        if ($request->hasFile('cover_image')) {
             if ($tour->cover_image && Storage::disk('public')->exists($tour->cover_image)) {
                 Storage::disk('public')->delete($tour->cover_image);
             }
 
-            // Guardar nova imagem
-            $tour->cover_image = $request
-                ->file('cover_image')
-                ->store('tours/covers', 'public');
+            $tour->cover_image = $request->file('cover_image')->store('tours/covers', 'public');
+        }
 
-}
+        DB::transaction(function () use ($data, $request, $tour) {
+            $tour->update([
+                'cover_image' => $tour->cover_image,
+                'max_capacity' => $data['max_capacity'],
+                'featured_home' => $request->boolean('featured_home'),
+                'available' => $request->boolean('available'),
+            ]);
 
-        // Atualizar passeio
-        $tour->pricing_model = $data['pricing_model'];
-        $tour->price = $data['price'];
-        $tour->duration = $data['duration'];
-        $tour->max_capacity = $data['max_capacity'];
-        $tour->featured_home = $request->boolean('featured_home');
-        $tour->available = $request->boolean('available');
-
-        $tour->save();
-
-        // Atualizar tradução Português
-        $tour->translations()
-            ->where('locale', 'pt')
-            ->update([
-                'name'                  => $data['pt_name'],
-                'short_description'     => $data['pt_short_description'],
-                'full_description'      => $data['pt_description'],
+            $tour->translations()->where('locale', 'pt')->update([
+                'name' => $data['pt_name'],
+                'short_description' => $data['pt_short_description'],
+                'full_description' => $data['pt_description'],
                 'important_information' => $data['pt_information'],
             ]);
 
-        // Atualizar tradução Inglês
-        $tour->translations()
-            ->where('locale', 'en')
-            ->update([
-                'name'                  => $data['en_name'],
-                'short_description'     => $data['en_short_description'],
-                'full_description'      => $data['en_description'],
+            $tour->translations()->where('locale', 'en')->update([
+                'name' => $data['en_name'],
+                'short_description' => $data['en_short_description'],
+                'full_description' => $data['en_description'],
                 'important_information' => $data['en_information'],
             ]);
-        // Atualizar horários
-        // Apagar todos os horários existentes
-        $tour->schedules()->delete();
 
-        // Criar novamente os horários enviados
-        if (!empty($data['schedule_start'])) {
-
-            foreach ($data['schedule_start'] as $index => $startTime) {
-
-                if (
-                    empty($startTime) ||
-                    empty($data['schedule_end'][$index])
-                ) {
-                    continue;
-                }
-
-                TourSchedule::create([
-                    'tour_id'       => $tour->id,
-                    'start_time'    => $startTime,
-                    'end_time'      => $data['schedule_end'][$index],
-                    'display_order' => $index,
-                ]);
+            foreach ($tour->options as $option) {
+                $option->schedules()->delete();
+                $option->translations()->delete();
             }
-        }
-       // Substituir imagens existentes
-        if ($request->hasFile('gallery_replace')) {
 
-            foreach ($request->file('gallery_replace') as $imageId => $newImage) {
+            $tour->options()->delete();
 
-                if (!$newImage) {
-                    continue;
-                }
-
-                $galleryImage = $tour->images()->find($imageId);
-
-                if (!$galleryImage) {
-                    continue;
-                }
-
-                // Apagar imagem antiga
-                if (
-                    $galleryImage->image &&
-                    Storage::disk('public')->exists($galleryImage->image)
-                ) {
-                    Storage::disk('public')->delete($galleryImage->image);
-                }
-
-                // Guardar nova imagem
-                $imagePath = $newImage->store('tours/gallery', 'public');
-
-                // Atualizar registo
-                $galleryImage->update([
-                    'image' => $imagePath,
+            foreach ($data['options'] as $optionIndex => $optionData) {
+                $option = $tour->options()->create([
+                    'duration_minutes' => $optionData['duration_minutes'],
+                    'price' => $optionData['price'],
+                    'display_order' => $optionIndex,
                 ]);
-            }
-        }
 
-        // Adicionar novas imagens à galeria
-        if ($request->hasFile('gallery_images')) {
-
-            $displayOrder = $tour->images()->count();
-
-            foreach ($request->file('gallery_images') as $image) {
-
-                if (!$image) {
-                    continue;
-                }
-
-                $imagePath = $image->store('tours/gallery', 'public');
-
-                TourImage::create([
-                    'tour_id' => $tour->id,
-                    'image' => $imagePath,
-                    'display_order' => $displayOrder++,
+                $option->translations()->createMany([
+                    ['locale' => 'pt', 'name' => $optionData['translations']['pt']['name']],
+                    ['locale' => 'en', 'name' => $optionData['translations']['en']['name']],
                 ]);
+
+                foreach ($optionData['schedules'] as $scheduleIndex => $scheduleData) {
+                    $option->schedules()->create([
+                        'start_time' => $scheduleData['start_time'],
+                        'end_time' => $scheduleData['end_time'],
+                        'display_order' => $scheduleIndex,
+                    ]);
+                }
             }
-        }
+
+            if ($request->hasFile('gallery_replace')) {
+                foreach ($request->file('gallery_replace') as $imageId => $newImage) {
+                    if (!$newImage) {
+                        continue;
+                    }
+
+                    $galleryImage = $tour->images()->find($imageId);
+
+                    if (!$galleryImage) {
+                        continue;
+                    }
+
+                    if ($galleryImage->image && Storage::disk('public')->exists($galleryImage->image)) {
+                        Storage::disk('public')->delete($galleryImage->image);
+                    }
+
+                    $galleryImage->update([
+                        'image' => $newImage->store('tours/gallery', 'public'),
+                    ]);
+                }
+            }
+
+            if ($request->hasFile('gallery_images')) {
+                $displayOrder = $tour->images()->count();
+
+                foreach ($request->file('gallery_images') as $image) {
+                    if (!$image) {
+                        continue;
+                    }
+
+                    $tour->images()->create([
+                        'image' => $image->store('tours/gallery', 'public'),
+                        'display_order' => $displayOrder++,
+                    ]);
+                }
+            }
+        });
+
         return redirect()
             ->route('admin.tours.index')
             ->with('success', 'Passeio atualizado com sucesso.');
@@ -171,82 +151,77 @@ class TourController extends Controller
     {
         $data = $request->validated();
 
-        // Upload da imagem de capa
-        $coverImage = $request
-            ->file('cover_image')
-            ->store('tours/covers', 'public');
-
-        // Criar passeio
-        $tour = Tour::create([
-            'cover_image'   => $coverImage,
-            'duration'      => $data['duration'],
-            'pricing_model' => $data['pricing_model'],
-            'price'         => $data['price'],
-            'max_capacity'  => $data['max_capacity'],
-            'featured_home' => $request->boolean('featured_home'),
-            'available'     => $request->boolean('available'),
-            'display_order' => 0,
-        ]);
-
-        // Tradução Português
-        TourTranslation::create([
-            'tour_id'               => $tour->id,
-            'locale'                => 'pt',
-            'name'                  => $data['pt_name'],
-            'short_description'     => $data['pt_short_description'],
-            'full_description'      => $data['pt_description'],
-            'important_information' => $data['pt_information'],
-        ]);
-
-        // Tradução Inglês
-        TourTranslation::create([
-            'tour_id'               => $tour->id,
-            'locale'                => 'en',
-            'name'                  => $data['en_name'],
-            'short_description'     => $data['en_short_description'],
-            'full_description'      => $data['en_description'],
-            'important_information' => $data['en_information'],
-        ]);
-
-        // Horários
-        if (!empty($data['schedule_start'])) {
-
-            foreach ($data['schedule_start'] as $index => $startTime) {
-
-                if (
-                    empty($startTime) ||
-                    empty($data['schedule_end'][$index])
-                ) {
-                    continue;
-                }
-
-                TourSchedule::create([
-                    'tour_id'       => $tour->id,
-                    'start_time'    => $startTime,
-                    'end_time'      => $data['schedule_end'][$index],
-                    'display_order' => $index,
-                ]);
-            }
+        $coverImage = null;
+        if ($request->hasFile('cover_image')) {
+            $coverImage = $request->file('cover_image')->store('tours/covers', 'public');
         }
 
-        // Galeria
+        $galleryImagePaths = [];
         if ($request->hasFile('gallery_images')) {
-
-            foreach ($request->file('gallery_images') as $index => $image) {
-
-                if (!$image) {
-                    continue;
+            foreach ($request->file('gallery_images') as $image) {
+                if ($image) {
+                    $galleryImagePaths[] = $image->store('tours/gallery', 'public');
                 }
-
-                $imagePath = $image->store('tours/gallery', 'public');
-
-                TourImage::create([
-                    'tour_id'       => $tour->id,
-                    'image'         => $imagePath,
-                    'display_order' => $index,
-                ]);
             }
         }
+
+        $featuredHome = $request->boolean('featured_home');
+        $available = $request->boolean('available');
+
+        DB::transaction(function () use ($data, $coverImage, $galleryImagePaths, $featuredHome, $available) {
+            $tour = Tour::create([
+                'cover_image' => $coverImage,
+                'max_capacity' => $data['max_capacity'],
+                'featured_home' => $featuredHome,
+                'available' => $available,
+                'display_order' => 0,
+            ]);
+
+            $tour->translations()->createMany([
+                [
+                    'locale' => 'pt',
+                    'name' => $data['pt_name'],
+                    'short_description' => $data['pt_short_description'],
+                    'full_description' => $data['pt_description'],
+                    'important_information' => $data['pt_information'],
+                ],
+                [
+                    'locale' => 'en',
+                    'name' => $data['en_name'],
+                    'short_description' => $data['en_short_description'],
+                    'full_description' => $data['en_description'],
+                    'important_information' => $data['en_information'],
+                ],
+            ]);
+
+            foreach ($data['options'] as $optionIndex => $optionData) {
+                $option = $tour->options()->create([
+                    'duration_minutes' => $optionData['duration_minutes'],
+                    'price' => $optionData['price'],
+                    'display_order' => $optionIndex,
+                ]);
+
+                $option->translations()->createMany([
+                    ['locale' => 'pt', 'name' => $optionData['translations']['pt']['name']],
+                    ['locale' => 'en', 'name' => $optionData['translations']['en']['name']],
+                ]);
+
+                foreach ($optionData['schedules'] as $scheduleIndex => $scheduleData) {
+                    $option->schedules()->create([
+                        'start_time' => $scheduleData['start_time'],
+                        'end_time' => $scheduleData['end_time'],
+                        'display_order' => $scheduleIndex,
+                    ]);
+                }
+            }
+
+            foreach ($galleryImagePaths as $displayOrder => $imagePath) {
+                $tour->images()->create([
+                    'image' => $imagePath,
+                    'display_order' => $displayOrder,
+                ]);
+            }
+        });
 
         return redirect()
             ->route('admin.tours.index')

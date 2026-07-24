@@ -9,9 +9,6 @@ class Tour extends Model
 {
     protected $fillable = [
         'cover_image',
-        'duration',
-        'pricing_model',
-        'price',
         'max_capacity',
         'featured_home',
         'available',
@@ -21,7 +18,6 @@ class Tour extends Model
     protected function casts(): array
     {
         return [
-            'price' => 'decimal:2',
             'featured_home' => 'boolean',
             'available' => 'boolean',
         ];
@@ -30,11 +26,6 @@ class Tour extends Model
     public function translations(): HasMany
     {
         return $this->hasMany(TourTranslation::class);
-    }
-
-    public function schedules(): HasMany
-    {
-        return $this->hasMany(TourSchedule::class);
     }
 
     public function images(): HasMany

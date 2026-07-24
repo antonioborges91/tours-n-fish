@@ -1,262 +1,248 @@
 document.addEventListener('DOMContentLoaded', () => {
-
     const optionsContainer = document.getElementById('options-container');
     const optionTemplate = document.getElementById('option-template');
     const scheduleTemplate = document.getElementById('schedule-template');
+    const galleryImageTemplate = document.getElementById('gallery-image-template');
     const addOptionButton = document.getElementById('add-option');
-    const noOptions = document.getElementById('no-options');
+    const addImageButton = document.getElementById('add-image');
+    const galleryContainer = document.getElementById('gallery-container');
 
-    if (
-        !optionsContainer ||
-        !optionTemplate ||
-        !scheduleTemplate ||
-        !addOptionButton
-    ) {
+    if (!optionsContainer || !optionTemplate || !addOptionButton) {
         return;
     }
 
-    let optionIndex = 0;
+    let optionIndex = optionsContainer.querySelectorAll('.option-card').length;
 
-    addOptionButton.addEventListener('click', () => {
-        addOption();
-    });
+    const optionFieldName = (index, field) => {
+        if (field === 'pt_name') {
+            return `options[${index}][translations][pt][name]`;
+        }
 
-    function addOption() {
+        if (field === 'en_name') {
+            return `options[${index}][translations][en][name]`;
+        }
 
-        noOptions?.remove();
+        return `options[${index}][${field}]`;
+    };
 
-        const fragment = optionTemplate.content.cloneNode(true);
+    const scheduleFieldName = (option, schedule, field) =>
+        `options[${option}][schedules][${schedule}][${field}]`;
 
-        const card = fragment.querySelector('.option-card');
+    function getOptionFields(card) {
+        const fields = card.querySelectorAll('[data-name]');
 
-        card.dataset.optionIndex = optionIndex;
+        if (fields.length > 0) {
+            return Array.from(fields).map((field) => ({
+                element: field,
+                name: field.dataset.name,
+            }));
+        }
 
-        const title = card.querySelector('h3');
-
-        title.textContent = `Opção ${optionIndex + 1}`;
-
-        prepareOptionFields(card, optionIndex);
-
-        prepareOptionButtons(card);
-
-        optionsContainer.appendChild(card);
-
-        optionIndex++;
-
-        refreshOptionTitles();
-
+        return Array.from(card.querySelectorAll(':scope > .grid input[name]')).map((field, index) => ({
+            element: field,
+            name: ['pt_name', 'en_name', 'duration_minutes', 'price'][index],
+        }));
     }
 
-    function prepareOptionFields(card, index) {
+    function getScheduleFields(row) {
+        const fields = row.querySelectorAll('[data-field]');
 
-        card.querySelectorAll('[data-field]').forEach(field => {
+        if (fields.length > 0) {
+            return Array.from(fields).map((field) => ({
+                element: field,
+                name: field.dataset.field,
+            }));
+        }
 
-            const fieldName = field.dataset.field;
+        return Array.from(row.querySelectorAll('input[name]')).map((field, index) => ({
+            element: field,
+            name: ['start_time', 'end_time'][index],
+        }));
+    }
 
-            switch (fieldName) {
+    function renumberSchedules(card, currentOptionIndex) {
+        const schedulesContainer = card.querySelector('.option-schedules');
 
-                case 'pt_name':
+        if (!schedulesContainer) {
+            return;
+        }
 
-                    field.name =
-                        `options[${index}][translations][pt][name]`;
+        const rows = schedulesContainer.querySelectorAll('.schedule-row');
 
-                    break;
+        rows.forEach((row, scheduleIndex) => {
+            row.dataset.scheduleIndex = scheduleIndex;
 
-                case 'en_name':
+            getScheduleFields(row).forEach((field) => {
+                field.element.name = scheduleFieldName(
+                    currentOptionIndex,
+                    scheduleIndex,
+                    field.name,
+                );
+            });
 
-                    field.name =
-                        `options[${index}][translations][en][name]`;
-
-                    break;
-
-                default:
-
-                    field.name =
-                        `options[${index}][${fieldName}]`;
-
-            }
-
+            prepareScheduleButton(row, card);
         });
 
+        if (rows.length === 0 && !schedulesContainer.querySelector('.no-option-schedules')) {
+            schedulesContainer.innerHTML = '<p class="text-gray-500 no-option-schedules">Ainda não existem horários.</p>';
+        }
+    }
+
+    function renumberOptions() {
+        const cards = optionsContainer.querySelectorAll('.option-card');
+
+        cards.forEach((card, index) => {
+            card.dataset.optionIndex = index;
+
+            const title = card.querySelector('h3');
+            if (title) {
+                title.textContent = `Opção ${index + 1}`;
+            }
+
+            getOptionFields(card).forEach((field) => {
+                field.element.name = optionFieldName(index, field.name);
+            });
+
+            renumberSchedules(card, index);
+            prepareOptionButtons(card);
+        });
+
+        optionIndex = cards.length;
+
+        const emptyState = optionsContainer.querySelector('#no-options');
+        if (cards.length > 0 && emptyState) {
+            emptyState.remove();
+        }
+
+        if (cards.length === 0 && !emptyState) {
+            optionsContainer.insertAdjacentHTML(
+                'beforeend',
+                '<p id="no-options" class="text-gray-500">Ainda não existem opções.</p>',
+            );
+        }
+    }
+
+    function prepareScheduleButton(row, card) {
+        const removeButton = row.querySelector('.remove-schedule');
+
+        if (!removeButton || removeButton.dataset.initialized) {
+            return;
+        }
+
+        removeButton.dataset.initialized = 'true';
+        removeButton.addEventListener('click', () => {
+            row.remove();
+            renumberSchedules(card, Number(card.dataset.optionIndex));
+        });
+    }
+
+    function addSchedule(card) {
+        if (!scheduleTemplate) {
+            return;
+        }
+
+        const schedulesContainer = card.querySelector('.option-schedules');
+
+        if (!schedulesContainer) {
+            return;
+        }
+
+        schedulesContainer.querySelector('.no-option-schedules')?.remove();
+
+        const fragment = scheduleTemplate.content.cloneNode(true);
+        const row = fragment.querySelector('.schedule-row');
+
+        if (!row) {
+            return;
+        }
+
+        schedulesContainer.appendChild(row);
+        renumberSchedules(card, Number(card.dataset.optionIndex));
     }
 
     function prepareOptionButtons(card) {
-
         const removeButton = card.querySelector('.remove-option');
+        const addScheduleButton = card.querySelector('.add-option-schedule');
 
-        removeButton.addEventListener('click', () => {
-
-            card.remove();
-
-            refreshOptionTitles();
-
-            if (
-                optionsContainer.querySelectorAll('.option-card').length === 0
-            ) {
-
-                optionsContainer.innerHTML = `
-                    <div
-                        id="no-options"
-                        class="rounded-lg border border-dashed border-gray-300 p-8 text-center text-gray-500">
-
-                        Ainda não existem opções.
-
-                    </div>
-                `;
-
-            }
-
-        });
-
-        const addScheduleButton =
-            card.querySelector('.add-schedule');
-
-        addScheduleButton.addEventListener('click', () => {
-
-            addSchedule(card);
-
-        });
-
-    }
-        function addSchedule(card) {
-
-        const optionIdx = card.dataset.optionIndex;
-
-        const scheduleList =
-            card.querySelector('.option-schedule-list');
-
-        const emptyMessage =
-            scheduleList.querySelector('.no-option-schedules');
-
-        if (emptyMessage) {
-            emptyMessage.remove();
+        if (removeButton && !removeButton.dataset.initialized) {
+            removeButton.dataset.initialized = 'true';
+            removeButton.addEventListener('click', () => {
+                card.remove();
+                renumberOptions();
+            });
         }
 
-        const scheduleIndex =
-            scheduleList.querySelectorAll('.schedule-row').length;
+        if (addScheduleButton && !addScheduleButton.dataset.initialized) {
+            addScheduleButton.dataset.initialized = 'true';
+            addScheduleButton.addEventListener('click', () => addSchedule(card));
+        }
+    }
 
-        const fragment =
-            scheduleTemplate.content.cloneNode(true);
+    function addOption() {
+        optionsContainer.querySelector('#no-options')?.remove();
 
-        const row =
-            fragment.querySelector('.schedule-row');
+        const fragment = optionTemplate.content.cloneNode(true);
+        const card = fragment.querySelector('.option-card');
 
-        row.dataset.scheduleIndex = scheduleIndex;
+        if (!card) {
+            return;
+        }
 
-        row.querySelectorAll('[data-field]').forEach(field => {
+        card.dataset.optionIndex = optionIndex;
+        optionsContainer.appendChild(card);
+        renumberOptions();
+    }
 
-            const fieldName = field.dataset.field;
+    function prepareGalleryRow(row) {
+        const removeButton = row.querySelector('.remove-image');
 
-            field.name =
-                `options[${optionIdx}][schedules][${scheduleIndex}][${fieldName}]`;
+        if (!removeButton || removeButton.dataset.initialized) {
+            return;
+        }
 
-        });
-
-        const removeButton =
-            row.querySelector('.remove-schedule');
-
+        removeButton.dataset.initialized = 'true';
         removeButton.addEventListener('click', () => {
-
             row.remove();
 
-            refreshSchedules(card);
-
+            if (!galleryContainer?.querySelector('.gallery-row')) {
+                galleryContainer?.insertAdjacentHTML(
+                    'beforeend',
+                    '<p id="no-images" class="text-gray-500">Ainda não existem imagens.</p>',
+                );
+            }
         });
-
-        scheduleList.appendChild(row);
-
     }
 
-    function refreshSchedules(card) {
-
-        const optionIdx = card.dataset.optionIndex;
-
-        const scheduleList =
-            card.querySelector('.option-schedule-list');
-
-        const rows =
-            scheduleList.querySelectorAll('.schedule-row');
-
-        rows.forEach((row, scheduleIndex) => {
-
-            row.dataset.scheduleIndex = scheduleIndex;
-
-            row.querySelectorAll('[data-field]').forEach(field => {
-
-                const fieldName = field.dataset.field;
-
-                field.name =
-                    `options[${optionIdx}][schedules][${scheduleIndex}][${fieldName}]`;
-
-            });
-
-        });
-
-        if (rows.length === 0) {
-
-            scheduleList.innerHTML = `
-                <div class="no-option-schedules text-gray-500">
-
-                    Ainda não existem horários.
-
-                </div>
-            `;
-
+    function addGalleryImage() {
+        if (!galleryContainer || !galleryImageTemplate) {
+            return;
         }
 
+        galleryContainer.querySelector('#no-images')?.remove();
+
+        const fragment = galleryImageTemplate.content.cloneNode(true);
+        const row = fragment.querySelector('.gallery-row');
+
+        if (!row) {
+            return;
+        }
+
+        galleryContainer.appendChild(row);
+        prepareGalleryRow(row);
     }
 
-    function refreshOptionTitles() {
+    addOptionButton.addEventListener('click', addOption);
+    addImageButton?.addEventListener('click', addGalleryImage);
 
-        const cards =
-            optionsContainer.querySelectorAll('.option-card');
+    optionsContainer.querySelectorAll('.option-card').forEach((card) => {
+        prepareOptionButtons(card);
+        card.querySelectorAll('.schedule-row').forEach((row) => prepareScheduleButton(row, card));
+    });
 
-        cards.forEach((card, optionIdx) => {
+    galleryContainer?.querySelectorAll('.gallery-row').forEach(prepareGalleryRow);
+    renumberOptions();
 
-            card.dataset.optionIndex = optionIdx;
-
-            card.querySelector('h3').textContent =
-                `Opção ${optionIdx + 1}`;
-
-            card.querySelectorAll('[data-field]').forEach(field => {
-
-                const fieldName = field.dataset.field;
-
-                switch (fieldName) {
-
-                    case 'pt_name':
-
-                        field.name =
-                            `options[${optionIdx}][translations][pt][name]`;
-
-                        break;
-
-                    case 'en_name':
-
-                        field.name =
-                            `options[${optionIdx}][translations][en][name]`;
-
-                        break;
-
-                    case 'start_time':
-                    case 'end_time':
-                        break;
-
-                    default:
-
-                        field.name =
-                            `options[${optionIdx}][${fieldName}]`;
-
-                }
-
-            });
-
-            refreshSchedules(card);
-
-        });
-
+    if (optionsContainer.querySelectorAll('.option-card').length === 0) {
+        addOption();
     }
-        // Cria automaticamente a primeira opção
-    addOption();
-
 });

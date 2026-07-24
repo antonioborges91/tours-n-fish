@@ -14,37 +14,37 @@ class UpdateTourRequest extends FormRequest
     public function rules(): array
     {
         return [
-
-            // Informações Gerais
-            'cover_image' => 'nullable|image|max:4096',
-            'pricing_model' => 'required|in:boat,person',
-            'price' => 'required|numeric|min:0',
-            'duration' => 'required|string|max:255',
+            'cover_image' => 'nullable|image|max:2048',
             'max_capacity' => 'required|integer|min:1',
+            'available' => 'nullable|boolean',
+            'featured_home' => 'nullable|boolean',
 
-            // Português
             'pt_name' => 'required|string|max:255',
             'pt_short_description' => 'required|string',
             'pt_description' => 'required|string',
-            'pt_information' => 'required|string',
+            'pt_information' => 'nullable|string',
 
-            // English
             'en_name' => 'required|string|max:255',
             'en_short_description' => 'required|string',
             'en_description' => 'required|string',
-            'en_information' => 'required|string',
+            'en_information' => 'nullable|string',
 
-            // Horários
-            'schedule_start' => 'nullable|array',
-            'schedule_start.*' => 'nullable|date_format:H:i',
+            'options' => 'required|array|min:1',
+            'options.*.translations' => 'required|array',
+            'options.*.translations.pt' => 'required|array',
+            'options.*.translations.pt.name' => 'required|string|max:255',
+            'options.*.translations.en' => 'required|array',
+            'options.*.translations.en.name' => 'required|string|max:255',
+            'options.*.duration_minutes' => 'required|integer|min:1',
+            'options.*.price' => 'required|numeric|min:0',
+            'options.*.schedules' => 'required|array|min:1',
+            'options.*.schedules.*.start_time' => 'required|date_format:H:i',
+            'options.*.schedules.*.end_time' => 'required|date_format:H:i',
 
-            'schedule_end' => 'nullable|array',
-            'schedule_end.*' => 'nullable|date_format:H:i',
-
-            // Galeria
             'gallery_images' => 'nullable|array|max:5',
-            'gallery_images.*' => 'nullable|image|max:4096',
-
+            'gallery_images.*' => 'image|max:2048',
+            'gallery_replace' => 'nullable|array',
+            'gallery_replace.*' => 'nullable|image|max:2048',
         ];
     }
 }

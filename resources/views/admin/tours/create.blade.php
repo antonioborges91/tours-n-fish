@@ -365,6 +365,52 @@
     </div>
 
 </template>
+
+<template id="schedule-template">
+
+    <div class="schedule-row grid grid-cols-12 gap-4 items-end mb-4">
+
+        <div class="col-span-5">
+
+            <label class="form-label">
+                Hora Início
+            </label>
+
+            <input
+                type="time"
+                data-field="start_time"
+                class="form-input">
+
+        </div>
+
+        <div class="col-span-5">
+
+            <label class="form-label">
+                Hora Fim
+            </label>
+
+            <input
+                type="time"
+                data-field="end_time"
+                class="form-input">
+
+        </div>
+
+        <div class="col-span-2">
+
+            <button
+                type="button"
+                class="admin-btn-danger remove-schedule">
+
+                Remover
+
+            </button>
+
+        </div>
+
+    </div>
+
+</template>
 </div>
 
     {{-- Galeria --}}
@@ -394,6 +440,36 @@
             </p>
 
         </div>
+
+        <template id="gallery-image-template">
+
+            <div class="gallery-row flex items-end gap-4 mb-4">
+
+                <div class="flex-1">
+
+                    <label class="form-label">
+                        Imagem
+                    </label>
+
+                    <input
+                        type="file"
+                        name="gallery[]"
+                        class="form-input"
+                        accept="image/*">
+
+                </div>
+
+                <button
+                    type="button"
+                    class="admin-btn-danger remove-image">
+
+                    Remover
+
+                </button>
+
+            </div>
+
+        </template>
 
     </div>
 

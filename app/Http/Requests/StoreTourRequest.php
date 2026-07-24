@@ -24,12 +24,6 @@ class StoreTourRequest extends FormRequest
             // Informações Gerais
             'cover_image' => 'nullable|image|max:2048',
 
-            'pricing_model' => 'required|in:boat,person',
-
-            'price' => 'required|numeric|min:0',
-
-            'duration' => 'required|string|max:100',
-
             'max_capacity' => 'required|integer|min:1',
 
             'available' => 'nullable|boolean',
@@ -54,14 +48,26 @@ class StoreTourRequest extends FormRequest
 
             'en_information' => 'nullable|string',
 
-            // Horários
-            'schedule_start' => 'nullable|array',
+            // Opções
+            'options' => 'required|array|min:1',
 
-            'schedule_start.*' => 'nullable|date_format:H:i',
+            'options.*.translations' => 'required|array',
 
-            'schedule_end' => 'nullable|array',
+            'options.*.translations.pt' => 'required|array',
+            'options.*.translations.pt.name' => 'required|string|max:255',
 
-            'schedule_end.*' => 'nullable|date_format:H:i',
+            'options.*.translations.en' => 'required|array',
+            'options.*.translations.en.name' => 'required|string|max:255',
+
+            'options.*.duration_minutes' => 'required|integer|min:1',
+
+            'options.*.price' => 'required|numeric|min:0',
+
+            'options.*.schedules' => 'required|array|min:1',
+
+            'options.*.schedules.*.start_time' => 'required|date_format:H:i',
+
+            'options.*.schedules.*.end_time' => 'required|date_format:H:i',
 
             // Galeria
             'gallery_images' => 'nullable|array|max:5',

@@ -3,7 +3,7 @@
     <div class="hero-feature">
 
         <div class="hero-feature-icon">
-            ⚓
+            <x-lucide-anchor />
         </div>
 
         <h3>Experiência Local</h3>
@@ -17,7 +17,7 @@
     <div class="hero-feature">
 
         <div class="hero-feature-icon">
-            🐟
+            <x-lucide-fish />
         </div>
 
         <h3>Equipamento Premium</h3>
@@ -31,7 +31,7 @@
     <div class="hero-feature">
 
         <div class="hero-feature-icon">
-            🚤
+            <x-lucide-users />
         </div>
 
         <h3>Grupos Pequenos</h3>
@@ -45,13 +45,13 @@
     <div class="hero-feature">
 
         <div class="hero-feature-icon">
-            🛡
+            <x-lucide-shield-check />
         </div>
 
         <h3>Segurança Garantida</h3>
 
         <p>
-            Todos os passeios seguem rigorosamente as normas de segurança.
+            Cumprimos todas as normas de segurança.
         </p>
 
     </div>

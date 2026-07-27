@@ -35,7 +35,7 @@
 
     </main>
 
-    @include('components.footer')
+    @include('components.footer.index')
 
 </body>
 

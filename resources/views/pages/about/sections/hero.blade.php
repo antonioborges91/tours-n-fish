@@ -11,10 +11,6 @@
 
         <div class="about-hero-content">
 
-            <span class="about-hero-badge">
-                Sobre Nós
-            </span>
-
             <h1 class="about-hero-title">
 
                 Uma paixão pelo mar.<br>

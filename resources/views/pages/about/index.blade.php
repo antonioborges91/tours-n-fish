@@ -6,6 +6,8 @@
 
     @include('pages.about.sections.hero')
 
+    @include('pages.about.sections.story')
+
 </section>
 
 @endsection

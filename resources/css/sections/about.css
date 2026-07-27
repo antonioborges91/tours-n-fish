@@ -1,0 +1,60 @@
+/*
+|--------------------------------------------------------------------------
+| About Preview
+|--------------------------------------------------------------------------
+*/
+
+.about-preview {
+
+    display: grid;
+
+    grid-template-columns: 1.1fr .9fr;
+
+    align-items: center;
+
+    gap: 4rem;
+
+    margin-top: -6rem;
+
+    padding: 2rem 3rem 5rem;
+}
+
+.about-preview-image img {
+
+    width: 100%;
+
+    display: block;
+
+    border-radius: 1.5rem;
+
+    box-shadow: var(--shadow-lg);
+
+    object-fit: cover;
+}
+
+.about-preview-content {
+
+    max-width: 470px;
+}
+
+.about-title {
+
+    margin-top: .75rem;
+
+    margin-bottom: 1.5rem;
+
+    font-size: clamp(2rem, 2.3vw, 2.6rem);
+
+    line-height: 1.15;
+}
+
+.about-text {
+
+    color: var(--color-text-light);
+
+    font-size: 1.05rem;
+
+    line-height: 1.8;
+
+    margin-bottom: 2rem;
+}

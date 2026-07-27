@@ -14,9 +14,23 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 */
 
-Route::get('/', function () {
-    return view('pages.home.index');
-})->name('home');
+Route::view('/', 'pages.home.index')
+    ->name('home');
+
+Route::view('/about', 'pages.about.index')
+    ->name('about');
+
+Route::view('/tours', 'pages.tours.index')
+    ->name('tours');
+
+Route::view('/gallery', 'pages.gallery.index')
+    ->name('gallery');
+
+Route::view('/contact', 'pages.contact.index')
+    ->name('contact');
+
+Route::view('/faq', 'pages.faq.index')
+    ->name('faq');
 
 /*
 |--------------------------------------------------------------------------
@@ -52,9 +66,15 @@ Route::middleware(['auth', 'verified'])
 */
 
 Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::get('/profile', [ProfileController::class, 'edit'])
+        ->name('profile.edit');
+
+    Route::patch('/profile', [ProfileController::class, 'update'])
+        ->name('profile.update');
+
+    Route::delete('/profile', [ProfileController::class, 'destroy'])
+        ->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

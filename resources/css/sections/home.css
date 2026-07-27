@@ -358,15 +358,6 @@
     font-weight: 400;
 }
 
-.tour-card-footer a {
-
-    color: var(--color-primary);
-
-    font-weight: 600;
-
-    text-decoration: none;
-}
-
 .popular-tours-action {
 
     margin-top: 3rem;

@@ -4,6 +4,7 @@
 @import "./base.css";
 @import "./utilities.css";
 @import "./animations.css";
+@import "./components.css";
 
 /* Components */
 @import "./components/container.css";

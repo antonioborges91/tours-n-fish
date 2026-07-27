@@ -47,8 +47,12 @@
 
                             </div>
 
-                            <a href="#">
+                            <a
+                                href="#"
+                                class="link-arrow">
+
                                 Saber mais →
+
                             </a>
 
                         </div>
@@ -63,8 +67,12 @@
 
         <div class="popular-tours-action">
 
-            <a href="#" class="btn btn-primary">
+            <a
+                href="#"
+                class="btn btn-primary">
+
                 Ver todos os passeios
+
             </a>
 
         </div>

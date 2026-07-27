@@ -6,11 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreTourRequest;
 use App\Http\Requests\UpdateTourRequest;
 use App\Models\Tour;
-use App\Models\TourImage;
-use App\Models\TourOption;
-use App\Models\TourOptionSchedule;
-use App\Models\TourOptionTranslation;
-use App\Models\TourTranslation;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
@@ -79,8 +74,13 @@ class TourController extends Controller
                 'important_information' => $data['en_information'],
             ]);
 
-            foreach ($tour->options as $option) {
+            $options = $tour->options()->with(['schedules', 'translations'])->get();
+
+            foreach ($options as $option) {
                 $option->schedules()->delete();
+            }
+
+            foreach ($options as $option) {
                 $option->translations()->delete();
             }
 

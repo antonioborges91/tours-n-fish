@@ -8,6 +8,8 @@
 
     @include('pages.home.sections.popular-tours')
 
+    @include('pages.home.sections.about-preview')
+
 </section>
 
 @endsection

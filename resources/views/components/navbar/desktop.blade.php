@@ -30,7 +30,8 @@
                     </li>
 
                     <li>
-                        <a href="#" class="nav-link">
+                        <a href="{{ route('about') }}"
+                           class="{{ request()->routeIs('about') ? 'nav-link nav-link-active' : 'nav-link' }}">
                             Sobre Nós
                         </a>
                     </li>

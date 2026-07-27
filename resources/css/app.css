@@ -27,3 +27,7 @@
 @import "./sections/terms.css";
 @import "./sections/privacy.css";
 @import "./sections/footer.css";
+
+html {
+    scrollbar-gutter: stable;
+}

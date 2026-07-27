@@ -9,7 +9,7 @@
                 <div class="footer-brand">
 
                     <img
-                        src="{{ asset('images/logo.webp') }}"
+                        src="{{ asset('images/logo/logo_branco.webp') }}"
                         alt="Tours N Fish">
 
                 </div>

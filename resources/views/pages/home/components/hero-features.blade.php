@@ -9,7 +9,7 @@
         <h3>Experiência Local</h3>
 
         <p>
-            Guias experientes e apaixonados pelo mar.
+            Guias locais apaixonados pelo mar.
         </p>
 
     </div>

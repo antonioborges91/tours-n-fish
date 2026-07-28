@@ -16,59 +16,24 @@
 
         <div class="popular-tours-grid">
 
-            @for($i = 0; $i < 4; $i++)
+            @forelse($popularTours as $tour)
 
-                <article class="tour-card">
+                <x-tour-card :tour="$tour"/>
 
-                    <div class="tour-card-image"></div>
+            @empty
 
-                    <div class="tour-card-content">
+                <p>
+                    Ainda não existem passeios em destaque.
+                </p>
 
-                        <h3>Nome do Passeio</h3>
-
-                        <div class="tour-card-meta">
-
-                            <span>⏱ 3 h</span>
-
-                            <span>👥 Até 6 pessoas</span>
-
-                        </div>
-
-                        <div class="tour-card-footer">
-
-                            <div>
-
-                                <small>Desde</small>
-
-                                <strong>
-                                    €45
-                                    <span>/ pessoa</span>
-                                </strong>
-
-                            </div>
-
-                            <a
-                                href="#"
-                                class="link-arrow">
-
-                                Saber mais →
-
-                            </a>
-
-                        </div>
-
-                    </div>
-
-                </article>
-
-            @endfor
+            @endforelse
 
         </div>
 
         <div class="popular-tours-action">
 
             <a
-                href="#"
+                href="{{ route('tours') }}"
                 class="btn btn-primary">
 
                 Ver todos os passeios

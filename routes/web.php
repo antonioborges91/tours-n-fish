@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\GalleryController;
 use App\Http\Controllers\Admin\ReservationController;
 use App\Http\Controllers\Admin\TourController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -14,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 */
 
-Route::view('/', 'pages.home.index')
+Route::get('/', [HomeController::class, 'index'])
     ->name('home');
 
 Route::view('/about', 'pages.about.index')

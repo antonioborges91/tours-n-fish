@@ -23,6 +23,12 @@ class Tour extends Model
         ];
     }
 
+    /*
+    |--------------------------------------------------------------------------
+    | Relationships
+    |--------------------------------------------------------------------------
+    */
+
     public function translations(): HasMany
     {
         return $this->hasMany(TourTranslation::class);
@@ -42,5 +48,25 @@ class Tour extends Model
     public function reservations(): HasMany
     {
         return $this->hasMany(Reservation::class);
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Helpers
+    |--------------------------------------------------------------------------
+    */
+
+    public function translation(?string $locale = null): ?TourTranslation
+    {
+        $locale ??= app()->getLocale();
+
+        return $this->translations
+            ->firstWhere('locale', $locale)
+            ?? $this->translations->first();
+    }
+
+    public function firstOption(): ?TourOption
+    {
+        return $this->options->first();
     }
 }

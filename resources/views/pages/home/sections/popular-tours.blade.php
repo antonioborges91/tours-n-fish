@@ -34,7 +34,7 @@
 
             <a
                 href="{{ route('tours') }}"
-                class="btn btn-primary">
+                class="btn-secondary">
 
                 Ver todos os passeios
 

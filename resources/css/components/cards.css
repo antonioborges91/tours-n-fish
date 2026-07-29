@@ -1,0 +1,117 @@
+/*
+|--------------------------------------------------------------------------
+| Tour Cards
+|--------------------------------------------------------------------------
+*/
+
+.tour-card {
+
+    width: 270px;
+
+    overflow: hidden;
+
+    border-radius: 1rem;
+
+    background: white;
+
+    box-shadow: var(--shadow-md);
+
+    transition: .25s;
+}
+
+.tour-card:hover {
+
+    transform: translateY(-4px);
+
+    box-shadow: var(--shadow-lg);
+}
+
+.tour-card-image {
+
+    aspect-ratio: 16 / 7.8;
+
+    background: #dbeafe;
+}
+
+.tour-card-content {
+
+    padding: .9rem 1.1rem 1rem;
+}
+
+.tour-card h3 {
+
+    margin: 0 0 .55rem;
+
+    font-size: 1.15rem;
+
+    line-height: 1.2;
+}
+
+.tour-card-meta {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: .9rem;
+
+    margin: 0 0 .9rem;
+
+    color: var(--color-text-light);
+
+    font-size: .9rem;
+}
+
+.tour-card-meta span {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: .35rem;
+
+    line-height: 1;
+}
+
+.meta-icon {
+
+    width: 16px;
+
+    height: 16px;
+
+    flex-shrink: 0;
+
+    color: var(--color-primary);
+}
+
+.tour-card-footer {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: flex-end;
+
+    margin-top: -.3rem;
+}
+
+.tour-card-footer small {
+
+    display: block;
+
+    margin-bottom: .25rem;
+
+    color: var(--color-text-light);
+}
+
+.tour-card-footer strong {
+
+    font-size: 1.2rem;
+}
+
+.tour-card-footer strong span {
+
+    font-size: .9rem;
+
+    font-weight: 400;
+}

@@ -63,7 +63,12 @@
 }
 
 .btn-secondary:hover {
-    background: #f8fafc;
+
+    background: rgba(0, 94, 184, .05);
+
+    color: var(--color-primary-dark);
+
+    border-color: var(--color-primary);
 
     transform: translateY(-2px);
 

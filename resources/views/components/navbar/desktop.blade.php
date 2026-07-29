@@ -24,7 +24,8 @@
                     </li>
 
                     <li>
-                        <a href="#" class="nav-link">
+                        <a href="{{ route('tours') }}"
+                           class="{{ request()->routeIs('tours') ? 'nav-link nav-link-active' : 'nav-link' }}">
                             Passeios
                         </a>
                     </li>

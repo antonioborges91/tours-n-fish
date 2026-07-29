@@ -4,9 +4,10 @@ use App\Http\Controllers\Admin\BlockedDateController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\GalleryController;
 use App\Http\Controllers\Admin\ReservationController;
-use App\Http\Controllers\Admin\TourController;
+use App\Http\Controllers\Admin\TourController as AdminTourController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TourController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,7 +22,7 @@ Route::get('/', [HomeController::class, 'index'])
 Route::view('/about', 'pages.about.index')
     ->name('about');
 
-Route::view('/tours', 'pages.tours.index')
+Route::get('/tours', [TourController::class, 'index'])
     ->name('tours');
 
 Route::view('/gallery', 'pages.gallery.index')
@@ -47,9 +48,9 @@ Route::middleware(['auth', 'verified'])
         Route::get('/', [DashboardController::class, 'index'])
             ->name('dashboard');
 
-        Route::resource('tours', TourController::class);
+        Route::resource('tours', AdminTourController::class);
 
-        Route::post('tours/{tour}/move', [TourController::class, 'move'])
+        Route::post('tours/{tour}/move', [AdminTourController::class, 'move'])
             ->name('tours.move');
 
         Route::resource('gallery', GalleryController::class);

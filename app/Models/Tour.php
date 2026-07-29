@@ -56,17 +56,18 @@ class Tour extends Model
     |--------------------------------------------------------------------------
     */
 
-    public function translation(?string $locale = null): ?TourTranslation
-    {
-        $locale ??= app()->getLocale();
+    public function translation(?string $locale = null)
+{
+    $locale ??= app()->getLocale();
 
-        return $this->translations
-            ->firstWhere('locale', $locale)
-            ?? $this->translations->first();
-    }
-
-    public function firstOption(): ?TourOption
-    {
-        return $this->options->first();
-    }
+    return $this->translations
+        ->firstWhere('locale', $locale)
+        ?? $this->translations->first();
 }
+
+public function firstOption()
+{
+    return $this->options->first();
+}
+
+    }

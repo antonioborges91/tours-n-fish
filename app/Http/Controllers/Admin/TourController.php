@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateTourRequest;
 use App\Models\Tour;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class TourController extends Controller
 {
@@ -55,6 +56,7 @@ class TourController extends Controller
         DB::transaction(function () use ($data, $request, $tour) {
             $tour->update([
                 'cover_image' => $tour->cover_image,
+                'slug' => Str::slug($data['pt_name']),
                 'max_capacity' => $data['max_capacity'],
                 'featured_home' => $request->boolean('featured_home'),
                 'available' => $request->boolean('available'),
@@ -204,6 +206,7 @@ class TourController extends Controller
         ) {
             $tour = Tour::create([
                 'cover_image' => $coverImage,
+                'slug' => Str::slug($data['pt_name']),
                 'max_capacity' => $data['max_capacity'],
                 'featured_home' => $featuredHome,
                 'available' => $available,

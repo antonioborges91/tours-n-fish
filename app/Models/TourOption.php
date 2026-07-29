@@ -22,6 +22,12 @@ class TourOption extends Model
         ];
     }
 
+    /*
+    |--------------------------------------------------------------------------
+    | Relationships
+    |--------------------------------------------------------------------------
+    */
+
     public function tour(): BelongsTo
     {
         return $this->belongsTo(Tour::class);
@@ -36,5 +42,20 @@ class TourOption extends Model
     {
         return $this->hasMany(TourOptionSchedule::class)
             ->orderBy('display_order');
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Helpers
+    |--------------------------------------------------------------------------
+    */
+
+    public function translation(?string $locale = null): ?TourOptionTranslation
+    {
+        $locale ??= app()->getLocale();
+
+        return $this->translations
+            ->firstWhere('locale', $locale)
+            ?? $this->translations->first();
     }
 }

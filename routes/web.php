@@ -24,6 +24,9 @@ Route::view('/about', 'pages.about.index')
 
 Route::get('/tours', [TourController::class, 'index'])
     ->name('tours');
+    
+Route::get('/tours/{tour}', [TourController::class, 'show'])
+    ->name('tours.show');
 
 Route::view('/gallery', 'pages.gallery.index')
     ->name('gallery');

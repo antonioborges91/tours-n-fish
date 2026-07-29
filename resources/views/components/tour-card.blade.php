@@ -132,11 +132,10 @@
             </div>
 
             <a
-                href="#"
-                class="link-arrow">
-
+                href="{{ route('tours.show', $tour) }}"
+                class="link-arrow"
+            >
                 Saber mais
-
             </a>
 
         </div>

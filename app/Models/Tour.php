@@ -13,6 +13,7 @@ class Tour extends Model
         'featured_home',
         'available',
         'display_order',
+        'slug',
     ];
 
     protected function casts(): array
@@ -68,6 +69,11 @@ class Tour extends Model
 public function firstOption()
 {
     return $this->options->first();
+}
+
+public function getRouteKeyName(): string
+{
+    return 'slug';
 }
 
     }

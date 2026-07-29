@@ -1,0 +1,318 @@
+/*
+|--------------------------------------------------------------------------
+| Tour Show Page
+|--------------------------------------------------------------------------
+*/
+
+.tour-show {
+
+    max-width: var(--container-width);
+
+    margin: 0 auto;
+
+    background: white;
+
+    border-radius: 1.25rem 1.25rem 0 0;
+
+    overflow: hidden;
+
+    box-shadow: var(--shadow-lg);
+}
+
+.tours-page {
+
+    padding: 5rem 0 6rem;
+
+}
+
+/*
+|--------------------------------------------------------------------------
+| Tour Show Hero
+|--------------------------------------------------------------------------
+*/
+
+.tour-show-hero {
+
+    margin-top: -110px;
+
+    padding-top: 110px;
+
+    padding-bottom: 0;
+}
+
+.tour-show-hero-card {
+
+    position: relative;
+
+    height: 540px;
+
+    border-radius: 1.25rem 1.25rem 0 0;
+
+    overflow: hidden;
+}
+
+.tour-show-hero-background {
+
+    position: absolute;
+
+    inset: 0;
+
+    background-size: cover;
+
+    background-position: center 45%;
+
+    background-repeat: no-repeat;
+
+    transform: scale(1.02);
+
+    z-index: 1;
+}
+
+.tour-show-hero-gradient {
+
+    position: absolute;
+
+    inset: 0;
+
+    background:
+
+        linear-gradient(
+            to bottom,
+            rgba(255,255,255,1) 0%,
+            rgba(255,255,255,.98) 12%,
+            rgba(255,255,255,.88) 24%,
+            rgba(255,255,255,.55) 40%,
+            rgba(255,255,255,0) 100%
+        ),
+
+        linear-gradient(
+            to right,
+            rgba(255,255,255,.99) 0%,
+            rgba(255,255,255,.96) 18%,
+            rgba(255,255,255,.82) 34%,
+            rgba(255,255,255,.40) 55%,
+            rgba(255,255,255,0) 72%
+        );
+
+    z-index: 2;
+}
+
+.tour-show-hero-content {
+    position: relative;
+
+    z-index: 3;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+
+    width: 40%;
+
+    height: 100%;
+
+    padding-left: 3rem;
+    padding-top: 9rem;
+}
+
+.tour-show-hero-title {
+    margin: 0;
+
+    color: var(--color-text);
+
+    font-size: clamp(2.4rem, 3vw, 3.5rem);
+
+    line-height: 1.12;
+
+    font-weight: 700;
+}
+
+.tour-show-hero-text {
+    margin-top: 2rem;
+
+    max-width: 460px;
+
+    color: var(--color-text);
+
+    font-size: 1.2rem;
+
+    line-height: 1.8;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Tour Options
+|--------------------------------------------------------------------------
+*/
+
+.tour-options{
+
+    padding:5rem 3rem;
+}
+
+.tour-options-list{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:1.5rem;
+
+    margin-top:3rem;
+}
+
+.tour-option{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    gap:2rem;
+
+    padding:2rem;
+
+    background:#fff;
+
+    border:1px solid #e5e7eb;
+
+    border-radius:1rem;
+
+    box-shadow:var(--shadow-sm);
+
+    transition:.25s;
+}
+
+.tour-option:hover{
+
+    border-color:var(--color-primary);
+
+    box-shadow:var(--shadow-md);
+}
+
+.tour-option h3{
+
+    margin-bottom:1rem;
+
+    font-size:1.5rem;
+}
+
+.tour-option-details{
+
+    display:flex;
+
+    gap:2rem;
+
+    margin-bottom:1rem;
+
+    color:var(--color-text-light);
+}
+
+.tour-option-schedules{
+
+    margin-top:1.5rem;
+}
+
+.tour-option-schedules-title{
+
+    margin-bottom:1rem;
+
+    font-weight:600;
+}
+
+.tour-option-schedule-list{
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:.75rem;
+}
+
+.tour-option-schedule{
+
+    cursor:pointer;
+}
+
+.tour-option-schedule input{
+
+    display:none;
+}
+
+.tour-option-schedule-card{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    padding:.8rem 1.1rem;
+
+    border:1px solid #dbe3ec;
+
+    border-radius:.75rem;
+
+    background:#fff;
+
+    transition:.25s;
+}
+
+.tour-option-schedule:hover .tour-option-schedule-card{
+
+    border-color:var(--color-primary);
+}
+
+.tour-option-schedule input:checked + .tour-option-schedule-card{
+
+    background:rgba(0,94,184,.06);
+
+    border-color:var(--color-primary);
+
+    color:var(--color-primary);
+
+    font-weight:600;
+}
+
+.tour-option-from{
+
+    color:var(--color-text-light);
+
+    font-size:.95rem;
+}
+
+.tour-option-per{
+
+    color:var(--color-text-light);
+
+    margin-top:-.5rem;
+
+    margin-bottom:.5rem;
+}
+
+.tour-option-book{
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:flex-end;
+
+    gap:1rem;
+
+    min-width:220px;
+}
+
+.tour-option-price{
+
+    font-size:2.2rem;
+
+    font-weight:700;
+
+    color:var(--color-primary);
+}
+
+.tour-option-book .btn{
+
+    min-width:180px;
+}

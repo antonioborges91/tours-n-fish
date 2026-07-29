@@ -19,4 +19,16 @@ class TourController extends Controller
 
         return view('pages.tours.index', compact('tours'));
     }
+
+    public function show(Tour $tour)
+{
+    $tour->load([
+        'translations',
+        'images',
+        'options.translations',
+        'options.schedules',
+    ]);
+
+    return view('pages.tours.show', compact('tour'));
+}
 }

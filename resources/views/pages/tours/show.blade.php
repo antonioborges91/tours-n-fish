@@ -17,5 +17,39 @@
     @include('pages.tours.sections.information')
 
 </div>
+@push('scripts')
 
+<script>
+
+document.addEventListener('DOMContentLoaded', () => {
+
+    const mainImage = document.getElementById('tourMainImage');
+
+    const thumbs = document.querySelectorAll('.tour-gallery-thumb');
+
+    thumbs.forEach((thumb) => {
+
+        thumb.addEventListener('click', () => {
+
+            mainImage.src = thumb.dataset.image;
+
+            thumbs.forEach(item => item.classList.remove('active'));
+
+            thumb.classList.add('active');
+
+        });
+
+    });
+
+    if (thumbs.length) {
+
+        thumbs[0].classList.add('active');
+
+    }
+
+});
+
+</script>
+
+@endpush
 @endsection

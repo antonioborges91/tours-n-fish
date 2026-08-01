@@ -36,7 +36,7 @@
     </main>
 
     @include('components.footer.index')
-
+@stack('scripts')
 </body>
 
 </html>

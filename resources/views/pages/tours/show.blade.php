@@ -10,9 +10,9 @@
 
     @include('pages.tours.sections.description')
 
-    @include('pages.tours.sections.gallery')
-
     @include('pages.tours.sections.options')
+
+    @include('pages.tours.sections.gallery')
 
     @include('pages.tours.sections.information')
 

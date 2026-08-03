@@ -1,6 +1,6 @@
 @if($tour->images->count())
 
-<section class="tour-gallery">
+<section class="tour-gallery section">
 
     <div class="container-custom">
 

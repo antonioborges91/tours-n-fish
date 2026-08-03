@@ -117,3 +117,26 @@
 .overflow-hidden {
     overflow: hidden;
 }
+
+/*
+|--------------------------------------------------------------------------
+| Global Sections
+|--------------------------------------------------------------------------
+*/
+
+.section{
+
+    padding:
+        var(--section-space)
+        var(--section-space-small);
+
+}
+
+.section-last{
+
+    padding:
+        var(--section-space)
+        var(--section-space-small)
+        var(--section-space-small);
+
+}

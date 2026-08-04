@@ -12,18 +12,18 @@
         <div class="hero-content">
 
             <h1 class="hero-title">
-                Viva o mar.<br>
-                <span>Sinta&nbsp;os&nbsp;Açores.</span>
+                {{ __('home.hero_title_1') }}<br>
+                <span>{{ __('home.hero_title_2') }}</span>
             </h1>
 
             <p class="hero-text">
-                Passeios de pesca e atividades marítimas nas águas mais autênticas do Atlântico.
+                {{ __('home.hero_text') }}
             </p>
 
             <div class="hero-actions">
 
                 <a href="#" class="btn-secondary">
-                    Explorar Passeios
+                    {{ __('home.explore') }}
 
                     <x-lucide-chevron-right class="btn-icon w-4 h-4"/>
                 </a>

@@ -6,10 +6,10 @@
             <x-lucide-anchor />
         </div>
 
-        <h3>Experiência Local</h3>
+        <h3>{{ __('home.features.local.title') }}</h3>
 
         <p>
-            Guias locais apaixonados pelo mar.
+            {{ __('home.features.local.text') }}
         </p>
 
     </div>
@@ -20,10 +20,10 @@
             <x-lucide-fish />
         </div>
 
-        <h3>Equipamento Premium</h3>
+        <h3>{{ __('home.features.equipment.title') }}</h3>
 
         <p>
-            Equipamento moderno e seguro.
+            {{ __('home.features.equipment.text') }}
         </p>
 
     </div>
@@ -34,10 +34,10 @@
             <x-lucide-users />
         </div>
 
-        <h3>Grupos Pequenos</h3>
+        <h3>{{ __('home.features.groups.title') }}</h3>
 
         <p>
-            Mais conforto e uma experiência personalizada.
+            {{ __('home.features.groups.text') }}
         </p>
 
     </div>
@@ -48,10 +48,10 @@
             <x-lucide-shield-check />
         </div>
 
-        <h3>Segurança Garantida</h3>
+        <h3>{{ __('home.features.safety.title') }}</h3>
 
         <p>
-            Cumprimos todas as normas de segurança.
+            {{ __('home.features.safety.text') }}
         </p>
 
     </div>

@@ -9,6 +9,8 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TourController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Session;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,7 +26,7 @@ Route::view('/about', 'pages.about.index')
 
 Route::get('/tours', [TourController::class, 'index'])
     ->name('tours');
-    
+
 Route::get('/tours/{tour}', [TourController::class, 'show'])
     ->name('tours.show');
 
@@ -36,6 +38,24 @@ Route::view('/contact', 'pages.contact.index')
 
 Route::view('/faq', 'pages.faq.index')
     ->name('faq');
+
+/*
+|--------------------------------------------------------------------------
+| Idioma
+|--------------------------------------------------------------------------
+*/
+
+Route::get('/language/{locale}', function (string $locale) {
+
+    if (! in_array($locale, ['pt', 'en'])) {
+        abort(404);
+    }
+
+    Session::put('locale', $locale);
+
+    return redirect()->back();
+
+})->name('language.switch');
 
 /*
 |--------------------------------------------------------------------------
@@ -78,8 +98,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])
         ->name('profile.update');
 
-    Route::delete('/profile', [ProfileController::class, 'destroy'])
-        ->name('profile.destroy');
+    Route::delete('/profile', [ProfileController::class, 'destroy']);
 });
 
-require __DIR__ . '/auth.php';
+require __DIR__.'/auth.php';

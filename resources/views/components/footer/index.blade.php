@@ -16,13 +16,13 @@
 
                 <div class="footer-contact">
 
-                    <h3>Contactos</h3>
+                    <h3>{{ __('footer.contact') }}</h3>
 
                     <ul>
 
                         <li>
                             <x-lucide-phone class="footer-icon"/>
-                            +351 000 000 000
+                            +351 913 488 511
                         </li>
 
                         <li>
@@ -32,7 +32,7 @@
 
                         <li>
                             <x-lucide-map-pin class="footer-icon"/>
-                            Ponta Delgada, São Miguel
+                            {{ __('footer.location') }}
                         </li>
 
                     </ul>
@@ -41,7 +41,7 @@
 
                 <div class="footer-social">
 
-                    <h3>Siga-nos</h3>
+                    <h3>{{ __('footer.follow_us') }}</h3>
 
                     <div class="footer-social-links">
 
@@ -68,11 +68,11 @@
                 <div class="footer-links">
 
                     <a href="#">
-                        Política de Privacidade
+                        {{ __('footer.privacy_policy') }}
                     </a>
 
                     <a href="#">
-                        Termos e Condições
+                        {{ __('footer.terms_conditions') }}
                     </a>
 
                 </div>

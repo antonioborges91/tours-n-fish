@@ -11,25 +11,22 @@
     <div class="about-preview-content">
 
         <span class="section-subtitle">
-            Sobre Nós
+            {{ __('home.about_badge') }}
         </span>
 
         <h2 class="section-title about-title">
-            Paixão pelo mar,
-            tradição nos Açores.
+            {{ __('home.about_title') }}
         </h2>
 
         <p class="about-text">
-            A Tours N Fish nasceu da paixão pelo mar e pela natureza dos Açores.
-            A nossa missão é proporcionar experiências autênticas, seguras e
-            inesquecíveis, respeitando sempre o oceano que nos inspira.
+            {{ __('home.about_text') }}
         </p>
 
         <a
             href="{{ route('about') }}"
             class="link-arrow">
 
-            Saiba mais sobre nós →
+            {{ __('home.about_link') }} →
 
         </a>
 

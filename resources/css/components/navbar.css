@@ -51,3 +51,61 @@
 .nav-link-active::after {
     width: 100%;
 }
+
+/*
+|--------------------------------------------------------------------------
+| Language Switch
+|--------------------------------------------------------------------------
+*/
+
+.language-switch{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:.55rem;
+
+    font-size:.9rem;
+
+    font-weight:600;
+
+}
+
+.language-switch a{
+
+    color:var(--color-primary);
+
+    text-decoration:none;
+
+    opacity:.45;
+
+    transition:.25s;
+
+}
+
+.language-switch a:hover{
+
+    opacity:1;
+
+}
+
+.language-switch .active{
+
+    color:var(--color-primary);
+
+    font-weight:700;
+
+    cursor:default;
+
+}
+
+.language-switch .divider{
+
+    width:1px;
+
+    height:14px;
+
+    background:#d7dee8;
+
+}

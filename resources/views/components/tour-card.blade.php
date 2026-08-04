@@ -36,9 +36,7 @@
     <div class="tour-card-content">
 
         <h3>
-
             {{ $translation?->name }}
-
         </h3>
 
         <div class="tour-card-meta">
@@ -101,7 +99,7 @@
 
                 </svg>
 
-                Até {{ $tour->max_capacity }} pessoas
+                {{ __('home.card.people', ['count' => $tour->max_capacity]) }}
 
             </span>
 
@@ -112,30 +110,23 @@
             <div class="tour-card-price">
 
                 <small>
-
-                    Desde
-
+                    {{ __('home.card.from') }}
                 </small>
 
                 <strong>
-
                     €{{ number_format($option?->price ?? 0, 0, ',', '.') }}
-
                 </strong>
 
                 <span>
-
-                    / passeio
-
+                    {{ __('home.card.per_trip') }}
                 </span>
 
             </div>
 
             <a
                 href="{{ route('tours.show', $tour) }}"
-                class="link-arrow"
-            >
-                Saber mais
+                class="link-arrow">
+                {{ __('home.card.learn_more') }}
             </a>
 
         </div>

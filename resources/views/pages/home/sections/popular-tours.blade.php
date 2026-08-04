@@ -5,11 +5,11 @@
         <div class="section-heading">
 
             <span class="section-subtitle">
-                Passeios Populares
+                {{ __('home.popular_badge') }}
             </span>
 
             <h2 class="section-title">
-                Escolha a sua aventura
+                {{ __('home.popular_title') }}
             </h2>
 
         </div>
@@ -23,7 +23,7 @@
             @empty
 
                 <p>
-                    Ainda não existem passeios em destaque.
+                    {{ __('home.no_featured_tours') }}
                 </p>
 
             @endforelse
@@ -36,7 +36,7 @@
                 href="{{ route('tours') }}"
                 class="btn-secondary">
 
-                Ver todos os passeios
+                {{ __('home.view_all') }}
 
             </a>
 

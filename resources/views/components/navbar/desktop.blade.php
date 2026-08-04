@@ -19,33 +19,33 @@
                     <li>
                         <a href="{{ route('home') }}"
                            class="{{ request()->routeIs('home') ? 'nav-link nav-link-active' : 'nav-link' }}">
-                            Início
+                            {{ __('navigation.home') }}
                         </a>
                     </li>
 
                     <li>
                         <a href="{{ route('tours') }}"
                            class="{{ request()->routeIs('tours') ? 'nav-link nav-link-active' : 'nav-link' }}">
-                            Passeios
+                            {{ __('navigation.tours') }}
                         </a>
                     </li>
 
                     <li>
                         <a href="{{ route('about') }}"
                            class="{{ request()->routeIs('about') ? 'nav-link nav-link-active' : 'nav-link' }}">
-                            Sobre Nós
+                            {{ __('navigation.about') }}
                         </a>
                     </li>
 
                     <li>
                         <a href="#" class="nav-link">
-                            Galeria
+                            {{ __('navigation.gallery') }}
                         </a>
                     </li>
 
                     <li>
                         <a href="#" class="nav-link">
-                            Contactos
+                            {{ __('navigation.contact') }}
                         </a>
                     </li>
 
@@ -59,7 +59,7 @@
                 @include('components.navbar.language-switch')
 
                 <a href="#" class="btn-primary">
-                    Reservar Agora
+                    {{ __('navigation.book_now') }}
                 </a>
 
             </div>

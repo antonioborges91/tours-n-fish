@@ -4,7 +4,7 @@
 
         <span class="section-badge">
 
-            O que o espera...
+            {{ __('tours.description.badge') }}
 
         </span>
 

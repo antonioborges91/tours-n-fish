@@ -5,11 +5,11 @@
         <div class="section-heading">
 
             <span class="section-subtitle">
-                A NOSSA HISTÓRIA
+                {{ __('about.story.subtitle') }}
             </span>
 
             <h2 class="section-title">
-                Mais do que passeios de barco.
+                {{ __('about.story.title') }}
             </h2>
 
         </div>
@@ -19,11 +19,11 @@
             <div>
 
                 <p>
-                    Texto...
+                    {{ __('about.story.paragraph_1') }}
                 </p>
 
                 <p>
-                    Texto...
+                    {{ __('about.story.paragraph_2') }}
                 </p>
 
             </div>

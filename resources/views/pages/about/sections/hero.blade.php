@@ -13,16 +13,15 @@
 
             <h1 class="about-hero-title">
 
-                Uma paixão pelo mar.<br>
+                {{ __('about.hero.title') }}<br>
 
-                <span>Uma tradição Açoriana.</span>
+                <span>{{ __('about.hero.highlight') }}</span>
 
             </h1>
 
             <p class="about-hero-text">
 
-                Há vários anos que mostramos o melhor do Atlântico,
-                proporcionando experiências autênticas, seguras e inesquecíveis.
+                {{ __('about.hero.text') }}
 
             </p>
 

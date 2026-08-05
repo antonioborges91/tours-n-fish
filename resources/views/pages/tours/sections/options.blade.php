@@ -6,13 +6,13 @@
 
             <span class="section-badge">
 
-                Reserve
+                {{ __('tours.options.badge') }}
 
             </span>
 
             <h2 class="section-title">
 
-                Opções disponíveis
+                {{ __('tours.options.title') }}
 
             </h2>
 
@@ -101,7 +101,7 @@
 
                                 </svg>
 
-                                Até {{ $tour->max_capacity }} pessoas
+                                {{ __('tours.options.up_to', ['count' => $tour->max_capacity]) }}
 
                             </span>
 
@@ -113,7 +113,7 @@
 
                                 <p class="tour-option-schedules-title">
 
-                                    Horários disponíveis
+                                    {{ __('tours.options.available_schedules') }}
 
                                 </p>
 
@@ -156,7 +156,7 @@
 
                         <span class="tour-option-from">
 
-                            Desde
+                            {{ __('tours.options.available_schedules') }}
 
                         </span>
 
@@ -168,13 +168,13 @@
 
                         <span class="tour-option-per">
 
-                            / passeio
+                            {{ __('tours.options.per_tour') }}
 
                         </span>
 
                         <a href="#" class="btn btn-primary">
 
-                            Reservar
+                            {{ __('tours.options.book') }}
 
                         </a>
 

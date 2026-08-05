@@ -13,17 +13,15 @@
 
             <h1 class="tours-hero-title">
 
-                Descubra os nossos<br>
+                {{ __('tours.hero.title') }}<br>
 
-                <span>Passeios</span>
+                <span>{{ __('tours.hero.highlight') }}</span>
 
             </h1>
 
             <p class="tours-hero-text">
 
-                Desde passeios costeiros a experiências de pesca desportiva,
-                viva momentos únicos no Atlântico com conforto, segurança e
-                acompanhamento profissional.
+                {{ __('tours.hero.text') }}
 
             </p>
 

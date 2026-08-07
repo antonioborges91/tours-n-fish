@@ -44,8 +44,12 @@
                     </li>
 
                     <li>
-                        <a href="#" class="nav-link">
+                        <a
+                            href="{{ route('contact') }}"
+                            class="{{ request()->routeIs('contact') ? 'nav-link nav-link-active' : 'nav-link' }}">
+
                             {{ __('navigation.contact') }}
+
                         </a>
                     </li>
 

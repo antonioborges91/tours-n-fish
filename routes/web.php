@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\TourController as AdminTourController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TourController;
+use App\Http\Controllers\ContactController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Session;
@@ -33,7 +34,7 @@ Route::get('/tours/{tour}', [TourController::class, 'show'])
 Route::view('/gallery', 'pages.gallery.index')
     ->name('gallery');
 
-Route::view('/contact', 'pages.contact.index')
+Route::get('/contact', [ContactController::class, 'index'])
     ->name('contact');
 
 Route::view('/faq', 'pages.faq.index')

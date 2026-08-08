@@ -79,6 +79,9 @@ Route::middleware(['auth', 'verified'])
 
         Route::resource('gallery', GalleryController::class);
 
+        Route::post('gallery/{gallery}/move', [GalleryController::class, 'move'])
+            ->name('gallery.move');
+
         Route::resource('blocked-dates', BlockedDateController::class);
 
         Route::resource('reservations', ReservationController::class)

@@ -38,7 +38,8 @@
                     </li>
 
                     <li>
-                        <a href="#" class="nav-link">
+                        <a href="{{ route('gallery') }}"
+                           class="{{ request()->routeIs('gallery') ? 'nav-link nav-link-active' : 'nav-link' }}">
                             {{ __('navigation.gallery') }}
                         </a>
                     </li>

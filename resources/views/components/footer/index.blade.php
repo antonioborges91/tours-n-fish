@@ -27,7 +27,7 @@
 
                         <li>
                             <x-lucide-mail class="footer-icon"/>
-                            geral@toursnfish.pt
+                            geral@toursnfishazores.pt
                         </li>
 
                         <li>

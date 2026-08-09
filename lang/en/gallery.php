@@ -4,13 +4,13 @@ return [
 
     'hero' => [
 
-        'title' => 'Momentos',
-        'highlight' => 'que ficam na memória.',
+        'title' => 'Moments',
+        'highlight' => 'to remember.',
 
-        'text' => 'Descubra alguns dos melhores momentos vividos a bordo do Tours N Fish, entre o mar, a pesca e as paisagens únicas dos Açores.',
+        'text' => 'Discover some of the best moments experienced aboard Tours N Fish, surrounded by the sea, fishing and the unique landscapes of the Azores.',
 
     ],
 
-    'empty' => 'Ainda não existem fotografias na galeria.',
+    'empty' => 'There are no photographs in the gallery yet.',
 
 ];

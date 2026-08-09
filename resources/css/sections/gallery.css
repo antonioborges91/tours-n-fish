@@ -154,56 +154,78 @@
    ========================================================= */
 
 .gallery-grid {
-    width: min(100%, 1100px);
+    width: min(100%, 1050px);
 
     margin: 0 auto;
 
-    columns: 3 280px;
+    display: grid;
 
-    column-gap: 24px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+
+    grid-auto-rows: 8px;
+
+    grid-auto-flow: dense;
+
+    gap: 16px;
 }
 
+
 .gallery-item {
+    position: relative;
+
     display: block;
 
     width: 100%;
+    height: 100%;
 
-    margin: 0 0 24px;
-
+    margin: 0;
     padding: 0;
 
     border: 0;
 
     background: transparent;
 
-    cursor: pointer;
-
     overflow: hidden;
 
-    border-radius: 16px;
+    border-radius: 14px;
 
-    break-inside: avoid;
-    -webkit-column-break-inside: avoid;
+    cursor: pointer;
 
     transition:
         transform 0.25s ease,
         box-shadow 0.25s ease;
 }
 
+
+/*
+ * Fotografias verticais:
+ * ficam ligeiramente mais estreitas para não
+ * dominar visualmente a composição.
+ */
+.gallery-item.is-portrait {
+    width: 76%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
 .gallery-item img {
     display: block;
 
     width: 100%;
-    height: auto;
+    height: 100%;
 
-    border-radius: 16px;
+    object-fit: cover;
+
+    border-radius: 14px;
 }
+
 
 .gallery-item:hover {
     transform: translateY(-3px);
 
     box-shadow:
-        0 12px 30px rgba(0, 0, 0, 0.12);
+        0 10px 24px rgba(0, 0, 0, 0.14);
 }
 
 
@@ -248,10 +270,12 @@
         visibility 0.25s ease;
 }
 
+
 .gallery-lightbox.is-open {
     opacity: 1;
     visibility: visible;
 }
+
 
 .gallery-lightbox img {
     display: block;
@@ -269,6 +293,7 @@
     box-shadow:
         0 20px 60px rgba(0, 0, 0, 0.35);
 }
+
 
 .gallery-lightbox-close {
     position: absolute;
@@ -291,7 +316,6 @@
     color: white;
 
     font-size: 34px;
-    font-weight: 300;
 
     line-height: 1;
 
@@ -302,11 +326,13 @@
         transform 0.2s ease;
 }
 
+
 .gallery-lightbox-close:hover {
     background: rgba(255, 255, 255, 0.22);
 
     transform: scale(1.05);
 }
+
 
 .gallery-lightbox-open {
     overflow: hidden;
@@ -320,12 +346,9 @@
 @media (max-width: 900px) {
 
     .gallery-grid {
-        columns: 2;
-        column-gap: 20px;
-    }
+        grid-template-columns: repeat(2, minmax(0, 1fr));
 
-    .gallery-item {
-        margin-bottom: 20px;
+        gap: 14px;
     }
 
 }
@@ -338,12 +361,12 @@
 @media (max-width: 600px) {
 
     .gallery-grid {
-        columns: 1;
+        grid-template-columns: 1fr;
+
+        gap: 14px;
     }
 
     .gallery-item {
-        margin-bottom: 16px;
-
         border-radius: 12px;
     }
 

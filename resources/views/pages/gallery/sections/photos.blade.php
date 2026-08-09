@@ -64,54 +64,185 @@
 
 document.addEventListener('DOMContentLoaded', function () {
 
-    const items = document.querySelectorAll(
-        '[data-gallery-image]'
-    );
+    const grid = document.querySelector('.gallery-grid');
 
-    const lightbox = document.getElementById(
-        'gallery-lightbox'
-    );
-
-    const lightboxImage = document.getElementById(
-        'gallery-lightbox-image'
-    );
-
-    const closeButton = document.querySelector(
-        '.gallery-lightbox-close'
-    );
-
-
-    if (!lightbox || !lightboxImage || !closeButton) {
+    if (!grid) {
         return;
     }
 
 
+    function resizeGalleryItems() {
+
+    const items = grid.querySelectorAll('.gallery-item');
+
+    const rowHeight = 8;
+
+    const gap = parseFloat(
+        getComputedStyle(grid).rowGap
+    );
+
+
     items.forEach(function (item) {
 
-        item.addEventListener('click', function () {
+        const image = item.querySelector('img');
 
-            lightboxImage.src =
-                item.dataset.galleryImage;
+        if (!image) {
+            return;
+        }
 
-            lightbox.classList.add('is-open');
 
-            lightbox.setAttribute(
-                'aria-hidden',
-                'false'
+        if (
+            !image.naturalWidth ||
+            !image.naturalHeight
+        ) {
+            return;
+        }
+
+
+        /*
+         * Detecta se a fotografia é vertical.
+         */
+        const isPortrait =
+            image.naturalHeight > image.naturalWidth;
+
+
+        item.classList.toggle(
+            'is-portrait',
+            isPortrait
+        );
+
+
+        /*
+         * Como a largura da vertical foi reduzida
+         * para 76%, temos de obter a largura real
+         * depois dessa alteração.
+         */
+        const width =
+            item.getBoundingClientRect().width;
+
+
+        if (!width) {
+            return;
+        }
+
+
+        const imageHeight =
+            width *
+            (
+                image.naturalHeight /
+                image.naturalWidth
             );
 
-            document.body.classList.add(
-                'gallery-lightbox-open'
+
+        const rowSpan =
+            Math.ceil(
+                (imageHeight + gap) /
+                (rowHeight + gap)
             );
 
-        });
+
+        item.style.gridRowEnd =
+            'span ' + rowSpan;
+
+    });
+
+}
+
+
+    const images = grid.querySelectorAll('img');
+
+
+    images.forEach(function (image) {
+
+        if (image.complete) {
+
+            resizeGalleryItems();
+
+        } else {
+
+            image.addEventListener(
+                'load',
+                resizeGalleryItems
+            );
+
+        }
+
+    });
+
+
+    window.addEventListener(
+        'resize',
+        resizeGalleryItems
+    );
+
+
+    resizeGalleryItems();
+
+
+    /* =====================================================
+       LIGHTBOX
+       ===================================================== */
+
+    const lightbox =
+        document.getElementById(
+            'gallery-lightbox'
+        );
+
+    const lightboxImage =
+        document.getElementById(
+            'gallery-lightbox-image'
+        );
+
+    const closeButton =
+        document.querySelector(
+            '.gallery-lightbox-close'
+        );
+
+
+    if (
+        !lightbox ||
+        !lightboxImage ||
+        !closeButton
+    ) {
+        return;
+    }
+
+
+    grid.querySelectorAll(
+        '[data-gallery-image]'
+    ).forEach(function (item) {
+
+        item.addEventListener(
+            'click',
+            function () {
+
+                lightboxImage.src =
+                    item.dataset.galleryImage;
+
+                lightbox.classList.add(
+                    'is-open'
+                );
+
+                lightbox.setAttribute(
+                    'aria-hidden',
+                    'false'
+                );
+
+                document.body.classList.add(
+                    'gallery-lightbox-open'
+                );
+
+            }
+        );
 
     });
 
 
     function closeLightbox() {
 
-        lightbox.classList.remove('is-open');
+        lightbox.classList.remove(
+            'is-open'
+        );
 
         lightbox.setAttribute(
             'aria-hidden',

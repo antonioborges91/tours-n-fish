@@ -3,8 +3,8 @@
 return [
 
     'hero' => [
-        'title' => 'Uma paixão pelo mar.',
-        'highlight' => 'Uma tradição Açoriana.',
+        'title' => 'Vivemos o mar.',
+        'highlight' => 'Vivemos os Açores.',
 
         'text' => 'Há vários anos que mostramos o melhor do Atlântico, proporcionando experiências autênticas, seguras e inesquecíveis.',
     ],

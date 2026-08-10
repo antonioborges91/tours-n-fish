@@ -3,6 +3,7 @@
 return [
 
     'hero' => [
+
         'title' => 'Descubra os nossos',
         'highlight' => 'Passeios',
 

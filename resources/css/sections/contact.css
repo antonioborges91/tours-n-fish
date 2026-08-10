@@ -5,7 +5,6 @@
 */
 
 .contact {
-
     max-width: var(--container-width);
 
     margin: 0 auto;
@@ -27,14 +26,12 @@
 */
 
 .contact-hero {
-
     margin-top: -110px;
     padding-top: 110px;
-    padding-bottom: 0rem;
+    padding-bottom: 0;
 }
 
 .contact-hero-card {
-
     position: relative;
 
     height: 540px;
@@ -47,7 +44,6 @@
 }
 
 .contact-hero-background {
-
     position: absolute;
     inset: 0;
 
@@ -61,7 +57,6 @@
 }
 
 .contact-hero-gradient {
-
     position: absolute;
 
     inset: 0;
@@ -105,7 +100,6 @@
 }
 
 .contact-hero-content {
-
     position: relative;
 
     z-index: 3;
@@ -123,7 +117,6 @@
 }
 
 .contact-hero-title {
-
     margin: 0;
 
     color: var(--color-text);
@@ -136,13 +129,11 @@
 }
 
 .contact-hero-title span {
-
     color: var(--color-primary);
 }
 
 .contact-hero-text {
-
-    margin-top: 2rem;
+    margin-top: var(--space-md);
 
     max-width: 460px;
 
@@ -153,6 +144,7 @@
     line-height: 1.8;
 }
 
+
 /*
 |--------------------------------------------------------------------------
 | Contact Info
@@ -160,22 +152,19 @@
 */
 
 .contact-info {
-
-    padding: 6rem 0;
+    padding: var(--space-xl) 0;
 }
 
 .contact-info-grid {
-
     display: grid;
 
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
 
-    gap: 2rem;
+    gap: var(--space-md);
 }
 
 .contact-card {
-
-    padding: 2rem;
+    padding: var(--space-md);
 
     background: white;
 
@@ -187,14 +176,12 @@
 }
 
 .contact-card:hover {
-
     transform: translateY(-5px);
 
     box-shadow: var(--shadow-lg);
 }
 
 .contact-card-icon {
-
     display: flex;
 
     justify-content: center;
@@ -205,7 +192,7 @@
 
     height: 60px;
 
-    margin-bottom: 1.5rem;
+    margin-bottom: var(--space-sm);
 
     border-radius: 50%;
 
@@ -215,8 +202,7 @@
 }
 
 .contact-card h3 {
-
-    margin-bottom: .75rem;
+    margin-bottom: var(--space-sm);
 
     font-size: 1.15rem;
 
@@ -224,7 +210,6 @@
 }
 
 .contact-card-link {
-
     color: var(--color-text-light);
 
     text-decoration: none;
@@ -235,9 +220,9 @@
 }
 
 .contact-card-link:hover {
-
     color: var(--color-primary);
 }
+
 
 /*
 |--------------------------------------------------------------------------
@@ -246,12 +231,10 @@
 */
 
 .contact-map {
-
-    padding-bottom: 6rem;
+    padding-bottom: var(--space-xl);
 }
 
 .contact-map-wrapper {
-
     overflow: hidden;
 
     border-radius: 1.25rem;
@@ -260,7 +243,6 @@
 }
 
 .contact-map iframe {
-
     display: block;
 
     width: 100%;
@@ -270,6 +252,7 @@
     border: 0;
 }
 
+
 /*
 |--------------------------------------------------------------------------
 | Contact Page
@@ -277,7 +260,6 @@
 */
 
 .contact-page {
-
     max-width: var(--container-width);
 
     margin: 0 auto;

@@ -5,7 +5,6 @@
 */
 
 .tours {
-
     max-width: var(--container-width);
 
     margin: 0 auto;
@@ -20,10 +19,9 @@
 }
 
 .tour-show {
-
-    padding: 5rem 0 6rem;
-
+    padding: var(--space-xl) 0 var(--section-space);
 }
+
 
 /*
 |--------------------------------------------------------------------------
@@ -34,11 +32,10 @@
 .tours-hero {
     margin-top: -110px;
     padding-top: 110px;
-    padding-bottom: 0rem;
+    padding-bottom: 0;
 }
 
 .tours-hero-card {
-
     position: relative;
 
     height: 540px;
@@ -51,7 +48,6 @@
 }
 
 .tours-hero-background {
-
     position: absolute;
     inset: 0;
 
@@ -65,7 +61,6 @@
 }
 
 .tours-hero-gradient {
-
     position: absolute;
     inset: 0;
 
@@ -101,7 +96,7 @@
     flex-direction: column;
     justify-content: flex-start;
 
-    width: 40%;
+    width: 49%;
 
     height: 100%;
 
@@ -122,12 +117,11 @@
 }
 
 .tours-hero-title span {
-
     color: var(--color-primary);
 }
 
 .tours-hero-text {
-    margin-top: 2rem;
+    margin-top: var(--space-md);
 
     max-width: 460px;
 

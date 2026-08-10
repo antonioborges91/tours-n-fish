@@ -3,8 +3,8 @@
 return [
 
     'hero' => [
-        'title' => 'A passion for the sea.',
-        'highlight' => 'An Azorean tradition.',
+        'title' => 'We live the sea.',
+        'highlight' => 'We live the Azores.',
 
         'text' => 'For many years, we have been sharing the very best of the Atlantic, creating authentic, safe and unforgettable experiences.',
     ],

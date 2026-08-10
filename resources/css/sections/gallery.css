@@ -1,14 +1,15 @@
 /*
 |--------------------------------------------------------------------------
-| About Page
+| Gallery Page
 |--------------------------------------------------------------------------
 */
 
 .gallery {
-
     max-width: var(--container-width);
 
     margin: 0 auto;
+
+    padding-bottom: var(--space-lg);
 
     background: white;
 
@@ -19,6 +20,7 @@
     box-shadow: var(--shadow-lg);
 }
 
+
 /*
 |--------------------------------------------------------------------------
 | Gallery Hero
@@ -26,10 +28,9 @@
 */
 
 .gallery-hero {
-
     margin-top: -110px;
     padding-top: 110px;
-    padding-bottom: 0rem;
+    padding-bottom: 0;
 }
 
 .gallery-hero-card {
@@ -58,7 +59,6 @@
 }
 
 .gallery-hero-gradient {
-
     position: absolute;
 
     inset: 0;
@@ -102,7 +102,6 @@
 }
 
 .gallery-hero-content {
-
     position: relative;
 
     z-index: 3;
@@ -111,7 +110,7 @@
     flex-direction: column;
     justify-content: flex-start;
 
-    width: 40%;
+    width: 58%;
 
     height: 100%;
 
@@ -132,13 +131,11 @@
 }
 
 .gallery-hero-title span {
-
     color: var(--color-primary);
 }
 
 .gallery-hero-text {
-
-    margin-top: 2rem;
+    margin-top: var(--space-md);
 
     max-width: 460px;
 
@@ -149,14 +146,17 @@
     line-height: 1.8;
 }
 
-/* =========================================================
-   GALERIA
-   ========================================================= */
+
+/*
+|--------------------------------------------------------------------------
+| GALERIA
+|--------------------------------------------------------------------------
+*/
 
 .gallery-grid {
     width: min(100%, 1050px);
 
-    margin: 0 auto;
+    margin: var(--space-lg) auto 0;
 
     display: grid;
 
@@ -168,7 +168,6 @@
 
     gap: 16px;
 }
-
 
 .gallery-item {
     position: relative;
@@ -196,7 +195,6 @@
         box-shadow 0.25s ease;
 }
 
-
 /*
  * Fotografias verticais:
  * ficam ligeiramente mais estreitas para não
@@ -207,7 +205,6 @@
     margin-left: auto;
     margin-right: auto;
 }
-
 
 .gallery-item img {
     display: block;
@@ -220,7 +217,6 @@
     border-radius: 14px;
 }
 
-
 .gallery-item:hover {
     transform: translateY(-3px);
 
@@ -229,12 +225,14 @@
 }
 
 
-/* =========================================================
-   GALERIA VAZIA
-   ========================================================= */
+/*
+|--------------------------------------------------------------------------
+| GALERIA VAZIA
+|--------------------------------------------------------------------------
+*/
 
 .gallery-empty {
-    padding: 80px 20px;
+    padding: var(--space-xl) var(--space-md);
 
     text-align: center;
 
@@ -242,9 +240,11 @@
 }
 
 
-/* =========================================================
-   LIGHTBOX
-   ========================================================= */
+/*
+|--------------------------------------------------------------------------
+| LIGHTBOX
+|--------------------------------------------------------------------------
+*/
 
 .gallery-lightbox {
     position: fixed;
@@ -270,12 +270,10 @@
         visibility 0.25s ease;
 }
 
-
 .gallery-lightbox.is-open {
     opacity: 1;
     visibility: visible;
 }
-
 
 .gallery-lightbox img {
     display: block;
@@ -293,7 +291,6 @@
     box-shadow:
         0 20px 60px rgba(0, 0, 0, 0.35);
 }
-
 
 .gallery-lightbox-close {
     position: absolute;
@@ -326,22 +323,22 @@
         transform 0.2s ease;
 }
 
-
 .gallery-lightbox-close:hover {
     background: rgba(255, 255, 255, 0.22);
 
     transform: scale(1.05);
 }
 
-
 .gallery-lightbox-open {
     overflow: hidden;
 }
 
 
-/* =========================================================
-   TABLET
-   ========================================================= */
+/*
+|--------------------------------------------------------------------------
+| TABLET
+|--------------------------------------------------------------------------
+*/
 
 @media (max-width: 900px) {
 
@@ -350,13 +347,14 @@
 
         gap: 14px;
     }
-
 }
 
 
-/* =========================================================
-   MOBILE
-   ========================================================= */
+/*
+|--------------------------------------------------------------------------
+| MOBILE
+|--------------------------------------------------------------------------
+*/
 
 @media (max-width: 600px) {
 
@@ -387,5 +385,4 @@
 
         font-size: 30px;
     }
-
 }

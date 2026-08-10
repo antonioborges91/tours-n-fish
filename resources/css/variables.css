@@ -23,7 +23,6 @@
     --color-white: #FFFFFF;
 
     --color-background: #F8FAFC;
-
     --color-surface: #FFFFFF;
 
     --color-border: #E5E7EB;
@@ -36,6 +35,7 @@
     --color-warning: #F59E0B;
     --color-danger: #DC2626;
 
+
     /* ==========================================================================
        TIPOGRAFIA
     ========================================================================== */
@@ -44,14 +44,45 @@
         "Poppins",
         sans-serif;
 
+
     /* ==========================================================================
        CONTAINER
     ========================================================================== */
 
     --container-width: 1280px;
 
-    --section-space: 3.5rem;
+
+    /* ==========================================================================
+       ESPAÇAMENTO
+    ========================================================================== */
+
+    /*
+     * Escala base de espaçamento.
+     *
+     * xs  → pequenos intervalos entre elementos relacionados
+     * sm  → separações curtas dentro de componentes
+     * md  → separação entre heading e conteúdo
+     * lg  → espaçamento normal entre secções
+     * xl  → espaçamento generoso entre grandes blocos
+     */
+
+    --space-xs: 0.5rem;
+    --space-sm: 0.75rem;
+    --space-md: 2rem;
+    --space-lg: 3.5rem;
+    --space-xl: 5rem;
+
+
+    /*
+     * Variáveis existentes mantidas por compatibilidade.
+     *
+     * Não remover estas variáveis enquanto os restantes ficheiros
+     * ainda as estiverem a utilizar.
+     */
+
+    --section-space: var(--space-lg);
     --section-space-small: 2.5rem;
+
 
     /* ==========================================================================
        BORDER RADIUS
@@ -64,18 +95,20 @@
     --radius-2xl: 1.5rem;
     --radius-full: 9999px;
 
+
     /* ==========================================================================
        SOMBRAS
     ========================================================================== */
 
     --shadow-sm:
-        0 1px 2px rgba(0,0,0,.05);
+        0 1px 2px rgba(0, 0, 0, .05);
 
     --shadow-md:
-        0 6px 20px rgba(15,23,42,.08);
+        0 6px 20px rgba(15, 23, 42, .08);
 
     --shadow-lg:
-        0 12px 35px rgba(15,23,42,.12);
+        0 12px 35px rgba(15, 23, 42, .12);
+
 
     /* ==========================================================================
        TRANSIÇÕES
@@ -84,5 +117,4 @@
     --transition-fast: .2s ease;
     --transition-normal: .3s ease;
     --transition-slow: .5s ease;
-
 }

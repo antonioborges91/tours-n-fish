@@ -16,7 +16,7 @@
 
         <div class="about-story-grid">
 
-            <div>
+            <div class="about-story-content">
 
                 <p>
                     {{ __('about.story.paragraph_1') }}
@@ -28,11 +28,12 @@
 
             </div>
 
-            <div>
+            <div class="about-story-image">
 
                 <img
                     src="{{ asset('images/about/story.webp') }}"
-                    alt="Tours N Fish">
+                    alt="{{ __('about.story.image_alt') }}"
+                    loading="lazy">
 
             </div>
 

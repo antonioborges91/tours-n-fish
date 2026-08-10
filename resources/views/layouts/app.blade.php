@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>
-        @yield('title', 'Tours N Fish')
+        Tours N Fish | @yield('title', 'Tours N Fish')
     </title>
 
     <meta name="description" content="@yield('description', 'Passeios de barco, pesca desportiva e experiências marítimas nos Açores.')">

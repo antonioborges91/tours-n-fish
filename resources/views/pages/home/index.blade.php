@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', __('home.page_title'))
+
 @section('content')
 
 <section class="home-top">

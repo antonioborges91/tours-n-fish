@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'page_title' => 'Home',
 
     'hero_title_1' => 'Live the sea.',
     'hero_title_2' => 'Feel the Azores.',

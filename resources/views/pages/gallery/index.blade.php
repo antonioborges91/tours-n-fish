@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', __('gallery.page_title'))
+
 @section('content')
 
 <section class="gallery">

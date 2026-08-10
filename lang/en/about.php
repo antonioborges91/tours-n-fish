@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'page_title' => 'About Us',
 
     'hero' => [
         'title' => 'We live the sea.',

@@ -1,7 +1,8 @@
 <?php
 
 return [
-
+    'page_title' => 'Galeria',
+    
     'hero' => [
 
         'title' => 'Momentos no mar.',

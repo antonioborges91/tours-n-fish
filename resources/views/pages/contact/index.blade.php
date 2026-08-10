@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', __('navigation.contact'))
+@section('title', __('contact.page_title'))
 
 @section('content')
 

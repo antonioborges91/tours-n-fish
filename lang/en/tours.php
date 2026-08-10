@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'page_title' => 'Tours',
 
     'hero' => [
         'title' => 'Discover our',

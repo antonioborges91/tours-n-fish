@@ -18,11 +18,6 @@
     box-shadow: var(--shadow-lg);
 }
 
-.tour-show {
-    padding: var(--space-xl) 0 var(--section-space);
-}
-
-
 /*
 |--------------------------------------------------------------------------
 | Tours Hero

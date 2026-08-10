@@ -209,7 +209,7 @@
 */
 
 .about-story {
-    padding: var(--space-xl) 3rem var(--space-xl);
+    padding: var(--space-lg) 0;
 
     background: white;
 }

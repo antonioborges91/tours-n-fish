@@ -152,7 +152,7 @@
 */
 
 .contact-info {
-    padding: var(--space-xl) 0;
+    padding: var(--space-lg) 0;
 }
 
 .contact-info-grid {
@@ -231,7 +231,7 @@
 */
 
 .contact-map {
-    padding-bottom: var(--space-xl);
+    padding: var(--space-lg) 0;
 }
 
 .contact-map-wrapper {
@@ -250,25 +250,4 @@
     height: 480px;
 
     border: 0;
-}
-
-
-/*
-|--------------------------------------------------------------------------
-| Contact Page
-|--------------------------------------------------------------------------
-*/
-
-.contact-page {
-    max-width: var(--container-width);
-
-    margin: 0 auto;
-
-    background: white;
-
-    border-radius: 1.25rem 1.25rem 0 0;
-
-    overflow: hidden;
-
-    box-shadow: var(--shadow-lg);
 }

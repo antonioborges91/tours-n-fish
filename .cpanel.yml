@@ -1,5 +1,5 @@
 ---
 deployment:
   tasks:
-    - export DEPLOYPATH=/home/toursnfi/tours-n-fish/
-    - /bin/true
+    - export DEPLOYPATH=/home/toursnfi/public_html/
+    - /bin/cp public/index.php $DEPLOYPATH

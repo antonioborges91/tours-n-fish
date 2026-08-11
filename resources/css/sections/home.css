@@ -322,7 +322,7 @@
     }
 
     .hero-background {
-        background-position: center center;
+        background-position: 80% center;
 
         transform: none;
     }

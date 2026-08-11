@@ -10,6 +10,18 @@
     height: 100px;
 }
 
+/* Mobile */
+.mobile-navbar {
+    min-height: 64px;
+    padding: 8px 1rem;
+}
+
+.mobile-navbar-logo img {
+    display: block;
+    width: auto;
+    height: 52px;
+}
+
 .nav-link {
     position: relative;
 

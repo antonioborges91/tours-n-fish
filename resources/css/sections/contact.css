@@ -154,7 +154,7 @@
 */
 
 .contact-info {
-    padding: var(--space-lg) 1rem;
+    padding: var(--space-lg) 0;
 }
 
 .contact-info-grid {
@@ -231,7 +231,7 @@
 */
 
 .contact-map {
-    padding: var(--space-lg) 1rem;
+    padding: var(--space-lg) 0;
 }
 
 .contact-map-wrapper {

@@ -211,7 +211,7 @@
 */
 
 .about-story {
-    padding: 0 1.5rem 2.5rem;
+    padding: 0 0 2.5rem;
 
     background: white;
 }
@@ -304,29 +304,28 @@
 }
 
 
-/*
-|--------------------------------------------------------------------------
-| Tablet
-|--------------------------------------------------------------------------
-*/
+/* ================================================================
+   About Hero - Tablet
+   ================================================================ */
 
-@media (max-width: 900px) {
+@media (max-width: 1023px) {
 
-    .about-story-grid {
-        grid-template-columns: 1fr;
-
-        gap: 2.5rem;
+    .about-hero-content {
+        width: 60%;
+        padding-left: 2rem;
+        padding-top: 8rem;
     }
 
-    .about-story-content {
-        max-width: none;
+    .about-hero-title {
+        font-size: clamp(2.2rem, 5vw, 3rem);
     }
 
-    .about-story-image {
-        width: 84%;
-
-        justify-self: center;
+    .about-hero-text {
+        max-width: 420px;
+        font-size: 1.1rem;
+        line-height: 1.7;
     }
+
 }
 
 
@@ -338,8 +337,65 @@
 
 @media (max-width: 600px) {
 
+    /*
+    |--------------------------------------------------------------------------
+    | Hero
+    |--------------------------------------------------------------------------
+    */
+
+    .about-hero {
+        margin-top: 0;
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+
+    .about-hero-card {
+        height: 320px;
+        border-radius: 1rem 1rem 0 0;
+    }
+
+    .about-hero-background {
+        background-position: center center;
+        transform: none;
+    }
+
+    .about-hero-content {
+        width: 100%;
+        height: auto;
+
+        padding: 2rem 1.25rem 0;
+    }
+
+    .about-hero-title {
+        max-width: 320px;
+
+        font-size: 2rem;
+        line-height: 1.12;
+    }
+
+    .about-hero-text {
+        max-width: 310px;
+
+        margin-top: 1rem;
+
+        font-size: 1rem;
+        line-height: 1.65;
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Story
+    |--------------------------------------------------------------------------
+    */
+
     .about-story {
-        padding: var(--space-lg) 1rem 2.5rem;
+    padding: var(--space-sm) 1rem 2.5rem;
+    }
+
+    .about-story .container-custom {
+        padding-left: 16px;
+        padding-right: 16px;
     }
 
     .about-story .section-heading {
@@ -347,17 +403,29 @@
     }
 
     .about-story-grid {
+        grid-template-columns: 1fr;
+
         gap: 2rem;
     }
 
-    .about-story-content p {
-        font-size: 1rem;
+    .about-story-content {
+        width: 100%;
+        max-width: none;
+    }
 
+    .about-story-content p {
+        width: 100%;
+        max-width: none;
+
+        font-size: 1rem;
         line-height: 1.7;
     }
 
     .about-story-image {
         width: 100%;
+        height: 280px;
+
+        justify-self: stretch;
 
         border-radius: 1.25rem;
     }

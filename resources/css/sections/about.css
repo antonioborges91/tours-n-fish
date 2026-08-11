@@ -430,3 +430,55 @@
         border-radius: 1.25rem;
     }
 }
+/*
+|--------------------------------------------------------------------------
+| About Preview - Mobile
+|--------------------------------------------------------------------------
+*/
+
+@media (max-width: 600px) {
+
+    .about-preview {
+        grid-template-columns: 1fr;
+
+        gap: 2rem;
+
+        margin-top: 0;
+
+        padding: 3rem 1rem 3.5rem;
+    }
+
+    .about-preview-content {
+        max-width: none;
+
+        order: 1;
+    }
+
+    .about-preview-image {
+        order: 2;
+    }
+
+    .about-preview-image img {
+        width: 100%;
+        height: 280px;
+
+        object-fit: cover;
+
+        border-radius: 1.25rem;
+    }
+
+    .about-title {
+        margin-top: var(--space-sm);
+        margin-bottom: var(--space-md);
+
+        font-size: 2rem;
+        line-height: 1.12;
+    }
+
+    .about-text {
+        margin-bottom: var(--space-md);
+
+        font-size: 1rem;
+        line-height: 1.7;
+    }
+}

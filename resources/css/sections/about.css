@@ -169,6 +169,8 @@
 .about-preview-image img {
     display: block;
 
+    height: 330px;
+
     width: 100%;
 
     object-fit: cover;
@@ -277,7 +279,8 @@
 */
 
 .about-story-image {
-    width: 84%;
+    width: 100%;
+    height: 330px;
 
     justify-self: end;
 
@@ -292,10 +295,12 @@
     display: block;
 
     width: 100%;
-
-    aspect-ratio: 4 / 3;
+    height: 100%;
 
     object-fit: cover;
+
+    object-position: center 80%;
+
 }
 
 

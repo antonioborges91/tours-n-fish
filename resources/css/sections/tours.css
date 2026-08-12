@@ -126,3 +126,82 @@
 
     line-height: 1.8;
 }
+
+/* ================================================================
+   Tours Hero - Tablet
+   ================================================================ */
+
+@media (max-width: 1023px) {
+
+    .tours-hero-content {
+        width: 60%;
+        padding-left: 2rem;
+        padding-top: 8rem;
+    }
+
+    .tours-hero-title {
+        font-size: clamp(2.2rem, 5vw, 3rem);
+    }
+
+    .tours-hero-text {
+        max-width: 420px;
+        font-size: 1.1rem;
+        line-height: 1.7;
+    }
+
+}
+
+/*
+|--------------------------------------------------------------------------
+| Mobile
+|--------------------------------------------------------------------------
+*/
+
+@media (max-width: 600px) {
+
+    /*
+    |--------------------------------------------------------------------------
+    | Hero
+    |--------------------------------------------------------------------------
+    */
+
+    .tours-hero {
+        margin-top: 0;
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+
+    .tours-hero-card {
+        height: 320px;
+        border-radius: 1rem 1rem 0 0;
+    }
+
+    .tours-hero-background {
+        background-position: center center;
+        transform: none;
+    }
+
+    .tours-hero-content {
+        width: 100%;
+        height: auto;
+
+        padding: 2rem 1.25rem 0;
+    }
+
+    .tours-hero-title {
+        max-width: 320px;
+
+        font-size: 2rem;
+        line-height: 1.12;
+    }
+
+    .tours-hero-text {
+        max-width: 310px;
+
+        margin-top: 1rem;
+
+        font-size: 1rem;
+        line-height: 1.65;
+    }
+
+}

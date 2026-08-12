@@ -445,13 +445,18 @@
 
         margin-top: 0;
 
-        padding: 3rem 1rem 3.5rem;
+        padding: 1rem 1rem 3.5rem;
     }
 
     .about-preview-content {
         max-width: none;
 
         order: 1;
+    }
+
+    .about-preview-content > .section-subtitle {
+        display: block;
+        text-align: center;
     }
 
     .about-preview-image {
@@ -473,6 +478,8 @@
 
         font-size: 2rem;
         line-height: 1.12;
+
+        text-align: center;
     }
 
     .about-text {
@@ -480,5 +487,7 @@
 
         font-size: 1rem;
         line-height: 1.7;
+
+        text-align: justify;
     }
 }

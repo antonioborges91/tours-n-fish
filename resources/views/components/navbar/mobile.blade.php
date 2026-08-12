@@ -184,6 +184,12 @@
         {{-- Menu Footer --}}
         <div class="mobile-side-menu-footer">
 
+            {{-- Idioma --}}
+            <div class="mobile-side-menu-language">
+                @include('components.navbar.language-switch')
+            </div>
+
+            {{-- Reservar --}}
             <a
                 href="#"
                 class="btn-primary mobile-side-menu-book"
@@ -192,6 +198,7 @@
                 {{ __('navigation.book_now') }}
             </a>
 
+            {{-- Frase --}}
             <span class="mobile-side-menu-note">
                 Viva o mar. Sinta os Açores.
             </span>

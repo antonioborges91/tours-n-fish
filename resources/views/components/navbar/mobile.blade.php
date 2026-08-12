@@ -136,8 +136,7 @@
             <li>
                 <a
                     href="{{ route('home') }}"
-                    class="nav-link"
-                    @click="open = false"
+                    class="nav-link block py-2 {{ request()->routeIs('home') ? 'nav-link-active' : '' }}"
                 >
                     {{ __('navigation.home') }}
                 </a>
@@ -146,8 +145,7 @@
             <li>
                 <a
                     href="{{ route('tours') }}"
-                    class="nav-link"
-                    @click="open = false"
+                    class="nav-link block py-2 {{ request()->routeIs('tours') ? 'nav-link-active' : '' }}"
                 >
                     {{ __('navigation.tours') }}
                 </a>
@@ -156,8 +154,7 @@
             <li>
                 <a
                     href="{{ route('about') }}"
-                    class="nav-link"
-                    @click="open = false"
+                    class="nav-link block py-2 {{ request()->routeIs('about') ? 'nav-link-active' : '' }}"
                 >
                     {{ __('navigation.about') }}
                 </a>
@@ -166,8 +163,7 @@
             <li>
                 <a
                     href="{{ route('gallery') }}"
-                    class="nav-link"
-                    @click="open = false"
+                    class="nav-link block py-2 {{ request()->routeIs('gallery') ? 'nav-link-active' : '' }}"
                 >
                     {{ __('navigation.gallery') }}
                 </a>
@@ -176,8 +172,7 @@
             <li>
                 <a
                     href="{{ route('contact') }}"
-                    class="nav-link"
-                    @click="open = false"
+                    class="nav-link block py-2 {{ request()->routeIs('contact') ? 'nav-link-active' : '' }}"
                 >
                     {{ __('navigation.contact') }}
                 </a>

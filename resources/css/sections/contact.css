@@ -255,25 +255,150 @@
 
 /*
 |--------------------------------------------------------------------------
-| Mobile
+| Contact - Tablet
+|--------------------------------------------------------------------------
+*/
+
+@media (max-width: 1023px) {
+
+    .contact-hero-content {
+        width: 60%;
+
+        padding-left: 2rem;
+        padding-top: 8rem;
+    }
+
+    .contact-hero-title {
+        font-size: clamp(2.2rem, 5vw, 3rem);
+    }
+
+    .contact-hero-text {
+        max-width: 420px;
+
+        font-size: 1.1rem;
+        line-height: 1.7;
+    }
+
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| Contact - Mobile
 |--------------------------------------------------------------------------
 */
 
 @media (max-width: 600px) {
 
+    .contact {
+        border-radius: 0;
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Hero
+    |--------------------------------------------------------------------------
+    */
+
+    .contact-hero {
+        margin-top: 0;
+
+        padding-top: 0;
+    }
+
+    .contact-hero-card {
+        height: 320px;
+        border-radius: 1rem 1rem 0 0;
+    }
+
+    .contact-hero-background {
+        background-position: center center;
+        transform: none;
+    }
+
+    .contact-hero-content {
+        width: 100%;
+        height: auto;
+
+        padding: 2rem 1.25rem 0;
+    }
+
+    .contact-hero-title {
+        max-width: 320px;
+
+        font-size: 2rem;
+        line-height: 1.12;
+    }
+
+    .contact-hero-text {
+        max-width: 310px;
+
+        margin-top: 1rem;
+
+        font-size: 1rem;
+        line-height: 1.65;
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Contact Info
+    |--------------------------------------------------------------------------
+    */
+
     .contact-info {
         padding: var(--space-lg) 1rem;
     }
+
+    .contact-info .section-heading {
+        text-align: center;
+    }
+
+    .contact-info-grid {
+        grid-template-columns: 1fr;
+
+        gap: 1rem;
+    }
+
+    .contact-card {
+        padding: 1.25rem;
+
+        border-radius: 1rem;
+    }
+
+    .contact-card-icon {
+        width: 50px;
+        height: 50px;
+
+        margin-bottom: .75rem;
+    }
+
+    .contact-card h3 {
+        font-size: 1.05rem;
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Map
+    |--------------------------------------------------------------------------
+    */
 
     .contact-map {
         padding: 0 1rem var(--space-lg);
     }
 
-    .contact-info-grid {
-        grid-template-columns: 1fr;
+    .contact-map .section-heading {
+        text-align: center;
+    }
+
+    .contact-map-wrapper {
+        border-radius: 1rem;
     }
 
     .contact-map iframe {
-        height: 380px;
+        height: 320px;
     }
+
 }

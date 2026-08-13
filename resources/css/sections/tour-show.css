@@ -524,3 +524,341 @@
 
     font-weight: 700;
 }
+
+/*
+|--------------------------------------------------------------------------
+| Tour Show - Tablet
+|--------------------------------------------------------------------------
+*/
+
+@media (max-width: 1023px) {
+
+    /*
+    |--------------------------------------------------------------------------
+    | Hero
+    |--------------------------------------------------------------------------
+    */
+
+    .tour-show-hero-content {
+        width: 60%;
+
+        padding-left: 2rem;
+        padding-top: 8rem;
+    }
+
+    .tour-show-hero-title {
+        font-size: clamp(2.2rem, 5vw, 3rem);
+    }
+
+    .tour-show-hero-text {
+        max-width: 420px;
+
+        font-size: 1.1rem;
+        line-height: 1.7;
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Information
+    |--------------------------------------------------------------------------
+    */
+
+    .tour-information-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| Tour Show - Mobile
+|--------------------------------------------------------------------------
+*/
+
+@media (max-width: 600px) {
+
+    /*
+    |--------------------------------------------------------------------------
+    | Main container
+    |--------------------------------------------------------------------------
+    */
+
+    .tour-show {
+        border-radius: 0;
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Hero
+    |--------------------------------------------------------------------------
+    */
+
+    .tour-show-hero {
+        margin-top: 0;
+
+        padding-top: 0;
+    }
+
+    .tour-show-hero-card {
+        height: 320px;
+
+        border-radius: 1rem 1rem 0 0;
+
+    }
+
+    .tour-show-hero-background {
+        background-position: center center;
+        transform: none;
+    }
+
+    .tour-show-hero-content {
+        width: 100%;
+        height: auto;
+
+        padding: 2rem 1.25rem 0;
+    }
+
+    .tour-show-hero-title {
+        max-width: 320px;
+
+        font-size: 2rem;
+        line-height: 1.12;
+    }
+
+    .tour-show-hero-text {
+        max-width: 310px;
+
+        margin-top: 1rem;
+
+        font-size: 1rem;
+        line-height: 1.65;
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Description
+    |--------------------------------------------------------------------------
+    */
+
+    .tour-description {
+        padding:
+            3rem
+            1rem
+            4rem;
+    }
+
+    .tour-description-text {
+        font-size: 1rem;
+
+        line-height: 1.75;
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Options
+    |--------------------------------------------------------------------------
+    */
+
+    .tour-options {
+        padding:
+            3rem
+            1rem
+            4rem;
+    }
+
+    .tour-options .section-heading {
+        text-align: center;
+    }
+
+    .tour-options-list {
+        gap: 1rem;
+
+        margin-top: 1.5rem;
+    }
+
+    .tour-option {
+        flex-direction: column;
+
+        align-items: stretch;
+
+        gap: 1.5rem;
+
+        padding: 1.25rem;
+
+        border-radius: 1rem;
+    }
+
+    .tour-option h3 {
+        margin-bottom: .75rem;
+
+        font-size: 1.25rem;
+    }
+
+    .tour-option-details {
+        flex-wrap: wrap;
+
+        gap: .75rem 1.25rem;
+
+        margin-bottom: 1rem;
+
+        font-size: .95rem;
+    }
+
+    .tour-option-schedules {
+        margin-top: 1rem;
+    }
+
+    .tour-option-schedules-title {
+        margin-bottom: .75rem;
+    }
+
+    .tour-option-schedule-list {
+        gap: .5rem;
+    }
+
+    .tour-option-schedule-card {
+        padding: .7rem .9rem;
+
+        font-size: .9rem;
+    }
+
+    .tour-option-book {
+        align-items: flex-start;
+
+        min-width: 0;
+
+        width: 100%;
+
+        gap: .5rem;
+
+        padding-top: .25rem;
+
+        border-top: 1px solid #e5e7eb;
+    }
+
+    .tour-option-from {
+        font-size: .9rem;
+    }
+
+    .tour-option-price {
+        font-size: 1.8rem;
+    }
+
+    .tour-option-per {
+        margin-top: -.25rem;
+
+        margin-bottom: .5rem;
+
+        font-size: .9rem;
+    }
+
+    .tour-option-book .btn {
+        width: 100%;
+
+        min-width: 0;
+
+        margin-top: .25rem;
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Gallery
+    |--------------------------------------------------------------------------
+    */
+
+    .tour-gallery {
+        padding:
+            3rem
+            1rem
+            4rem;
+    }
+
+    .tour-gallery .section-heading {
+        text-align: center;
+    }
+
+    .tour-gallery-grid {
+        gap: .75rem;
+
+        margin-top: 1.5rem;
+    }
+
+    .tour-gallery-main {
+        height: 300px;
+
+        border-radius: 1rem;
+    }
+
+    .tour-gallery-thumbs {
+        flex-wrap: nowrap;
+
+        overflow-x: auto;
+
+        gap: .75rem;
+
+        padding-bottom: .25rem;
+    }
+
+    .tour-gallery-thumb {
+        width: 90px;
+
+        height: 65px;
+
+        border-radius: .7rem;
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Information
+    |--------------------------------------------------------------------------
+    */
+
+    .tour-information {
+        padding:
+            3rem
+            1rem
+            4rem;
+    }
+
+    .tour-information .section-heading {
+        text-align: center;
+    }
+
+    .tour-information-grid {
+        grid-template-columns: 1fr;
+
+        gap: 1rem;
+
+        margin-top: 1.5rem;
+    }
+
+    .tour-information-card {
+        padding: 1.25rem;
+
+        border-radius: 1rem;
+    }
+
+    .tour-information-card h3 {
+        font-size: 1.1rem;
+
+        margin-bottom: .75rem;
+    }
+
+    .tour-information-card ul {
+        gap: .7rem;
+    }
+
+    .tour-information-card li {
+        font-size: .95rem;
+
+        line-height: 1.5;
+    }
+
+}

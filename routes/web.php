@@ -55,6 +55,12 @@ Route::post(
 )->name('reservations.store');
 
 
+Route::get(
+    '/reservation/{reservation:public_token}',
+    [PublicReservationController::class, 'show']
+)->name('reservations.show');
+
+
 Route::get('/gallery', [GalleryController::class, 'index'])
     ->name('gallery');
 

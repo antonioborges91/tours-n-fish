@@ -28,6 +28,7 @@
 @import "./sections/contact.css";
 @import "./sections/terms.css";
 @import "./sections/privacy.css";
+@import "./sections/reservations.css";
 @import "./sections/footer.css";
 
 html {

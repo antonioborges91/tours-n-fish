@@ -1,9 +1,10 @@
 <?php
 
 return [
-    'page_title' => 'Passeios',
-    'hero' => [
 
+    'page_title' => 'Passeios',
+
+    'hero' => [
         'title' => 'Descubra os nossos',
         'highlight' => 'Passeios',
 
@@ -15,8 +16,9 @@ return [
     ],
 
     'options' => [
+
         'badge' => 'Reserve',
-        'title' => 'Opções disponíveis',
+        'title' => 'Escolha a sua experiência',
 
         'up_to' => 'Até :count pessoas',
 
@@ -27,6 +29,47 @@ return [
         'per_tour' => '/ passeio',
 
         'book' => 'Reservar',
+
+        'continue' => 'Continuar',
+
+        'calendar' => [
+
+            'mon' => 'Seg',
+            'tue' => 'Ter',
+            'wed' => 'Qua',
+            'thu' => 'Qui',
+            'fri' => 'Sex',
+            'sat' => 'Sáb',
+            'sun' => 'Dom',
+
+            'available' => 'Disponível',
+            'unavailable' => 'Indisponível',
+
+            'selected_date' => 'Data selecionada',
+            'choose_date' => 'Escolha uma data disponível.',
+        ],
+
+        'duration' => [
+            'title' => 'Escolha a duração',
+        ],
+
+        'schedule' => [
+            'title' => 'Escolha o horário',
+            'none' => 'Não existem horários disponíveis para esta opção.',
+        ],
+
+        'people' => [
+            'title' => 'Número de pessoas',
+
+            'decrease' => 'Diminuir número de pessoas',
+            'increase' => 'Aumentar número de pessoas',
+
+            'maximum' => 'Máximo de :count pessoas.',
+        ],
+
+        'summary' => [
+            'total' => 'Total do passeio',
+        ],
     ],
 
 ];

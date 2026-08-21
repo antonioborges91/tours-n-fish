@@ -45,7 +45,7 @@
                 Galeria
             </a>
 
-            <a href="{{ route('admin.blocked-dates.index') }}"
+            <a href="{{ route('admin.blocked-periods.index') }}"
                class="block px-4 py-2 rounded hover:bg-slate-800">
                 Bloqueios
             </a>

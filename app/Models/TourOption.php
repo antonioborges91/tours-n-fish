@@ -18,7 +18,10 @@ class TourOption extends Model
     protected function casts(): array
     {
         return [
+            'tour_id' => 'integer',
+            'duration_minutes' => 'integer',
             'price' => 'decimal:2',
+            'display_order' => 'integer',
         ];
     }
 

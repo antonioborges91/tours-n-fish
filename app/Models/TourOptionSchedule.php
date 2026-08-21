@@ -14,6 +14,14 @@ class TourOptionSchedule extends Model
         'display_order',
     ];
 
+    protected function casts(): array
+    {
+        return [
+            'tour_option_id' => 'integer',
+            'display_order' => 'integer',
+        ];
+    }
+
     public function option(): BelongsTo
     {
         return $this->belongsTo(TourOption::class, 'tour_option_id');

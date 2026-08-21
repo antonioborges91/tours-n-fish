@@ -4,52 +4,92 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Str;
 
 class Reservation extends Model
 {
     protected $fillable = [
-        'reservation_reference',
+        'public_token',
+
         'tour_id',
-        'tour_schedule_id',
+        'tour_option_id',
+        'tour_option_schedule_id',
+
+        'booking_date',
+        'start_at',
+        'end_at',
+        'participants',
+
         'customer_name',
         'customer_email',
         'customer_phone',
-        'customer_country',
-        'locale',
-        'notes',
-        'reservation_date',
-        'people',
-        'total_price',
+        'customer_message',
+
+        'total_amount',
+        'deposit_percentage',
         'deposit_amount',
-        'remaining_amount',
-        'payment_proof',
-        'payment_proof_uploaded_at',
-        'deposit_payment_method',
-        'final_payment_method',
-        'final_payment_amount',
+
         'status',
+
+        'payment_proof',
+        'payment_submitted_at',
+
+        'confirmed_at',
+        'cancelled_at',
     ];
 
     protected function casts(): array
     {
         return [
-            'reservation_date' => 'date',
-            'payment_proof_uploaded_at' => 'datetime',
-            'people' => 'integer',
-            'total_price' => 'decimal:2',
+            'booking_date' => 'date',
+
+            'payment_submitted_at' => 'datetime',
+            'confirmed_at' => 'datetime',
+            'cancelled_at' => 'datetime',
+
+            'participants' => 'integer',
+
+            'total_amount' => 'decimal:2',
+            'deposit_percentage' => 'decimal:2',
             'deposit_amount' => 'decimal:2',
-            'remaining_amount' => 'decimal:2',
-            'final_payment_amount' => 'decimal:2',
         ];
     }
+
+    protected static function booted(): void
+    {
+        static::creating(function (Reservation $reservation) {
+
+            if (empty($reservation->public_token)) {
+                $reservation->public_token = Str::random(64);
+            }
+
+        });
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Relações
+    |--------------------------------------------------------------------------
+    */
 
     public function tour(): BelongsTo
     {
         return $this->belongsTo(Tour::class);
     }
 
+    public function option(): BelongsTo
+    {
+        return $this->belongsTo(
+            TourOption::class,
+            'tour_option_id'
+        );
+    }
+
     public function schedule(): BelongsTo
     {
-        return $this->belongsTo(TourSchedule::class, 'tour_schedule_id');
+        return $this->belongsTo(
+            TourOptionSchedule::class,
+            'tour_option_schedule_id'
+        );
     }
 }

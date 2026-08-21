@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Admin\BlockedDateController;
+use App\Http\Controllers\Admin\BlockedPeriodController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\GalleryController as AdminGalleryController;
 use App\Http\Controllers\Admin\ReservationController;
@@ -10,8 +10,8 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TourController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\GalleryController;
+use App\Http\Controllers\ReservationController as PublicReservationController;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Session;
 
 
@@ -35,6 +35,24 @@ Route::get('/tours', [TourController::class, 'index'])
 
 Route::get('/tours/{tour}', [TourController::class, 'show'])
     ->name('tours.show');
+
+
+/*
+|--------------------------------------------------------------------------
+| Reservas - Área Pública
+|--------------------------------------------------------------------------
+*/
+
+Route::get(
+    '/tours/{tour:id}/reserve/{option}/{schedule}',
+    [PublicReservationController::class, 'create']
+)->name('reservations.create');
+
+
+Route::post(
+    '/reservations',
+    [PublicReservationController::class, 'store']
+)->name('reservations.store');
 
 
 Route::get('/gallery', [GalleryController::class, 'index'])
@@ -97,7 +115,7 @@ Route::middleware(['auth', 'verified'])
             ->name('gallery.move');
 
 
-        Route::resource('blocked-dates', BlockedDateController::class);
+        Route::resource('blocked-periods', BlockedPeriodController::class);
 
 
         Route::resource('reservations', ReservationController::class)

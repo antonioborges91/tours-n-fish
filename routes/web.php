@@ -43,12 +43,6 @@ Route::get('/tours/{tour}', [TourController::class, 'show'])
 |--------------------------------------------------------------------------
 */
 
-Route::get(
-    '/tours/{tour:id}/reserve/{option}/{schedule}',
-    [PublicReservationController::class, 'create']
-)->name('reservations.create');
-
-
 Route::post(
     '/reservations',
     [PublicReservationController::class, 'store']

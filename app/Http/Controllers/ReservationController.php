@@ -13,97 +13,6 @@ use Illuminate\Http\Request;
 class ReservationController extends Controller
 {
     /**
-     * Apresenta o formulário de reserva.
-     */
-    public function create(
-        Tour $tour,
-        TourOption $option,
-        TourOptionSchedule $schedule
-    ) {
-        /*
-        |--------------------------------------------------------------------------
-        | Validar relações
-        |--------------------------------------------------------------------------
-        */
-
-        abort_unless(
-            $option->tour_id === $tour->id,
-            404
-        );
-
-        abort_unless(
-            $schedule->tour_option_id === $option->id,
-            404
-        );
-
-        /*
-        |--------------------------------------------------------------------------
-        | O passeio tem de estar disponível
-        |--------------------------------------------------------------------------
-        */
-
-        abort_unless(
-            $tour->available,
-            404
-        );
-
-        /*
-        |--------------------------------------------------------------------------
-        | Carregar traduções
-        |--------------------------------------------------------------------------
-        */
-
-        $tour->load('translations');
-        $option->load('translations');
-
-        /*
-        |--------------------------------------------------------------------------
-        | Preparar calendário
-        |--------------------------------------------------------------------------
-        |
-        | Mostramos os próximos 12 meses.
-        |
-        */
-
-        $calendarStart = Carbon::today();
-        $calendarEnd = $calendarStart->copy()->addYear();
-
-        $availableDates = [];
-        $unavailableDates = [];
-
-        $currentDate = $calendarStart->copy();
-
-        while ($currentDate->lte($calendarEnd)) {
-
-            $date = $currentDate->format('Y-m-d');
-
-            if ($this->isSlotAvailable(
-                $date,
-                $schedule->start_time,
-                $schedule->end_time
-            )) {
-                $availableDates[] = $date;
-            } else {
-                $unavailableDates[] = $date;
-            }
-
-            $currentDate->addDay();
-        }
-
-        return view(
-            'pages.reservations.create',
-            compact(
-                'tour',
-                'option',
-                'schedule',
-                'availableDates',
-                'unavailableDates'
-            )
-        );
-    }
-
-
-    /**
      * Cria uma nova reserva.
      */
     public function store(Request $request)
@@ -292,6 +201,27 @@ class ReservationController extends Controller
 
         /*
         |--------------------------------------------------------------------------
+        | Prazo para pagamento do sinal
+        |--------------------------------------------------------------------------
+        |
+        | O sinal deve ser pago até 3 dias antes do passeio.
+        |
+        | Se a reserva for feita já dentro desses 3 dias,
+        | o pagamento fica devido imediatamente.
+        |
+        */
+
+        $paymentDeadline = Carbon::parse(
+            $validated['booking_date'] . ' ' . $startAt
+        )->subDays(3);
+
+        if ($paymentDeadline->lt(now())) {
+            $paymentDeadline = now();
+        }
+
+
+        /*
+        |--------------------------------------------------------------------------
         | Criar reserva
         |--------------------------------------------------------------------------
         */
@@ -325,6 +255,8 @@ class ReservationController extends Controller
             'deposit_percentage' => $depositPercentage,
 
             'deposit_amount' => $depositAmount,
+
+            'payment_deadline_at' => $paymentDeadline,
 
             'status' => 'pending_payment',
 
@@ -395,9 +327,17 @@ class ReservationController extends Controller
 
         $reservationExists = Reservation::query()
             ->where('booking_date', $bookingDate)
-            ->whereNotIn('status', [
-                'cancelled',
-            ])
+            ->where(function ($query) {
+                $query
+                    ->whereIn('status', [
+                        'confirmed',
+                    ])
+                    ->orWhere(function ($query) {
+                        $query
+                            ->where('status', 'pending_payment')
+                            ->where('payment_deadline_at', '>', now());
+                    });
+            })
             ->where('start_at', '<', $endTime)
             ->where('end_at', '>', $startTime)
             ->exists();

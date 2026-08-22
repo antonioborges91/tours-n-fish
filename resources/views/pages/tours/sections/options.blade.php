@@ -2,6 +2,10 @@
 
     <div class="container-custom">
 
+        {{-- =====================================================
+             CABEÇALHO
+        ====================================================== --}}
+
         <div class="section-heading">
             <span class="section-badge">
                 {{ __('tours.options.badge') }}
@@ -11,6 +15,7 @@
                 {{ __('tours.options.title') }}
             </h2>
         </div>
+
 
         @php
             $unavailableDates = collect($unavailableDates ?? [])
@@ -28,30 +33,44 @@
 
                     return [
                         'id' => $option->id,
-                        'name' => $translation?->name ?? '',
-                        'price' => (float) $option->price,
-                        'duration_minutes' => (int) $option->duration_minutes,
 
-                        'schedules' => $option->schedules
-                            ->map(function ($schedule) {
+                        'name' =>
+                            $translation?->name ?? '',
 
-                                return [
-                                    'id' => $schedule->id,
-                                    'start_time' => substr(
-                                        $schedule->start_time,
-                                        0,
-                                        5
-                                    ),
-                                    'end_time' => substr(
-                                        $schedule->end_time,
-                                        0,
-                                        5
-                                    ),
-                                ];
-                            })
-                            ->values()
-                            ->all(),
+                        'price' =>
+                            (float) $option->price,
+
+                        'duration_minutes' =>
+                            (int) $option->duration_minutes,
+
+                        'schedules' =>
+                            $option->schedules
+                                ->map(function ($schedule) {
+
+                                    return [
+                                        'id' =>
+                                            $schedule->id,
+
+                                        'start_time' =>
+                                            substr(
+                                                $schedule->start_time,
+                                                0,
+                                                5
+                                            ),
+
+                                        'end_time' =>
+                                            substr(
+                                                $schedule->end_time,
+                                                0,
+                                                5
+                                            ),
+                                    ];
+
+                                })
+                                ->values()
+                                ->all(),
                     ];
+
                 })
                 ->values()
                 ->all();
@@ -64,93 +83,321 @@
             data-max-capacity="{{ $tour->max_capacity }}"
         >
 
-            {{-- =====================================================
-                 CALENDÁRIO
-            ====================================================== --}}
 
-            <div class="tour-calendar-panel">
+            {{-- =================================================
+                 ESTADO 1
+                 ESCOLHA DA EXPERIÊNCIA
+            ================================================== --}}
 
-                <div class="tour-calendar-header">
+            <div
+                class="tour-reservation-selection"
+                id="tourReservationSelection"
+            >
 
-                    <button
-                        type="button"
-                        class="tour-calendar-nav"
-                        id="tourCalendarPrev"
-                        aria-label="Mês anterior"
-                    >
-                        ‹
-                    </button>
+                {{-- =================================================
+                     CALENDÁRIO
+                ================================================== --}}
 
-                    <h3 id="tourCalendarMonth"></h3>
+                <div class="tour-calendar-panel">
 
-                    <button
-                        type="button"
-                        class="tour-calendar-nav"
-                        id="tourCalendarNext"
-                        aria-label="Mês seguinte"
-                    >
-                        ›
-                    </button>
+                    <div class="tour-calendar-header">
+
+                        <button
+                            type="button"
+                            class="tour-calendar-nav"
+                            id="tourCalendarPrev"
+                            aria-label="Mês anterior"
+                        >
+                            ‹
+                        </button>
+
+                        <h3 id="tourCalendarMonth"></h3>
+
+                        <button
+                            type="button"
+                            class="tour-calendar-nav"
+                            id="tourCalendarNext"
+                            aria-label="Mês seguinte"
+                        >
+                            ›
+                        </button>
+
+                    </div>
+
+
+                    <div class="tour-calendar-weekdays">
+
+                        <span>
+                            {{ __('tours.options.calendar.mon') }}
+                        </span>
+
+                        <span>
+                            {{ __('tours.options.calendar.tue') }}
+                        </span>
+
+                        <span>
+                            {{ __('tours.options.calendar.wed') }}
+                        </span>
+
+                        <span>
+                            {{ __('tours.options.calendar.thu') }}
+                        </span>
+
+                        <span>
+                            {{ __('tours.options.calendar.fri') }}
+                        </span>
+
+                        <span>
+                            {{ __('tours.options.calendar.sat') }}
+                        </span>
+
+                        <span>
+                            {{ __('tours.options.calendar.sun') }}
+                        </span>
+
+                    </div>
+
+
+                    <div
+                        class="tour-calendar-grid"
+                        id="tourCalendarGrid"
+                    ></div>
+
+
+                    <div class="tour-calendar-legend">
+
+                        <span>
+                            <i
+                                class="tour-calendar-dot tour-calendar-dot-available"
+                            ></i>
+
+                            {{ __('tours.options.calendar.available') }}
+                        </span>
+
+                        <span>
+                            <i
+                                class="tour-calendar-dot tour-calendar-dot-unavailable"
+                            ></i>
+
+                            {{ __('tours.options.calendar.unavailable') }}
+                        </span>
+
+                    </div>
 
                 </div>
 
 
-                <div class="tour-calendar-weekdays">
+                {{-- =================================================
+                     CONFIGURAÇÃO DA RESERVA
+                ================================================== --}}
 
-                    <span>
-                        {{ __('tours.options.calendar.mon') }}
-                    </span>
+                <div class="tour-reservation-options">
 
-                    <span>
-                        {{ __('tours.options.calendar.tue') }}
-                    </span>
+                    {{-- DATA ESCOLHIDA --}}
 
-                    <span>
-                        {{ __('tours.options.calendar.wed') }}
-                    </span>
+                    <div class="tour-reservation-selected-date">
 
-                    <span>
-                        {{ __('tours.options.calendar.thu') }}
-                    </span>
+                        <span class="tour-reservation-label">
+                            {{ __('tours.options.calendar.selected_date') }}
+                        </span>
 
-                    <span>
-                        {{ __('tours.options.calendar.fri') }}
-                    </span>
+                        <strong id="selectedDateLabel">
+                            {{ __('tours.options.calendar.choose_date') }}
+                        </strong>
 
-                    <span>
-                        {{ __('tours.options.calendar.sat') }}
-                    </span>
-
-                    <span>
-                        {{ __('tours.options.calendar.sun') }}
-                    </span>
-
-                </div>
+                    </div>
 
 
-                <div
-                    class="tour-calendar-grid"
-                    id="tourCalendarGrid"
-                ></div>
+                    {{-- =================================================
+                         DURAÇÃO / OPÇÃO
+                    ================================================== --}}
+
+                    <div
+                        class="tour-reservation-step"
+                        id="tourDurationStep"
+                        hidden
+                    >
+
+                        <h3>
+                            {{ __('tours.options.duration.title') }}
+                        </h3>
 
 
-                <div class="tour-calendar-legend">
+                        <div class="tour-duration-options">
 
-                    <span>
-                        <i
-                            class="tour-calendar-dot tour-calendar-dot-available"
-                        ></i>
+                            @foreach($tour->options as $option)
 
-                        {{ __('tours.options.calendar.available') }}
-                    </span>
+                                @php
+                                    $translation =
+                                        $option->translation();
 
-                    <span>
-                        <i
-                            class="tour-calendar-dot tour-calendar-dot-unavailable"
-                        ></i>
+                                    $hours =
+                                        intdiv(
+                                            $option->duration_minutes,
+                                            60
+                                        );
 
-                        {{ __('tours.options.calendar.unavailable') }}
-                    </span>
+                                    $minutes =
+                                        $option->duration_minutes % 60;
+
+                                    if ($minutes > 0) {
+
+                                        $durationText =
+                                            "{$hours} h {$minutes} min";
+
+                                    } else {
+
+                                        $durationText =
+                                            "{$hours} h";
+
+                                    }
+                                @endphp
+
+
+                                <label
+                                    class="tour-duration-option"
+                                >
+
+                                    <input
+                                        type="radio"
+                                        name="tour_option_id"
+                                        value="{{ $option->id }}"
+                                    >
+
+                                    <span class="tour-duration-card">
+
+                                        <strong>
+                                            {{ $translation?->name }}
+                                        </strong>
+
+                                        <small>
+                                            {{ $durationText }}
+                                        </small>
+
+                                        <span class="tour-duration-price">
+                                            €{{ number_format(
+                                                $option->price,
+                                                0,
+                                                ',',
+                                                '.'
+                                            ) }}
+                                        </span>
+
+                                    </span>
+
+                                </label>
+
+                            @endforeach
+
+                        </div>
+
+                    </div>
+
+
+                    {{-- =================================================
+                         HORÁRIOS
+                    ================================================== --}}
+
+                    <div
+                        class="tour-reservation-step"
+                        id="tourScheduleStep"
+                        hidden
+                    >
+
+                        <h3>
+                            {{ __('tours.options.schedule.title') }}
+                        </h3>
+
+
+                        <div
+                            class="tour-schedule-options"
+                            id="tourScheduleOptions"
+                        ></div>
+
+                    </div>
+
+
+                    {{-- =================================================
+                         NÚMERO DE PESSOAS
+                    ================================================== --}}
+
+                    <div
+                        class="tour-reservation-step"
+                        id="tourPeopleStep"
+                        hidden
+                    >
+
+                        <h3>
+                            {{ __('tours.options.people.title') }}
+                        </h3>
+
+
+                        <div class="tour-people-control">
+
+                            <button
+                                type="button"
+                                id="tourPeopleMinus"
+                                aria-label="{{ __('tours.options.people.decrease') }}"
+                            >
+                                −
+                            </button>
+
+                            <span id="tourPeopleValue">
+                                1
+                            </span>
+
+                            <button
+                                type="button"
+                                id="tourPeoplePlus"
+                                aria-label="{{ __('tours.options.people.increase') }}"
+                            >
+                                +
+                            </button>
+
+                        </div>
+
+
+                        <p class="tour-people-help">
+                            {{ __('tours.options.people.maximum', [
+                                'count' => $tour->max_capacity
+                            ]) }}
+                        </p>
+
+                    </div>
+
+
+                    {{-- =================================================
+                         RESUMO DA ESCOLHA
+                    ================================================== --}}
+
+                    <div
+                        class="tour-reservation-summary"
+                        id="tourReservationSummary"
+                        hidden
+                    >
+
+                        <div>
+
+                            <span>
+                                {{ __('tours.options.summary.total') }}
+                            </span>
+
+                            <strong id="tourReservationPrice">
+                                €0
+                            </strong>
+
+                        </div>
+
+
+                        <button
+                            type="button"
+                            class="btn btn-primary"
+                            id="tourReservationContinue"
+                        >
+                            {{ __('tours.options.continue') }}
+                        </button>
+
+                    </div>
 
                 </div>
 
@@ -158,208 +405,394 @@
 
 
             {{-- =====================================================
-                 CONFIGURAÇÃO DA RESERVA
+                 ESTADO 2
+                 CONFIRMAÇÃO + DADOS DO CLIENTE
             ====================================================== --}}
 
-            <div class="tour-reservation-options">
-
-                {{-- DATA ESCOLHIDA --}}
-
-                <div class="tour-reservation-selected-date">
-
-                    <span class="tour-reservation-label">
-                        {{ __('tours.options.calendar.selected_date') }}
-                    </span>
-
-                    <strong id="selectedDateLabel">
-                        {{ __('tours.options.calendar.choose_date') }}
-                    </strong>
-
-                </div>
-
-
-                {{-- =================================================
-                     DURAÇÃO / OPÇÃO
-                ================================================== --}}
-
-                <div
-                    class="tour-reservation-step"
-                    id="tourDurationStep"
-                    hidden
-                >
-
-                    <h3>
-                        {{ __('tours.options.duration.title') }}
-                    </h3>
-
-
-                    <div class="tour-duration-options">
-
-                        @foreach($tour->options as $option)
-
-                            @php
-                                $translation = $option->translation();
-
-                                $hours = intdiv(
-                                    $option->duration_minutes,
-                                    60
-                                );
-
-                                $minutes =
-                                    $option->duration_minutes % 60;
-
-                                if ($minutes > 0) {
-                                    $durationText =
-                                        "{$hours} h {$minutes} min";
-                                } else {
-                                    $durationText =
-                                        "{$hours} h";
-                                }
-                            @endphp
-
-
-                            <label
-                                class="tour-duration-option"
-                            >
-
-                                <input
-                                    type="radio"
-                                    name="tour_option_id"
-                                    value="{{ $option->id }}"
-                                >
-
-                                <span class="tour-duration-card">
-
-                                    <strong>
-                                        {{ $translation?->name }}
-                                    </strong>
-
-                                    <small>
-                                        {{ $durationText }}
-                                    </small>
-
-                                    <span class="tour-duration-price">
-                                        €{{ number_format(
-                                            $option->price,
-                                            0,
-                                            ',',
-                                            '.'
-                                        ) }}
-                                    </span>
-
-                                </span>
-
-                            </label>
-
-                        @endforeach
-
-                    </div>
-
-                </div>
-
-
-                {{-- =================================================
-                     HORÁRIOS
-                ================================================== --}}
-
-                <div
-                    class="tour-reservation-step"
-                    id="tourScheduleStep"
-                    hidden
-                >
-
-                    <h3>
-                        {{ __('tours.options.schedule.title') }}
-                    </h3>
-
-
-                    <div
-                        class="tour-schedule-options"
-                        id="tourScheduleOptions"
-                    ></div>
-
-                </div>
-
-
-                {{-- =================================================
-                     NÚMERO DE PESSOAS
-                ================================================== --}}
-
-                <div
-                    class="tour-reservation-step"
-                    id="tourPeopleStep"
-                    hidden
-                >
-
-                    <h3>
-                        {{ __('tours.options.people.title') }}
-                    </h3>
-
-
-                    <div class="tour-people-control">
-
-                        <button
-                            type="button"
-                            id="tourPeopleMinus"
-                            aria-label="{{ __('tours.options.people.decrease') }}"
-                        >
-                            −
-                        </button>
-
-                        <span id="tourPeopleValue">
-                            1
-                        </span>
-
-                        <button
-                            type="button"
-                            id="tourPeoplePlus"
-                            aria-label="{{ __('tours.options.people.increase') }}"
-                        >
-                            +
-                        </button>
-
-                    </div>
-
-
-                    <p class="tour-people-help">
-                        {{ __('tours.options.people.maximum', [
-                            'count' => $tour->max_capacity
-                        ]) }}
-                    </p>
-
-                </div>
-
+            <div
+                class="tour-reservation-confirmation"
+                id="tourReservationConfirmation"
+                hidden
+            >
 
                 {{-- =================================================
                      RESUMO
                 ================================================== --}}
 
-                <div
-                    class="tour-reservation-summary"
-                    id="tourReservationSummary"
-                    hidden
-                >
+                <div class="tour-reservation-confirmation-summary">
 
-                    <div>
+                    <div class="tour-reservation-confirmation-header">
 
-                        <span>
-                            {{ __('tours.options.summary.total') }}
+                        <span class="section-badge">
+                            Reserva
                         </span>
 
-                        <strong id="tourReservationPrice">
-                            €0
-                        </strong>
+                        <h3>
+                            Confirme a sua reserva
+                        </h3>
+
+                        <p>
+                            Verifique os dados do passeio antes de enviar
+                            o seu pedido.
+                        </p>
 
                     </div>
 
 
-                    <a
-                        href="#"
-                        class="btn btn-primary"
-                        id="tourReservationContinue"
+                    <div class="tour-reservation-confirmation-details">
+
+                        <div class="tour-reservation-detail">
+
+                            <span>
+                                Passeio
+                            </span>
+
+                            <strong>
+                                {{ $tour->translation()->name }}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="tour-reservation-detail">
+
+                            <span>
+                                Opção
+                            </span>
+
+                            <strong id="confirmationOption">
+                                —
+                            </strong>
+
+                        </div>
+
+
+                        <div class="tour-reservation-detail">
+
+                            <span>
+                                Data
+                            </span>
+
+                            <strong id="confirmationDate">
+                                —
+                            </strong>
+
+                        </div>
+
+
+                        <div class="tour-reservation-detail">
+
+                            <span>
+                                Horário
+                            </span>
+
+                            <strong id="confirmationSchedule">
+                                —
+                            </strong>
+
+                        </div>
+
+
+                        <div class="tour-reservation-detail">
+
+                            <span>
+                                Pessoas
+                            </span>
+
+                            <strong id="confirmationPeople">
+                                —
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="tour-reservation-confirmation-price">
+
+                        <div>
+
+                            <span>
+                                Total do passeio
+                            </span>
+
+                            <strong id="confirmationTotal">
+                                €0
+                            </strong>
+
+                        </div>
+
+
+                        <div>
+
+                            <span>
+                                Sinal de 10%
+                            </span>
+
+                            <strong id="confirmationDeposit">
+                                €0
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <button
+                        type="button"
+                        class="btn btn-secondary"
+                        id="tourReservationBack"
                     >
-                        {{ __('tours.options.continue') }}
-                    </a>
+                        ← Voltar e alterar a seleção
+                    </button>
+
+                </div>
+
+
+                {{-- =================================================
+                     FORMULÁRIO
+                ================================================== --}}
+
+                <div class="tour-reservation-confirmation-form">
+
+                    <div class="tour-reservation-confirmation-header">
+
+                        <h3>
+                            Os seus dados
+                        </h3>
+
+                        <p>
+                            Preencha os seus dados para solicitar a reserva.
+                        </p>
+
+                    </div>
+
+
+                    <form
+                        method="POST"
+                        action="{{ route('reservations.store') }}"
+                        id="tourReservationForm"
+                    >
+
+                        @csrf
+
+
+                        {{-- =================================================
+                             CAMPOS OCULTOS
+                        ================================================== --}}
+
+                        <input
+                            type="hidden"
+                            name="tour_option_id"
+                            id="reservationTourOptionId"
+                        >
+
+                        <input
+                            type="hidden"
+                            name="tour_option_schedule_id"
+                            id="reservationScheduleId"
+                        >
+
+                        <input
+                            type="hidden"
+                            name="booking_date"
+                            id="reservationBookingDate"
+                        >
+
+                        <input
+                            type="hidden"
+                            name="participants"
+                            id="reservationParticipants"
+                        >
+
+
+                        {{-- =================================================
+                             NOME
+                        ================================================== --}}
+
+                        <div class="reservation-inline-field">
+
+                            <label for="reservationCustomerName">
+                                Nome
+                            </label>
+
+                            <input
+                                type="text"
+                                id="reservationCustomerName"
+                                name="customer_name"
+                                autocomplete="name"
+                                required
+                            >
+
+                            <p
+                                class="reservation-form-error"
+                                data-error-for="customer_name"
+                                hidden
+                            ></p>
+
+                        </div>
+
+
+                        {{-- =================================================
+                             EMAIL
+                        ================================================== --}}
+
+                        <div class="reservation-inline-field">
+
+                            <label for="reservationCustomerEmail">
+                                Email
+                            </label>
+
+                            <input
+                                type="email"
+                                id="reservationCustomerEmail"
+                                name="customer_email"
+                                autocomplete="email"
+                                required
+                            >
+
+                            <p
+                                class="reservation-form-error"
+                                data-error-for="customer_email"
+                                hidden
+                            ></p>
+
+                        </div>
+
+
+                        {{-- =================================================
+                             TELEFONE
+                        ================================================== --}}
+
+                        <div class="reservation-inline-field">
+
+                            <label for="reservationCustomerPhone">
+                                Telefone
+                            </label>
+
+                            <input
+                                type="tel"
+                                id="reservationCustomerPhone"
+                                name="customer_phone"
+                                autocomplete="tel"
+                                required
+                            >
+
+                            <p
+                                class="reservation-form-error"
+                                data-error-for="customer_phone"
+                                hidden
+                            ></p>
+
+                        </div>
+
+
+                        {{-- =================================================
+                             OBSERVAÇÕES
+                        ================================================== --}}
+
+                        <div class="reservation-inline-field">
+
+                            <label for="reservationCustomerMessage">
+                                Observações
+                            </label>
+
+                            <textarea
+                                id="reservationCustomerMessage"
+                                name="customer_message"
+                                rows="4"
+                                placeholder="Alguma informação que considere importante?"
+                            ></textarea>
+
+                            <p
+                                class="reservation-form-error"
+                                data-error-for="customer_message"
+                                hidden
+                            ></p>
+
+                        </div>
+
+
+                        {{-- =================================================
+                             AVISO
+                        ================================================== --}}
+
+                        <div class="tour-reservation-confirmation-notice">
+
+                            <strong>
+                                Antes de enviar
+                            </strong>
+
+                            <p>
+                                O envio deste formulário não confirma
+                                imediatamente a reserva. O pedido ficará
+                                sujeito à disponibilidade e à confirmação
+                                do pagamento do sinal.
+                            </p>
+
+                        </div>
+
+
+                        {{-- =================================================
+                             ERRO GERAL
+                        ================================================== --}}
+
+                        <div
+                            class="tour-reservation-form-error"
+                            id="tourReservationFormError"
+                            hidden
+                        ></div>
+
+
+                        {{-- =================================================
+                             AÇÕES
+                        ================================================== --}}
+
+                        <div class="tour-reservation-confirmation-actions">
+
+                            <button
+                                type="submit"
+                                class="btn btn-primary"
+                                id="tourReservationSubmit"
+                            >
+                                Enviar pedido de reserva
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+
+            {{-- =====================================================
+                 ESTADO 3
+                 SUCESSO
+            ====================================================== --}}
+
+            <div
+                class="tour-reservation-success"
+                id="tourReservationSuccess"
+                hidden
+            >
+
+                <div class="tour-reservation-success-content">
+
+                    <span class="section-badge">
+                        Reserva
+                    </span>
+
+                    <h3>
+                        Pedido de reserva enviado
+                    </h3>
+
+                    <p>
+                        Recebemos o seu pedido de reserva com sucesso.
+                        Entraremos em contacto consigo com as instruções
+                        para pagamento do sinal.
+                    </p>
 
                 </div>
 
@@ -389,9 +822,25 @@ document.addEventListener('DOMContentLoaded', function () {
 
     /*
      * ============================================================
-     * ELEMENTOS
+     * ELEMENTOS — SELEÇÃO
      * ============================================================
      */
+
+    const selection =
+        document.getElementById(
+            'tourReservationSelection'
+        );
+
+    const confirmation =
+        document.getElementById(
+            'tourReservationConfirmation'
+        );
+
+    const success =
+        document.getElementById(
+            'tourReservationSuccess'
+        );
+
 
     const calendarGrid =
         document.getElementById(
@@ -466,6 +915,91 @@ document.addEventListener('DOMContentLoaded', function () {
     const continueButton =
         document.getElementById(
             'tourReservationContinue'
+        );
+
+    const backButton =
+        document.getElementById(
+            'tourReservationBack'
+        );
+
+
+    /*
+     * ============================================================
+     * ELEMENTOS — CONFIRMAÇÃO
+     * ============================================================
+     */
+
+    const confirmationOption =
+        document.getElementById(
+            'confirmationOption'
+        );
+
+    const confirmationDate =
+        document.getElementById(
+            'confirmationDate'
+        );
+
+    const confirmationSchedule =
+        document.getElementById(
+            'confirmationSchedule'
+        );
+
+    const confirmationPeople =
+        document.getElementById(
+            'confirmationPeople'
+        );
+
+    const confirmationTotal =
+        document.getElementById(
+            'confirmationTotal'
+        );
+
+    const confirmationDeposit =
+        document.getElementById(
+            'confirmationDeposit'
+        );
+
+
+    /*
+     * ============================================================
+     * ELEMENTOS — FORMULÁRIO
+     * ============================================================
+     */
+
+    const reservationForm =
+        document.getElementById(
+            'tourReservationForm'
+        );
+
+    const reservationSubmit =
+        document.getElementById(
+            'tourReservationSubmit'
+        );
+
+    const formError =
+        document.getElementById(
+            'tourReservationFormError'
+        );
+
+
+    const reservationTourOptionId =
+        document.getElementById(
+            'reservationTourOptionId'
+        );
+
+    const reservationScheduleId =
+        document.getElementById(
+            'reservationScheduleId'
+        );
+
+    const reservationBookingDate =
+        document.getElementById(
+            'reservationBookingDate'
+        );
+
+    const reservationParticipants =
+        document.getElementById(
+            'reservationParticipants'
         );
 
 
@@ -557,9 +1091,51 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
 
+    function formatCurrency(value) {
+
+        return '€' +
+            Number(value).toLocaleString(
+                'pt-PT',
+                {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2
+                }
+            );
+    }
+
+
+    function formatSelectedDate(dateString) {
+
+        if (!dateString) {
+            return '—';
+        }
+
+        const date =
+            new Date(
+                `${dateString}T00:00:00`
+            );
+
+        return date.toLocaleDateString(
+            '{{ app()->getLocale() }}',
+            {
+                day: '2-digit',
+                month: 'long',
+                year: 'numeric'
+            }
+        );
+    }
+
+
+    function getDeposit(value) {
+
+        return Number(value) * 0.10;
+    }
+
+
     /*
-     * Verifica se um determinado horário está disponível
-     * para a data atualmente selecionada.
+     * ============================================================
+     * DISPONIBILIDADE DE HORÁRIOS
+     * ============================================================
      */
 
     function isScheduleAvailable(
@@ -578,8 +1154,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
         /*
-         * Se o backend não enviou informação para esta data,
-         * significa que ela não foi afetada por bloqueios/reservas.
+         * Se o backend não enviou informação
+         * para esta data, significa que ela não
+         * foi afetada por bloqueios/reservas.
          */
 
         if (!dateAvailability) {
@@ -668,12 +1245,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
 
 
-                /*
-                * A opção só é considerada disponível
-                * se tiver pelo menos um horário disponível
-                * para a data selecionada.
-                */
-
                 const hasAvailableSchedule =
                     option.schedules.some(
                         schedule =>
@@ -695,11 +1266,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
 
 
-                /*
-                * Se não existir nenhum horário disponível,
-                * escondemos completamente a opção.
-                */
-
                 if (!hasAvailableSchedule) {
 
                     input.checked = false;
@@ -712,11 +1278,6 @@ document.addEventListener('DOMContentLoaded', function () {
                         'is-unavailable'
                     );
 
-
-                    /*
-                    * Se era a opção selecionada,
-                    * limpamos a seleção.
-                    */
 
                     if (
                         selectedOption &&
@@ -734,14 +1295,10 @@ document.addEventListener('DOMContentLoaded', function () {
                         peopleStep.hidden = true;
 
                         summary.hidden = true;
+
                     }
 
                 } else {
-
-                    /*
-                    * Existe pelo menos um horário disponível.
-                    * Voltamos a mostrar a opção.
-                    */
 
                     input.disabled = false;
 
@@ -750,9 +1307,11 @@ document.addEventListener('DOMContentLoaded', function () {
                     label.classList.remove(
                         'is-unavailable'
                     );
+
                 }
 
             });
+
     }
 
 
@@ -841,6 +1400,7 @@ document.addEventListener('DOMContentLoaded', function () {
             calendarGrid.appendChild(
                 emptyDay
             );
+
         }
 
 
@@ -969,13 +1529,6 @@ document.addEventListener('DOMContentLoaded', function () {
             );
 
 
-        /*
-         * IMPORTANTE:
-         *
-         * Aqui recalculamos quais opções têm
-         * pelo menos um horário disponível.
-         */
-
         updateOptionAvailability();
 
 
@@ -1055,11 +1608,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
 
-        /*
-         * Filtrar apenas os horários disponíveis
-         * para a data escolhida.
-         */
-
         const availableSchedules =
             selectedOption.schedules.filter(
                 schedule =>
@@ -1069,10 +1617,6 @@ document.addEventListener('DOMContentLoaded', function () {
                     )
             );
 
-
-        /*
-         * Nenhum horário disponível.
-         */
 
         if (!availableSchedules.length) {
 
@@ -1093,10 +1637,6 @@ document.addEventListener('DOMContentLoaded', function () {
             return;
         }
 
-
-        /*
-         * Mostrar os horários disponíveis.
-         */
 
         availableSchedules.forEach(
             (schedule, index) => {
@@ -1173,8 +1713,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
                 /*
-                 * Selecionar automaticamente o primeiro
-                 * horário disponível.
+                 * Selecionar automaticamente
+                 * o primeiro horário disponível.
                  */
 
                 if (index === 0) {
@@ -1229,18 +1769,13 @@ document.addEventListener('DOMContentLoaded', function () {
          */
 
         const total =
-            selectedOption.price;
+            Number(
+                selectedOption.price
+            );
 
 
         reservationPrice.textContent =
-            '€' +
-            total.toLocaleString(
-                'pt-PT',
-                {
-                    minimumFractionDigits: 0,
-                    maximumFractionDigits: 0
-                }
-            );
+            formatCurrency(total);
 
     }
 
@@ -1291,15 +1826,265 @@ document.addEventListener('DOMContentLoaded', function () {
 
     /*
      * ============================================================
+     * PREPARAR CONFIRMAÇÃO
+     * ============================================================
+     */
+
+    function prepareConfirmation() {
+
+        if (
+            !selectedDate ||
+            !selectedOption ||
+            !selectedSchedule
+        ) {
+            return false;
+        }
+
+
+        /*
+         * Dados que serão enviados ao backend.
+         */
+
+        reservationTourOptionId.value =
+            selectedOption.id;
+
+        reservationScheduleId.value =
+            selectedSchedule.id;
+
+        reservationBookingDate.value =
+            selectedDate;
+
+        reservationParticipants.value =
+            people;
+
+
+        /*
+         * Resumo visual.
+         */
+
+        confirmationOption.textContent =
+            selectedOption.name;
+
+
+        confirmationDate.textContent =
+            formatSelectedDate(
+                selectedDate
+            );
+
+
+        confirmationSchedule.textContent =
+            `${selectedSchedule.start_time} — ${selectedSchedule.end_time}`;
+
+
+        confirmationPeople.textContent =
+            people;
+
+
+        const total =
+            Number(
+                selectedOption.price
+            );
+
+
+        confirmationTotal.textContent =
+            formatCurrency(total);
+
+
+        confirmationDeposit.textContent =
+            formatCurrency(
+                getDeposit(total)
+            );
+
+
+        return true;
+
+    }
+
+
+    /*
+     * ============================================================
      * CONTINUAR
      * ============================================================
      */
 
     continueButton.addEventListener(
         'click',
-        function (event) {
+        function () {
+
+            if (!prepareConfirmation()) {
+                return;
+            }
+
+
+            selection.hidden =
+                true;
+
+            confirmation.hidden =
+                false;
+
+            success.hidden =
+                true;
+
+
+            /*
+             * Levamos o utilizador para o início
+             * do bloco de reserva.
+             */
+
+            document
+                .getElementById(
+                    'tour-reservation'
+                )
+                ?.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+
+        }
+    );
+
+
+    /*
+     * ============================================================
+     * VOLTAR À SELEÇÃO
+     * ============================================================
+     */
+
+    backButton.addEventListener(
+        'click',
+        function () {
+
+            confirmation.hidden =
+                true;
+
+            success.hidden =
+                true;
+
+            selection.hidden =
+                false;
+
+
+            /*
+             * Mantemos a seleção atual.
+             * O utilizador pode simplesmente alterar
+             * data, opção, horário ou pessoas.
+             */
+
+            renderCalendar();
+
+        }
+    );
+
+
+    /*
+     * ============================================================
+     * LIMPAR ERROS
+     * ============================================================
+     */
+
+    function clearFormErrors() {
+
+        formError.hidden = true;
+
+        formError.textContent = '';
+
+
+        document
+            .querySelectorAll(
+                '.reservation-form-error'
+            )
+            .forEach(error => {
+
+                error.hidden = true;
+
+                error.textContent = '';
+
+            });
+
+    }
+
+
+    /*
+     * ============================================================
+     * MOSTRAR ERROS
+     * ============================================================
+     */
+
+    function showFormErrors(errors) {
+
+        clearFormErrors();
+
+
+        let firstError = null;
+
+
+        Object.entries(errors || {})
+            .forEach(
+                ([field, messages]) => {
+
+                    const error =
+                        document.querySelector(
+                            `[data-error-for="${field}"]`
+                        );
+
+
+                    if (!error) {
+                        return;
+                    }
+
+
+                    error.textContent =
+                        Array.isArray(messages)
+                            ? messages[0]
+                            : messages;
+
+
+                    error.hidden = false;
+
+
+                    if (!firstError) {
+                        firstError = error;
+                    }
+
+                }
+            );
+
+
+        if (firstError) {
+
+            firstError.scrollIntoView({
+                behavior: 'smooth',
+                block: 'center'
+            });
+
+            return;
+
+        }
+
+
+        formError.textContent =
+            'Não foi possível enviar o pedido. Verifique os dados e tente novamente.';
+
+        formError.hidden =
+            false;
+
+    }
+
+
+    /*
+     * ============================================================
+     * ENVIO DA RESERVA
+     * ============================================================
+     */
+
+    reservationForm.addEventListener(
+        'submit',
+        async function (event) {
 
             event.preventDefault();
+
+
+            clearFormErrors();
 
 
             if (
@@ -1307,31 +2092,165 @@ document.addEventListener('DOMContentLoaded', function () {
                 !selectedOption ||
                 !selectedSchedule
             ) {
+
+                formError.textContent =
+                    'A seleção da reserva ficou incompleta. Volte atrás e confirme a data, opção e horário.';
+
+                formError.hidden =
+                    false;
+
                 return;
+
             }
 
 
             /*
-             * O backend recebe:
-             *
-             * - tour_option_id
-             * - tour_option_schedule_id
-             * - booking_date
-             * - people
-             *
-             * O horário é determinado pelo schedule.
+             * Garantimos novamente os valores ocultos.
              */
 
-            const url =
-                `/tours/${tourId}/reserve/` +
-                `${selectedOption.id}/` +
-                `${selectedSchedule.id}` +
-                `?booking_date=${encodeURIComponent(selectedDate)}` +
-                `&people=${encodeURIComponent(people)}`;
+            reservationTourOptionId.value =
+                selectedOption.id;
+
+            reservationScheduleId.value =
+                selectedSchedule.id;
+
+            reservationBookingDate.value =
+                selectedDate;
+
+            reservationParticipants.value =
+                people;
 
 
-            window.location.href =
-                url;
+            reservationSubmit.disabled =
+                true;
+
+
+            const originalButtonText =
+                reservationSubmit.textContent;
+
+
+            reservationSubmit.textContent =
+                'A enviar...';
+
+
+            try {
+
+                const formData =
+                    new FormData(
+                        reservationForm
+                    );
+
+
+                const response =
+                    await fetch(
+                        reservationForm.action,
+                        {
+                            method: 'POST',
+
+                            body: formData,
+
+                            headers: {
+                                'X-Requested-With':
+                                    'XMLHttpRequest',
+
+                                'Accept':
+                                    'text/html'
+                            },
+
+                            credentials:
+                                'same-origin'
+                        }
+                    );
+
+
+                /*
+                 * O backend atual faz redirect depois
+                 * de criar a reserva.
+                 *
+                 * Se o redirect final for para uma página
+                 * diferente da página atual, consideramos
+                 * o pedido enviado com sucesso.
+                 */
+
+                if (
+                    response.ok &&
+                    response.url !== window.location.href
+                ) {
+
+                    confirmation.hidden =
+                        true;
+
+                    selection.hidden =
+                        true;
+
+                    success.hidden =
+                        false;
+
+
+                    success.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'center'
+                    });
+
+
+                    /*
+                     * Por enquanto mantemos a mensagem
+                     * durante alguns segundos e voltamos
+                     * ao estado inicial.
+                     */
+
+                    setTimeout(
+                        function () {
+
+                            window.location.reload();
+
+                        },
+                        5000
+                    );
+
+
+                    return;
+
+                }
+
+
+                /*
+                 * Se o servidor nos devolveu a própria página,
+                 * muito provavelmente houve validação/rejeição.
+                 *
+                 * O backend atual ainda não devolve JSON de erros.
+                 */
+
+                formError.textContent =
+                    'Não foi possível enviar o pedido. Verifique os dados introduzidos e tente novamente.';
+
+                formError.hidden =
+                    false;
+
+
+            } catch (error) {
+
+                console.error(
+                    'Erro ao enviar reserva:',
+                    error
+                );
+
+
+                formError.textContent =
+                    'Ocorreu um erro ao enviar o pedido. Tente novamente.';
+
+                formError.hidden =
+                    false;
+
+            } finally {
+
+                reservationSubmit.disabled =
+                    false;
+
+                reservationSubmit.textContent =
+                    originalButtonText;
+
+            }
 
         }
     );

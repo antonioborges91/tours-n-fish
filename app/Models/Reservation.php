@@ -25,9 +25,11 @@ class Reservation extends Model
         'customer_phone',
         'customer_message',
 
-        'total_amount',
         'deposit_percentage',
         'deposit_amount',
+        'total_amount',
+        'payment_deadline_at',
+
 
         'status',
 
@@ -44,6 +46,7 @@ class Reservation extends Model
             'booking_date' => 'date',
 
             'payment_submitted_at' => 'datetime',
+            'payment_deadline_at' => 'datetime',
             'confirmed_at' => 'datetime',
             'cancelled_at' => 'datetime',
 

@@ -109,9 +109,6 @@
 |
 */
 
-.tour-options {
-    padding: 4rem var(--section-space-small) 5rem;
-}
 
 .tour-options .section-heading {
     margin-bottom: 2.5rem;
@@ -746,7 +743,7 @@
 }
 
 .tour-description {
-    padding: 5rem var(--section-space-small) 6rem;
+    padding: 5rem 0 6rem;
 }
 
 .tour-description-text {
@@ -768,7 +765,7 @@
 */
 
 .tour-gallery {
-    padding: 5rem var(--section-space-small) 6rem;
+    padding: 5rem 0 6rem;
 }
 
 .tour-gallery-grid {
@@ -849,7 +846,7 @@
 */
 
 .tour-information {
-    padding: 5rem var(--section-space-small) 6rem;
+    padding: 5rem 0 6rem;
 }
 
 .tour-information-grid {

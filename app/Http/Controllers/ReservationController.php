@@ -9,9 +9,11 @@ use App\Models\TourOption;
 use App\Models\TourOptionSchedule;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ReservationController extends Controller
 {
+    
     /**
      * Cria uma nova reserva.
      */
@@ -163,10 +165,6 @@ class ReservationController extends Controller
         |--------------------------------------------------------------------------
         | Verificar disponibilidade
         |--------------------------------------------------------------------------
-        |
-        | O cliente nunca envia start_at/end_at.
-        | Estes valores vêm sempre do schedule escolhido.
-        |
         */
 
         if (! $this->isSlotAvailable(
@@ -203,12 +201,6 @@ class ReservationController extends Controller
         |--------------------------------------------------------------------------
         | Prazo para pagamento do sinal
         |--------------------------------------------------------------------------
-        |
-        | O sinal deve ser pago até 3 dias antes do passeio.
-        |
-        | Se a reserva for feita já dentro desses 3 dias,
-        | o pagamento fica devido imediatamente.
-        |
         */
 
         $paymentDeadline = Carbon::parse(
@@ -224,43 +216,116 @@ class ReservationController extends Controller
         |--------------------------------------------------------------------------
         | Criar reserva
         |--------------------------------------------------------------------------
+        |
+        | O ano do número corresponde ao ano do passeio.
+        |
+        | Exemplo:
+        | 2026001
+        | 2026002
+        | 2027001
+        |
         */
 
-        $reservation = Reservation::create([
+        $reservation = DB::transaction(function () use (
+            $validated,
+            $tour,
+            $option,
+            $schedule,
+            $startAt,
+            $endAt,
+            $totalAmount,
+            $depositPercentage,
+            $depositAmount,
+            $paymentDeadline
+        ) {
 
-            'tour_id' => $tour->id,
+            $year = Carbon::parse(
+                $validated['booking_date']
+            )->year;
 
-            'tour_option_id' => $option->id,
 
-            'tour_option_schedule_id' => $schedule->id,
+            /*
+            |--------------------------------------------------------------------------
+            | Procurar a última reserva numerada desse ano
+            |--------------------------------------------------------------------------
+            */
 
-            'booking_date' => $validated['booking_date'],
+            $lastReservationNumber = Reservation::query()
+                ->whereNotNull('reservation_number')
+                ->where(
+                    'reservation_number',
+                    'like',
+                    $year . '%'
+                )
+                ->orderByDesc('reservation_number')
+                ->lockForUpdate()
+                ->value('reservation_number');
 
-            'start_at' => $startAt,
 
-            'end_at' => $endAt,
+            /*
+            |--------------------------------------------------------------------------
+            | Calcular próximo número
+            |--------------------------------------------------------------------------
+            */
 
-            'participants' => $validated['participants'],
+            $nextSequence = $lastReservationNumber
+                ? ((int) substr($lastReservationNumber, 4)) + 1
+                : 1;
 
-            'customer_name' => $validated['customer_name'],
 
-            'customer_email' => $validated['customer_email'],
+            $reservationNumber = $year . str_pad(
+                $nextSequence,
+                3,
+                '0',
+                STR_PAD_LEFT
+            );
 
-            'customer_phone' => $validated['customer_phone'],
 
-            'customer_message' => $validated['customer_message'] ?? null,
+            /*
+            |--------------------------------------------------------------------------
+            | Criar reserva
+            |--------------------------------------------------------------------------
+            */
 
-            'total_amount' => $totalAmount,
+            return Reservation::create([
 
-            'deposit_percentage' => $depositPercentage,
+                'reservation_number' => $reservationNumber,
 
-            'deposit_amount' => $depositAmount,
+                'tour_id' => $tour->id,
 
-            'payment_deadline_at' => $paymentDeadline,
+                'tour_option_id' => $option->id,
 
-            'status' => 'pending_payment',
+                'tour_option_schedule_id' => $schedule->id,
 
-        ]);
+                'booking_date' => $validated['booking_date'],
+
+                'start_at' => $startAt,
+
+                'end_at' => $endAt,
+
+                'participants' => $validated['participants'],
+
+                'customer_name' => $validated['customer_name'],
+
+                'customer_email' => $validated['customer_email'],
+
+                'customer_phone' => $validated['customer_phone'],
+
+                'customer_message' => $validated['customer_message'] ?? null,
+
+                'total_amount' => $totalAmount,
+
+                'deposit_percentage' => $depositPercentage,
+
+                'deposit_amount' => $depositAmount,
+
+                'payment_deadline_at' => $paymentDeadline,
+
+                'status' => 'pending_payment',
+
+            ]);
+
+        });
 
 
         /*

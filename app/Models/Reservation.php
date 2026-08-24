@@ -11,6 +11,8 @@ class Reservation extends Model
     protected $fillable = [
         'public_token',
 
+        'reservation_number',
+
         'tour_id',
         'tour_option_id',
         'tour_option_schedule_id',

@@ -47,17 +47,39 @@ class TourController extends Controller
 
         /*
         |--------------------------------------------------------------------------
-        | Reservas existentes
+        | Reservas que ocupam atualmente o barco
         |--------------------------------------------------------------------------
         |
         | O barco é um recurso único.
-        | Qualquer reserva que não esteja cancelada ocupa o respetivo horário.
+        |
+        | Uma reserva ocupa o horário quando:
+        |
+        | - está confirmada;
+        | OU
+        | - está pendente de pagamento e o prazo ainda não expirou.
+        |
+        | Uma reserva pending_payment cujo prazo já expirou
+        | deixa de ocupar o horário, mesmo antes de o seu estado
+        | ser automaticamente alterado para expired.
         |
         */
 
         $reservations = Reservation::query()
             ->where('booking_date', '>=', $today->toDateString())
-            ->where('status', '!=', 'cancelled')
+            ->where(function ($query) {
+
+                $query
+                    ->where('status', 'confirmed')
+
+                    ->orWhere(function ($query) {
+
+                        $query
+                            ->where('status', 'pending_payment')
+                            ->where('payment_deadline_at', '>', now());
+
+                    });
+
+            })
             ->orderBy('booking_date')
             ->get();
 

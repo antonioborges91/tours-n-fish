@@ -13,7 +13,7 @@
         <div>
 
             <h1>
-                Reserva #{{ $reservation->id }}
+                Reserva #{{ $reservation->reservation_number }}
             </h1>
 
             <p>

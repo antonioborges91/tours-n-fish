@@ -37,6 +37,10 @@
             <tr>
 
                 <th class="p-4 text-left">
+                    Reserva
+                </th>
+
+                <th class="p-4 text-left">
                     Data
                 </th>
 
@@ -82,6 +86,16 @@
             @endphp
 
             <tr class="border-t">
+
+                <td class="p-4">
+
+                    <div class="font-medium text-gray-900">
+
+                        #{{ $reservation->reservation_number }}
+
+                    </div>
+
+                </td>
 
                 <td class="p-4">
 
@@ -240,7 +254,7 @@
             <tr>
 
                 <td
-                    colspan="8"
+                    colspan="9"
                     class="py-12 text-center text-gray-500">
 
                     Ainda não existem reservas.

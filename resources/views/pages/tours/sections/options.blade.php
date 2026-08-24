@@ -106,7 +106,7 @@
                             type="button"
                             class="tour-calendar-nav"
                             id="tourCalendarPrev"
-                            aria-label="Mês anterior"
+                            aria-label="{{ __('tours.options.calendar.previous_month') }}"
                         >
                             ‹
                         </button>
@@ -117,7 +117,7 @@
                             type="button"
                             class="tour-calendar-nav"
                             id="tourCalendarNext"
-                            aria-label="Mês seguinte"
+                            aria-label="{{ __('tours.options.calendar.next_month') }}"
                         >
                             ›
                         </button>
@@ -424,16 +424,15 @@
                     <div class="tour-reservation-confirmation-header">
 
                         <span class="section-badge">
-                            Reserva
+                            {{ __('tours.options.confirmation.badge') }}
                         </span>
 
                         <h3>
-                            Confirme a sua reserva
+                            {{ __('tours.options.confirmation.title') }}
                         </h3>
 
                         <p>
-                            Verifique os dados do passeio antes de enviar
-                            o seu pedido.
+                            {{ __('tours.options.confirmation.description') }}
                         </p>
 
                     </div>
@@ -444,7 +443,7 @@
                         <div class="tour-reservation-detail">
 
                             <span>
-                                Passeio
+                                {{ __('tours.options.confirmation.tour') }}
                             </span>
 
                             <strong>
@@ -457,7 +456,7 @@
                         <div class="tour-reservation-detail">
 
                             <span>
-                                Opção
+                                {{ __('tours.options.confirmation.option') }}
                             </span>
 
                             <strong id="confirmationOption">
@@ -470,7 +469,7 @@
                         <div class="tour-reservation-detail">
 
                             <span>
-                                Data
+                                {{ __('tours.options.confirmation.date') }}
                             </span>
 
                             <strong id="confirmationDate">
@@ -483,7 +482,7 @@
                         <div class="tour-reservation-detail">
 
                             <span>
-                                Horário
+                                {{ __('tours.options.confirmation.schedule') }}
                             </span>
 
                             <strong id="confirmationSchedule">
@@ -496,7 +495,7 @@
                         <div class="tour-reservation-detail">
 
                             <span>
-                                Pessoas
+                                {{ __('tours.options.confirmation.people') }}
                             </span>
 
                             <strong id="confirmationPeople">
@@ -513,7 +512,7 @@
                         <div>
 
                             <span>
-                                Total do passeio
+                                {{ __('tours.options.confirmation.total') }}
                             </span>
 
                             <strong id="confirmationTotal">
@@ -526,7 +525,7 @@
                         <div>
 
                             <span>
-                                Sinal de 10%
+                                {{ __('tours.options.confirmation.deposit') }}
                             </span>
 
                             <strong id="confirmationDeposit">
@@ -543,7 +542,7 @@
                         class="btn btn-secondary"
                         id="tourReservationBack"
                     >
-                        ← Voltar e alterar a seleção
+                        {{ __('tours.options.confirmation.back') }}
                     </button>
 
                 </div>
@@ -558,11 +557,11 @@
                     <div class="tour-reservation-confirmation-header">
 
                         <h3>
-                            Os seus dados
+                            {{ __('tours.options.confirmation.customer_data') }}
                         </h3>
 
                         <p>
-                            Preencha os seus dados para solicitar a reserva.
+                            {{ __('tours.options.confirmation.customer_data_description') }}
                         </p>
 
                     </div>
@@ -613,7 +612,7 @@
                         <div class="reservation-inline-field">
 
                             <label for="reservationCustomerName">
-                                Nome
+                                {{ __('tours.options.confirmation.name') }}
                             </label>
 
                             <input
@@ -640,7 +639,7 @@
                         <div class="reservation-inline-field">
 
                             <label for="reservationCustomerEmail">
-                                Email
+                                {{ __('tours.options.confirmation.email') }}
                             </label>
 
                             <input
@@ -667,7 +666,7 @@
                         <div class="reservation-inline-field">
 
                             <label for="reservationCustomerPhone">
-                                Telefone
+                                {{ __('tours.options.confirmation.phone') }}
                             </label>
 
                             <input
@@ -694,14 +693,14 @@
                         <div class="reservation-inline-field">
 
                             <label for="reservationCustomerMessage">
-                                Observações
+                                {{ __('tours.options.confirmation.message') }}
                             </label>
 
                             <textarea
                                 id="reservationCustomerMessage"
                                 name="customer_message"
                                 rows="4"
-                                placeholder="Alguma informação que considere importante?"
+                                placeholder="{{ __('tours.options.confirmation.message_placeholder') }}"
                             ></textarea>
 
                             <p
@@ -720,14 +719,11 @@
                         <div class="tour-reservation-confirmation-notice">
 
                             <strong>
-                                Antes de enviar
+                                {{ __('tours.options.confirmation.before_submit') }}
                             </strong>
 
                             <p>
-                                O envio deste formulário não confirma
-                                imediatamente a reserva. O pedido ficará
-                                sujeito à disponibilidade e à confirmação
-                                do pagamento do sinal.
+                                {{ __('tours.options.confirmation.notice') }}
                             </p>
 
                         </div>
@@ -755,7 +751,7 @@
                                 class="btn btn-primary"
                                 id="tourReservationSubmit"
                             >
-                                Enviar pedido de reserva
+                                {{ __('tours.options.confirmation.submit') }}
                             </button>
 
                         </div>
@@ -781,17 +777,15 @@
                 <div class="tour-reservation-success-content">
 
                     <span class="section-badge">
-                        Reserva
+                        {{ __('tours.options.success.badge') }}
                     </span>
 
                     <h3>
-                        Pedido de reserva enviado
+                        {{ __('tours.options.success.title') }}
                     </h3>
 
                     <p>
-                        Recebemos o seu pedido de reserva com sucesso.
-                        Entraremos em contacto consigo com as instruções
-                        para pagamento do sinal.
+                        {{ __('tours.options.success.message') }}
                     </p>
 
                 </div>
@@ -2063,7 +2057,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
         formError.textContent =
-            'Não foi possível enviar o pedido. Verifique os dados e tente novamente.';
+            '{{ __("tours.options.errors.generic") }}';
 
         formError.hidden =
             false;
@@ -2094,7 +2088,7 @@ document.addEventListener('DOMContentLoaded', function () {
             ) {
 
                 formError.textContent =
-                    'A seleção da reserva ficou incompleta. Volte atrás e confirme a data, opção e horário.';
+                    '{{ __("tours.options.errors.incomplete") }}';
 
                 formError.hidden =
                     false;
@@ -2130,7 +2124,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
             reservationSubmit.textContent =
-                'A enviar...';
+                '{{ __("tours.options.confirmation.sending") }}';
 
 
             try {
@@ -2222,7 +2216,7 @@ document.addEventListener('DOMContentLoaded', function () {
                  */
 
                 formError.textContent =
-                    'Não foi possível enviar o pedido. Verifique os dados introduzidos e tente novamente.';
+                    '{{ __("tours.options.errors.generic") }}';
 
                 formError.hidden =
                     false;
@@ -2237,7 +2231,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
                 formError.textContent =
-                    'Ocorreu um erro ao enviar o pedido. Tente novamente.';
+                    '{{ __("tours.options.errors.submit") }}';
 
                 formError.hidden =
                     false;

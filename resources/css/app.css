@@ -17,6 +17,9 @@
 @import "./components/badges.css";
 @import "./components/forms.css";
 
+/* Admin */
+@import "./admin/reservations.css";
+
 /* Pages */
 @import "./sections/home.css";
 @import "./sections/tours.css";

@@ -1,0 +1,191 @@
+/*
+|--------------------------------------------------------------------------
+| Admin Reservations
+|--------------------------------------------------------------------------
+*/
+
+.admin-page {
+    width: 100%;
+}
+
+.admin-page-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.admin-page-header h1 {
+    margin: 0;
+    color: #0f172a;
+    font-size: 2rem;
+    line-height: 1.2;
+    font-weight: 700;
+}
+
+.admin-page-header p {
+    margin: .45rem 0 0;
+    color: #64748b;
+    font-size: .95rem;
+}
+
+.admin-reservation-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.25rem;
+}
+
+.admin-card {
+    min-width: 0;
+    padding: 1.5rem;
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 1rem;
+    box-shadow: 0 1px 3px rgba(15, 23, 42, .05);
+}
+
+.admin-card-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+}
+
+.admin-card-label {
+    display: block;
+    margin-bottom: .3rem;
+    color: #0060b8;
+    font-size: .8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+}
+
+.admin-card h2 {
+    margin: 0;
+    color: #0f172a;
+    font-size: 1.2rem;
+    line-height: 1.3;
+}
+
+.admin-detail-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.admin-detail-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    padding: .8rem 0;
+    border-bottom: 1px solid #edf0f3;
+}
+
+.admin-detail-row:first-child {
+    padding-top: 0;
+}
+
+.admin-detail-row:last-child {
+    padding-bottom: 0;
+    border-bottom: 0;
+}
+
+.admin-detail-row > span {
+    color: #64748b;
+    font-size: .9rem;
+}
+
+.admin-detail-row > strong {
+    color: #0f172a;
+    font-size: .92rem;
+    font-weight: 600;
+    text-align: right;
+}
+
+.admin-detail-row-column {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: .5rem;
+}
+
+.admin-detail-row-column p {
+    margin: 0;
+    color: #334155;
+    font-size: .9rem;
+    line-height: 1.6;
+    white-space: pre-wrap;
+}
+
+.admin-status {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: .4rem .75rem;
+    border-radius: 999px;
+    font-size: .78rem;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.admin-status-pending_payment {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.admin-status-payment_submitted {
+    background: #dbeafe;
+    color: #1d4ed8;
+}
+
+.admin-status-confirmed {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.admin-status-rejected {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.admin-status-cancelled,
+.admin-status-expired {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| Responsive
+|--------------------------------------------------------------------------
+*/
+
+@media (max-width: 800px) {
+
+    .admin-page-header {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .admin-reservation-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-card-header {
+        flex-direction: column;
+    }
+
+    .admin-detail-row {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: .25rem;
+    }
+
+    .admin-detail-row > strong {
+        text-align: left;
+    }
+
+}

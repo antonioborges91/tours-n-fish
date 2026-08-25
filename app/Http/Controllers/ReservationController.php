@@ -162,6 +162,7 @@ class ReservationController extends Controller
         $startAt = $schedule->start_time;
         $endAt = $schedule->end_time;
 
+
         /*
         |--------------------------------------------------------------------------
         | Não permitir reservas com menos de 12 horas de antecedência
@@ -180,6 +181,7 @@ class ReservationController extends Controller
                 ])
                 ->withInput();
         }
+
 
         /*
         |--------------------------------------------------------------------------
@@ -347,6 +349,7 @@ class ReservationController extends Controller
 
         });
 
+
         /*
         |--------------------------------------------------------------------------
         | Enviar email de confirmação da reserva
@@ -357,6 +360,7 @@ class ReservationController extends Controller
             ->send(
                 new ReservationCreated($reservation)
             );
+
 
         /*
         |--------------------------------------------------------------------------
@@ -415,23 +419,31 @@ class ReservationController extends Controller
         |
         | Temos um único barco.
         |
-        | Qualquer reserva não cancelada que se sobreponha
-        | ocupa o barco nesse intervalo.
+        | Qualquer reserva confirmada ou pending_payment
+        | dentro do prazo ocupa o barco.
         |
         */
 
         $reservationExists = Reservation::query()
             ->where('booking_date', $bookingDate)
             ->where(function ($query) {
+
                 $query
                     ->whereIn('status', [
                         'confirmed',
                     ])
                     ->orWhere(function ($query) {
+
                         $query
                             ->where('status', 'pending_payment')
-                            ->where('payment_deadline_at', '>', now());
+                            ->where(
+                                'payment_deadline_at',
+                                '>',
+                                now()
+                            );
+
                     });
+
             })
             ->where('start_at', '<', $endTime)
             ->where('end_at', '>', $startTime)
@@ -457,15 +469,153 @@ class ReservationController extends Controller
             $reservation
         )->firstOrFail();
 
+
         $reservation->load([
             'tour.translations',
             'option.translations',
             'schedule',
         ]);
 
+
         return view(
             'pages.reservations.show',
             compact('reservation')
         );
+    }
+
+
+    /**
+     * Recebe o comprovativo de pagamento enviado pelo cliente.
+     */
+    public function uploadPaymentProof(
+        Request $request,
+        Reservation $reservation
+    ) {
+
+        /*
+        |--------------------------------------------------------------------------
+        | Só aceitar comprovativo enquanto aguarda pagamento
+        |--------------------------------------------------------------------------
+        */
+
+        abort_unless(
+            $reservation->status === 'pending_payment',
+            403
+        );
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Validar ficheiro
+        |--------------------------------------------------------------------------
+        */
+
+        $validated = $request->validate([
+            'payment_proof' => [
+                'required',
+                'file',
+                'mimes:jpg,jpeg,png,pdf',
+                'max:5120',
+            ],
+        ]);
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Guardar comprovativo
+        |--------------------------------------------------------------------------
+        |
+        | O ficheiro fica no storage privado.
+        |
+        */
+
+        $path = $validated['payment_proof']->store(
+            'payment-proofs'
+        );
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Atualizar reserva
+        |--------------------------------------------------------------------------
+        */
+
+        $reservation->update([
+
+            'payment_proof' => $path,
+
+            'payment_submitted_at' => now(),
+
+            'status' => 'payment_submitted',
+
+        ]);
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Voltar para a página da reserva
+        |--------------------------------------------------------------------------
+        */
+
+        return redirect()
+            ->route(
+                'reservations.show',
+                $reservation->public_token
+            )
+            ->with(
+                'success',
+                'O comprovativo foi enviado com sucesso. Obrigado.'
+            );
+    }
+
+
+    /**
+     * Cancela uma reserva pública ainda não paga.
+     */
+    public function cancel(Reservation $reservation)
+    {
+
+        /*
+        |--------------------------------------------------------------------------
+        | O cliente só pode cancelar enquanto aguarda pagamento
+        |--------------------------------------------------------------------------
+        */
+
+        abort_unless(
+            $reservation->status === 'pending_payment',
+            403
+        );
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Cancelar reserva
+        |--------------------------------------------------------------------------
+        */
+
+        $reservation->update([
+
+            'status' => 'cancelled',
+
+            'cancelled_at' => now(),
+
+        ]);
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Voltar para a página da reserva
+        |--------------------------------------------------------------------------
+        */
+
+        return redirect()
+            ->route(
+                'reservations.show',
+                $reservation->public_token
+            )
+            ->with(
+                'success',
+                'A sua reserva foi cancelada com sucesso.'
+            );
     }
 }

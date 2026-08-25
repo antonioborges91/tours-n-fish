@@ -54,6 +54,17 @@ Route::get(
     [PublicReservationController::class, 'show']
 )->name('reservations.show');
 
+Route::post(
+    '/reservation/{reservation:public_token}/payment-proof',
+    [PublicReservationController::class, 'uploadPaymentProof']
+)->name('reservations.payment-proof');
+
+
+Route::post(
+    '/reservation/{reservation:public_token}/cancel',
+    [PublicReservationController::class, 'cancel']
+)->name('reservations.cancel');
+
 
 Route::get('/gallery', [GalleryController::class, 'index'])
     ->name('gallery');

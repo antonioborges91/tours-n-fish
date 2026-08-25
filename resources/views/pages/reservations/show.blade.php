@@ -1,6 +1,10 @@
+@php
+    app()->setLocale($reservation->locale ?? config('app.locale'));
+@endphp
+
 @extends('layouts.app')
 
-@section('title', 'Reserva')
+@section('title', __('reservation.success_title'))
 
 @section('content')
 
@@ -15,12 +19,13 @@
             </div>
 
             <h1>
-                Pedido de reserva recebido
+                {{ __('reservation.success_title') }}
             </h1>
 
             <p>
-                Obrigado, {{ $reservation->customer_name }}.
-                O seu pedido de reserva foi registado.
+                {{ __('reservation.success_message', [
+                    'name' => $reservation->customer_name
+                ]) }}
             </p>
 
         </div>
@@ -35,7 +40,7 @@
                 <div class="reservation-card-header">
 
                     <h2>
-                        Dados da reserva
+                        {{ __('reservation.reservation_data') }}
                     </h2>
 
                 </div>
@@ -46,7 +51,7 @@
                     <div class="reservation-detail">
 
                         <span class="reservation-label">
-                            Passeio
+                            {{ __('reservation.tour') }}
                         </span>
 
                         <strong>
@@ -59,7 +64,7 @@
                     <div class="reservation-detail">
 
                         <span class="reservation-label">
-                            Opção
+                            {{ __('reservation.option') }}
                         </span>
 
                         <strong>
@@ -72,7 +77,7 @@
                     <div class="reservation-detail">
 
                         <span class="reservation-label">
-                            Data
+                            {{ __('reservation.date') }}
                         </span>
 
                         <strong>
@@ -85,17 +90,13 @@
                     <div class="reservation-detail">
 
                         <span class="reservation-label">
-                            Horário
+                            {{ __('reservation.time') }}
                         </span>
 
                         <strong>
-
                             {{ substr($reservation->start_at, 0, 5) }}
-
                             —
-
                             {{ substr($reservation->end_at, 0, 5) }}
-
                         </strong>
 
                     </div>
@@ -104,7 +105,7 @@
                     <div class="reservation-detail">
 
                         <span class="reservation-label">
-                            Pessoas
+                            {{ __('reservation.participants') }}
                         </span>
 
                         <strong>
@@ -125,7 +126,7 @@
                 <div class="reservation-card-header">
 
                     <h2>
-                        Estado da reserva
+                        {{ __('reservation.reservation_status') }}
                     </h2>
 
                 </div>
@@ -136,19 +137,19 @@
                     @if($reservation->status === 'pending_payment')
 
                         <span class="reservation-status-badge pending">
-                            Pendente de pagamento
+                            {{ __('reservation.pending_payment') }}
                         </span>
 
                     @elseif($reservation->status === 'confirmed')
 
                         <span class="reservation-status-badge confirmed">
-                            Reserva confirmada
+                            {{ __('reservation.confirmed') }}
                         </span>
 
                     @elseif($reservation->status === 'cancelled')
 
                         <span class="reservation-status-badge cancelled">
-                            Reserva cancelada
+                            {{ __('reservation.cancelled') }}
                         </span>
 
                     @endif
@@ -161,7 +162,7 @@
                     <div>
 
                         <span>
-                            Preço do passeio
+                            {{ __('reservation.tour_price') }}
                         </span>
 
                         <strong>
@@ -174,7 +175,7 @@
                     <div>
 
                         <span>
-                            Sinal (10%)
+                            {{ __('reservation.deposit') }}
                         </span>
 
                         <strong>
@@ -191,18 +192,17 @@
                     <div class="reservation-notice">
 
                         <strong>
-                            Próximo passo
+                            {{ __('reservation.next_step') }}
                         </strong>
 
                         <p>
-                            Para confirmar a reserva deverá efetuar o
-                            pagamento do sinal de
-                            €{{ number_format($reservation->deposit_amount, 2, ',', '.') }}.
+                            {{ __('reservation.payment_instruction', [
+                                'amount' => '€' . number_format($reservation->deposit_amount, 2, ',', '.')
+                            ]) }}
                         </p>
 
                         <p>
-                            Após o pagamento poderá enviar o comprovativo
-                            através do link que receberá por email.
+                            {{ __('reservation.proof_instruction') }}
                         </p>
 
                     </div>
@@ -219,7 +219,7 @@
         <div class="reservation-reference">
 
             <span>
-                Referência da reserva
+                {{ __('reservation.reservation_reference') }}
             </span>
 
             <strong>

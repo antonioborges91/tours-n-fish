@@ -36,6 +36,6 @@ return [
 
     'proof_instruction' => 'Após o pagamento poderá enviar o comprovativo através do link que receberá por email.',
 
-    'reservation_reference' => 'Referência da reserva',
+    'reservation_number' => 'Número da reserva',
 
 ];

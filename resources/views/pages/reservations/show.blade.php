@@ -46,8 +46,8 @@
 
                 <div class="reservation-show-details">
 
+                    {{-- Tour --}}
                     <div class="reservation-show-detail">
-
                         <span class="reservation-show-label">
                             {{ __('reservation.tour') }}
                         </span>
@@ -55,12 +55,10 @@
                         <strong>
                             {{ $reservation->tour->translation()->name }}
                         </strong>
-
                     </div>
 
-
+                    {{-- Option --}}
                     <div class="reservation-show-detail">
-
                         <span class="reservation-show-label">
                             {{ __('reservation.option') }}
                         </span>
@@ -68,12 +66,10 @@
                         <strong>
                             {{ $reservation->option->translation()->name }}
                         </strong>
-
                     </div>
 
-
+                    {{-- Date --}}
                     <div class="reservation-show-detail">
-
                         <span class="reservation-show-label">
                             {{ __('reservation.date') }}
                         </span>
@@ -81,12 +77,10 @@
                         <strong>
                             {{ \Carbon\Carbon::parse($reservation->booking_date)->format('d/m/Y') }}
                         </strong>
-
                     </div>
 
-
+                    {{-- Time --}}
                     <div class="reservation-show-detail">
-
                         <span class="reservation-show-label">
                             {{ __('reservation.time') }}
                         </span>
@@ -96,12 +90,10 @@
                             —
                             {{ substr($reservation->end_at, 0, 5) }}
                         </strong>
-
                     </div>
 
-
+                    {{-- Participants --}}
                     <div class="reservation-show-detail">
-
                         <span class="reservation-show-label">
                             {{ __('reservation.participants') }}
                         </span>
@@ -109,8 +101,20 @@
                         <strong>
                             {{ $reservation->participants }}
                         </strong>
-
                     </div>
+
+                </div>
+
+                {{-- Número da reserva --}}
+                <div class="reservation-show-number">
+
+                    <span>
+                        {{ __('reservation.reservation_number') }}
+                    </span>
+
+                    <strong>
+                        #{{ $reservation->reservation_number }}
+                    </strong>
 
                 </div>
 
@@ -211,13 +215,6 @@
 
             </div>
 
-        </div>
-
-
-        {{-- Nº Reserva --}}
-        <div class="reservation-show-number">
-            <span>NÚMERO DA RESERVA</span>
-            <strong>#{{ $reservation->reservation_number }}</strong>
         </div>
 
     </div>

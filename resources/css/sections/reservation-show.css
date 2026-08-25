@@ -239,26 +239,26 @@
 
 
 /* =========================================================
-   Public reference
+   Reservation Number
    ========================================================= */
 
 .reservation-show-number {
-    margin: 25px auto 0;
-    max-width: 900px;
-    padding: 20px;
+    margin-top: 24px;
+    padding-top: 20px;
+
+    border-top: 1px solid #eef0f2;
 
     text-align: center;
-
-    border-top: 1px solid #e5e7eb;
 }
 
 .reservation-show-number span {
     display: block;
 
-    margin-bottom: 7px;
+    margin-bottom: 6px;
 
-    font-size: 13px;
+    font-size: 0.78rem;
     font-weight: 600;
+
     letter-spacing: 0.08em;
     text-transform: uppercase;
 
@@ -268,7 +268,7 @@
 .reservation-show-number strong {
     display: block;
 
-    font-size: 22px;
+    font-size: 1.35rem;
     font-weight: 700;
 
     color: #0f172a;

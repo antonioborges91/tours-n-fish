@@ -36,6 +36,6 @@ return [
 
     'proof_instruction' => 'After payment, you can submit your payment receipt using the link you will receive by email.',
 
-    'reservation_reference' => 'Booking reference',
+    'reservation_number' => 'Booking number',
 
 ];

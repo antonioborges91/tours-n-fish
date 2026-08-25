@@ -92,6 +92,24 @@ class TourController extends Controller
         $affectedDates = collect();
 
         /*
+        |--------------------------------------------------------------------------
+        | Datas afetadas pela regra das 12 horas
+        |--------------------------------------------------------------------------
+        |
+        | Precisamos de calcular pelo menos hoje e amanhã,
+        | porque podem existir horários dentro das próximas 12 horas.
+        |
+        */
+
+        $affectedDates->push(
+            $today->toDateString()
+        );
+
+        $affectedDates->push(
+            $today->copy()->addDay()->toDateString()
+        );
+
+        /*
          * Datas afetadas pelos bloqueios.
          */
 
@@ -196,6 +214,16 @@ class TourController extends Controller
 
                     /*
                     |--------------------------------------------------------------------------
+                    | Não permitir reservas com menos de 12 horas
+                    |--------------------------------------------------------------------------
+                    */
+
+                    $tooSoon = $slotStart->lt(
+                        now()->addHours(12)
+                    );
+
+                    /*
+                    |--------------------------------------------------------------------------
                     | Verificar bloqueios
                     |--------------------------------------------------------------------------
                     */
@@ -257,7 +285,8 @@ class TourController extends Controller
 
                     $available =
                         !$blocked &&
-                        !$reserved;
+                        !$reserved &&
+                        !$tooSoon;
 
                     $key =
                         $option->id . ':' . $schedule->id;

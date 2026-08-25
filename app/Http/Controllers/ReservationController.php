@@ -10,6 +10,8 @@ use App\Models\TourOptionSchedule;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\ReservationCreated;
 
 class ReservationController extends Controller
 {
@@ -160,6 +162,24 @@ class ReservationController extends Controller
         $startAt = $schedule->start_time;
         $endAt = $schedule->end_time;
 
+        /*
+        |--------------------------------------------------------------------------
+        | Não permitir reservas com menos de 12 horas de antecedência
+        |--------------------------------------------------------------------------
+        */
+
+        $bookingStart = Carbon::parse(
+            $validated['booking_date'] . ' ' . $startAt
+        );
+
+        if ($bookingStart->lt(now()->addHours(12))) {
+
+            return back()
+                ->withErrors([
+                    'booking_date' => 'Este horário já não pode ser reservado. As reservas devem ser feitas com pelo menos 12 horas de antecedência.',
+                ])
+                ->withInput();
+        }
 
         /*
         |--------------------------------------------------------------------------
@@ -207,8 +227,8 @@ class ReservationController extends Controller
             $validated['booking_date'] . ' ' . $startAt
         )->subDays(3);
 
-        if ($paymentDeadline->lt(now())) {
-            $paymentDeadline = now();
+        if ($paymentDeadline->lte(now())) {
+            $paymentDeadline = now()->addHours(2);
         }
 
 
@@ -327,6 +347,16 @@ class ReservationController extends Controller
 
         });
 
+        /*
+        |--------------------------------------------------------------------------
+        | Enviar email de confirmação da reserva
+        |--------------------------------------------------------------------------
+        */
+
+        Mail::to($reservation->customer_email)
+            ->send(
+                new ReservationCreated($reservation)
+            );
 
         /*
         |--------------------------------------------------------------------------

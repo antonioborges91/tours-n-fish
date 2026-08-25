@@ -214,17 +214,10 @@
         </div>
 
 
-        {{-- Referência pública --}}
-        <div class="reservation-show-reference">
-
-            <span>
-                {{ __('reservation.reservation_reference') }}
-            </span>
-
-            <strong>
-                {{ $reservation->public_token }}
-            </strong>
-
+        {{-- Nº Reserva --}}
+        <div class="reservation-show-number">
+            <span>NÚMERO DA RESERVA</span>
+            <strong>#{{ $reservation->reservation_number }}</strong>
         </div>
 
     </div>

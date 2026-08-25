@@ -11,6 +11,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Session;
 use App\Mail\ReservationCreated;
 
 class ReservationController extends Controller
@@ -334,6 +335,8 @@ class ReservationController extends Controller
                 'customer_phone' => $validated['customer_phone'],
 
                 'customer_message' => $validated['customer_message'] ?? null,
+
+                'locale' => Session::get('locale', config('app.locale')),
 
                 'total_amount' => $totalAmount,
 

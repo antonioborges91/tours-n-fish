@@ -26,6 +26,7 @@ class Reservation extends Model
         'customer_email',
         'customer_phone',
         'customer_message',
+        'locale',
 
         'deposit_percentage',
         'deposit_amount',

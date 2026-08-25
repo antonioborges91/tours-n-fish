@@ -3,7 +3,7 @@
    ========================================================= */
 
 .reservation-show-page {
-    padding: 100px 0 80px;
+    padding: 300px 0 80px;
 }
 
 .reservation-show-header {
@@ -132,6 +132,24 @@
 
 
 /* =========================================================
+   Reservation Number
+   ========================================================= */
+
+.reservation-show-reservation-number {
+    margin-top: 4px;
+
+    padding-top: 18px;
+}
+
+.reservation-show-reservation-number strong {
+    color: #123b66;
+
+    font-size: 1.05rem;
+    font-weight: 700;
+}
+
+
+/* =========================================================
    Reservation status
    ========================================================= */
 
@@ -198,6 +216,8 @@
     color: #111827;
     font-size: 1rem;
     font-weight: 700;
+
+    text-align: right;
 }
 
 
@@ -239,40 +259,86 @@
 
 
 /* =========================================================
-   Reservation Number
+   Bank Payment
    ========================================================= */
 
-.reservation-show-number {
+.reservation-show-bank {
     margin-top: 24px;
-    padding-top: 20px;
 
-    border-top: 1px solid #eef0f2;
+    padding: 20px;
 
-    text-align: center;
+    background: #f8fafc;
+
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
 }
 
-.reservation-show-number span {
-    display: block;
-
-    margin-bottom: 6px;
-
-    font-size: 0.78rem;
-    font-weight: 600;
-
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-
-    color: #64748b;
+.reservation-show-bank-header {
+    margin-bottom: 18px;
 }
 
-.reservation-show-number strong {
-    display: block;
+.reservation-show-bank-header h3 {
+    margin: 0 0 7px;
 
-    font-size: 1.35rem;
+    font-size: 1.05rem;
     font-weight: 700;
 
-    color: #0f172a;
+    color: #111827;
 }
+
+.reservation-show-bank-header p {
+    margin: 0;
+
+    color: #6b7280;
+
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.reservation-show-bank-details {
+    display: flex;
+    flex-direction: column;
+
+    gap: 12px;
+}
+
+.reservation-show-bank-details > div {
+    display: flex;
+
+    align-items: flex-start;
+    justify-content: space-between;
+
+    gap: 20px;
+}
+
+.reservation-show-bank-details span {
+    color: #64748b;
+
+    font-size: 0.9rem;
+}
+
+.reservation-show-bank-details strong {
+    color: #111827;
+
+    font-size: 0.9rem;
+    font-weight: 600;
+
+    text-align: right;
+}
+
+.reservation-show-bank-note {
+    margin-top: 18px;
+
+    padding-top: 15px;
+
+    border-top: 1px solid #e5e7eb;
+
+    color: #64748b;
+
+    font-size: 0.85rem;
+    line-height: 1.5;
+}
+
 
 /* =========================================================
    Responsive
@@ -284,8 +350,16 @@
         padding: 40px 0 60px;
     }
 
+    .reservation-show-header {
+        margin-bottom: 30px;
+    }
+
     .reservation-show-header h1 {
         font-size: 1.8rem;
+    }
+
+    .reservation-show-header p {
+        font-size: 0.95rem;
     }
 
     .reservation-show-layout {
@@ -312,5 +386,21 @@
         flex-direction: column;
 
         gap: 4px;
+    }
+
+    .reservation-show-payment strong {
+        text-align: left;
+    }
+
+    .reservation-show-bank-details > div {
+        flex-direction: column;
+
+        gap: 3px;
+    }
+
+    .reservation-show-bank-details strong {
+        text-align: left;
+
+        word-break: break-word;
     }
 }

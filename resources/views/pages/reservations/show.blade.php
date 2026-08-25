@@ -8,13 +8,14 @@
 
 @section('content')
 
-<section class="reservation-page">
+<section class="reservation-show-page">
 
     <div class="container-custom">
 
-        <div class="reservation-success">
+        {{-- Cabeçalho --}}
+        <div class="reservation-show-header">
 
-            <div class="reservation-success-icon">
+            <div class="reservation-show-icon">
                 ✓
             </div>
 
@@ -31,26 +32,23 @@
         </div>
 
 
-        <div class="reservation-layout">
+        {{-- Informação da reserva --}}
+        <div class="reservation-show-layout">
 
             {{-- Dados da reserva --}}
+            <div class="reservation-show-card">
 
-            <div class="reservation-card">
-
-                <div class="reservation-card-header">
-
+                <div class="reservation-show-card-header">
                     <h2>
                         {{ __('reservation.reservation_data') }}
                     </h2>
-
                 </div>
 
+                <div class="reservation-show-details">
 
-                <div class="reservation-details">
+                    <div class="reservation-show-detail">
 
-                    <div class="reservation-detail">
-
-                        <span class="reservation-label">
+                        <span class="reservation-show-label">
                             {{ __('reservation.tour') }}
                         </span>
 
@@ -61,9 +59,9 @@
                     </div>
 
 
-                    <div class="reservation-detail">
+                    <div class="reservation-show-detail">
 
-                        <span class="reservation-label">
+                        <span class="reservation-show-label">
                             {{ __('reservation.option') }}
                         </span>
 
@@ -74,9 +72,9 @@
                     </div>
 
 
-                    <div class="reservation-detail">
+                    <div class="reservation-show-detail">
 
-                        <span class="reservation-label">
+                        <span class="reservation-show-label">
                             {{ __('reservation.date') }}
                         </span>
 
@@ -87,9 +85,9 @@
                     </div>
 
 
-                    <div class="reservation-detail">
+                    <div class="reservation-show-detail">
 
-                        <span class="reservation-label">
+                        <span class="reservation-show-label">
                             {{ __('reservation.time') }}
                         </span>
 
@@ -102,9 +100,9 @@
                     </div>
 
 
-                    <div class="reservation-detail">
+                    <div class="reservation-show-detail">
 
-                        <span class="reservation-label">
+                        <span class="reservation-show-label">
                             {{ __('reservation.participants') }}
                         </span>
 
@@ -120,35 +118,32 @@
 
 
             {{-- Estado e pagamento --}}
+            <div class="reservation-show-card">
 
-            <div class="reservation-card">
-
-                <div class="reservation-card-header">
-
+                <div class="reservation-show-card-header">
                     <h2>
                         {{ __('reservation.reservation_status') }}
                     </h2>
-
                 </div>
 
 
-                <div class="reservation-status">
+                <div class="reservation-show-status">
 
                     @if($reservation->status === 'pending_payment')
 
-                        <span class="reservation-status-badge pending">
+                        <span class="reservation-show-status-badge pending">
                             {{ __('reservation.pending_payment') }}
                         </span>
 
                     @elseif($reservation->status === 'confirmed')
 
-                        <span class="reservation-status-badge confirmed">
+                        <span class="reservation-show-status-badge confirmed">
                             {{ __('reservation.confirmed') }}
                         </span>
 
                     @elseif($reservation->status === 'cancelled')
 
-                        <span class="reservation-status-badge cancelled">
+                        <span class="reservation-show-status-badge cancelled">
                             {{ __('reservation.cancelled') }}
                         </span>
 
@@ -157,7 +152,7 @@
                 </div>
 
 
-                <div class="reservation-payment">
+                <div class="reservation-show-payment">
 
                     <div>
 
@@ -189,7 +184,7 @@
 
                 @if($reservation->status === 'pending_payment')
 
-                    <div class="reservation-notice">
+                    <div class="reservation-show-notice">
 
                         <strong>
                             {{ __('reservation.next_step') }}
@@ -197,7 +192,12 @@
 
                         <p>
                             {{ __('reservation.payment_instruction', [
-                                'amount' => '€' . number_format($reservation->deposit_amount, 2, ',', '.')
+                                'amount' => '€' . number_format(
+                                    $reservation->deposit_amount,
+                                    2,
+                                    ',',
+                                    '.'
+                                )
                             ]) }}
                         </p>
 
@@ -215,8 +215,7 @@
 
 
         {{-- Referência pública --}}
-
-        <div class="reservation-reference">
+        <div class="reservation-show-reference">
 
             <span>
                 {{ __('reservation.reservation_reference') }}
@@ -231,101 +230,5 @@
     </div>
 
 </section>
-
-
-@push('styles')
-
-<style>
-
-.reservation-success {
-    text-align: center;
-    margin-bottom: 40px;
-}
-
-.reservation-success-icon {
-    width: 60px;
-    height: 60px;
-    margin: 0 auto 20px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    border-radius: 50%;
-
-    background: #dcfce7;
-    color: #15803d;
-
-    font-size: 30px;
-    font-weight: 700;
-}
-
-.reservation-success h1 {
-    margin: 0;
-
-    font-size: 2.2rem;
-    font-weight: 700;
-}
-
-.reservation-success p {
-    margin-top: 10px;
-
-    color: #6b7280;
-    font-size: 1.05rem;
-}
-
-.reservation-status {
-    margin-bottom: 25px;
-}
-
-.reservation-status-badge {
-    display: inline-block;
-
-    padding: 8px 14px;
-
-    border-radius: 999px;
-
-    font-size: 0.9rem;
-    font-weight: 600;
-}
-
-.reservation-status-badge.pending {
-    background: #fff7d6;
-    color: #92400e;
-}
-
-.reservation-status-badge.confirmed {
-    background: #dcfce7;
-    color: #15803d;
-}
-
-.reservation-status-badge.cancelled {
-    background: #fee2e2;
-    color: #b91c1c;
-}
-
-.reservation-reference {
-    margin-top: 25px;
-
-    text-align: center;
-
-    color: #6b7280;
-}
-
-.reservation-reference strong {
-    display: block;
-
-    margin-top: 5px;
-
-    color: #374151;
-
-    font-size: 0.85rem;
-
-    word-break: break-all;
-}
-
-</style>
-
-@endpush
 
 @endsection

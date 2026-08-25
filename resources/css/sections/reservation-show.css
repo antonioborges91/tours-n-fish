@@ -1,0 +1,317 @@
+/* =========================================================
+   Reservation Show / Success Page
+   ========================================================= */
+
+.reservation-show-page {
+    padding: 60px 0 80px;
+}
+
+.reservation-show-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.reservation-show-icon {
+    width: 60px;
+    height: 60px;
+    margin: 0 auto 20px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #dcfce7;
+    color: #15803d;
+
+    font-size: 30px;
+    font-weight: 700;
+}
+
+.reservation-show-header h1 {
+    margin: 0;
+
+    font-size: 2.2rem;
+    font-weight: 700;
+}
+
+.reservation-show-header p {
+    margin: 10px auto 0;
+
+    max-width: 700px;
+
+    color: #6b7280;
+    font-size: 1.05rem;
+}
+
+
+/* =========================================================
+   Layout
+   ========================================================= */
+
+.reservation-show-layout {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px;
+}
+
+
+/* =========================================================
+   Cards
+   ========================================================= */
+
+.reservation-show-card {
+    background: #ffffff;
+
+    border: 1px solid #e5e7eb;
+    border-radius: 16px;
+
+    padding: 28px;
+
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+}
+
+.reservation-show-card-header {
+    margin-bottom: 24px;
+}
+
+.reservation-show-card-header h2 {
+    margin: 0;
+
+    font-size: 1.25rem;
+    font-weight: 700;
+
+    color: #111827;
+}
+
+
+/* =========================================================
+   Reservation details
+   ========================================================= */
+
+.reservation-show-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.reservation-show-detail {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    padding: 14px 0;
+
+    border-bottom: 1px solid #eef0f2;
+}
+
+.reservation-show-detail:first-child {
+    padding-top: 0;
+}
+
+.reservation-show-detail:last-child {
+    padding-bottom: 0;
+    border-bottom: 0;
+}
+
+.reservation-show-label {
+    color: #6b7280;
+    font-size: 0.95rem;
+}
+
+.reservation-show-detail strong {
+    color: #111827;
+
+    font-size: 0.95rem;
+    font-weight: 600;
+
+    text-align: right;
+}
+
+
+/* =========================================================
+   Reservation status
+   ========================================================= */
+
+.reservation-show-status {
+    margin-bottom: 25px;
+}
+
+.reservation-show-status-badge {
+    display: inline-block;
+
+    padding: 8px 14px;
+
+    border-radius: 999px;
+
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.reservation-show-status-badge.pending {
+    background: #fff7d6;
+    color: #92400e;
+}
+
+.reservation-show-status-badge.confirmed {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+.reservation-show-status-badge.cancelled {
+    background: #fee2e2;
+    color: #b91c1c;
+}
+
+
+/* =========================================================
+   Payment
+   ========================================================= */
+
+.reservation-show-payment {
+    display: flex;
+    flex-direction: column;
+
+    gap: 14px;
+
+    padding-top: 20px;
+
+    border-top: 1px solid #eef0f2;
+}
+
+.reservation-show-payment > div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 20px;
+}
+
+.reservation-show-payment span {
+    color: #6b7280;
+    font-size: 0.95rem;
+}
+
+.reservation-show-payment strong {
+    color: #111827;
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   Notice
+   ========================================================= */
+
+.reservation-show-notice {
+    margin-top: 24px;
+
+    padding: 18px;
+
+    border-radius: 12px;
+
+    background: #fff8e7;
+    border: 1px solid #f5df9b;
+}
+
+.reservation-show-notice strong {
+    display: block;
+
+    margin-bottom: 8px;
+
+    color: #111827;
+}
+
+.reservation-show-notice p {
+    margin: 0 0 8px;
+
+    color: #6b7280;
+
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+.reservation-show-notice p:last-child {
+    margin-bottom: 0;
+}
+
+
+/* =========================================================
+   Public reference
+   ========================================================= */
+
+.reservation-show-reference {
+    margin-top: 25px;
+
+    padding: 20px;
+
+    text-align: center;
+
+    color: #6b7280;
+
+    background: #f8fafc;
+
+    border-radius: 12px;
+}
+
+.reservation-show-reference span {
+    display: block;
+
+    margin-bottom: 6px;
+
+    font-size: 0.9rem;
+}
+
+.reservation-show-reference strong {
+    display: block;
+
+    color: #374151;
+
+    font-size: 0.85rem;
+
+    word-break: break-all;
+}
+
+
+/* =========================================================
+   Responsive
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+    .reservation-show-page {
+        padding: 40px 0 60px;
+    }
+
+    .reservation-show-header h1 {
+        font-size: 1.8rem;
+    }
+
+    .reservation-show-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .reservation-show-card {
+        padding: 22px;
+    }
+
+    .reservation-show-detail {
+        align-items: flex-start;
+        flex-direction: column;
+
+        gap: 5px;
+    }
+
+    .reservation-show-detail strong {
+        text-align: left;
+    }
+
+    .reservation-show-payment > div {
+        align-items: flex-start;
+        flex-direction: column;
+
+        gap: 4px;
+    }
+}

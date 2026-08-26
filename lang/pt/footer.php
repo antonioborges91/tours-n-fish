@@ -12,4 +12,4 @@ return [
 
     'terms_conditions' => 'Termos e Condições',
 
-]; teste
+];

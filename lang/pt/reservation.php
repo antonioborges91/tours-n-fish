@@ -2,9 +2,9 @@
 
 return [
 
-    'success_title' => 'Pedido de reserva recebido',
+    'success_title' => 'Área da sua reserva',
 
-    'success_message' => 'Obrigado, :name. O seu pedido de reserva foi registado.',
+    'success_message' => 'Consulte os dados da sua reserva e acompanhe o estado do pagamento.',
 
     'reservation_data' => 'Dados da reserva',
 

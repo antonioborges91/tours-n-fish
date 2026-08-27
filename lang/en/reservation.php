@@ -2,9 +2,9 @@
 
 return [
 
-    'success_title' => 'Booking request received',
+    'success_title' => 'Your booking',
 
-    'success_message' => 'Thank you, :name. Your booking request has been received.',
+    'success_message' => 'View your booking details and check the payment status.',
 
     'reservation_data' => 'Booking details',
 

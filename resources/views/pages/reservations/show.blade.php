@@ -34,7 +34,6 @@
 
     <div class="container-custom">
 
-
         {{-- =========================================================
              HEADER
         ========================================================== --}}
@@ -66,293 +65,144 @@
 
 
             {{-- =====================================================
-                 RESERVATION DETAILS
+                 LEFT COLUMN
+                 RESERVATION + BANK DETAILS
             ====================================================== --}}
 
-            <div class="reservation-show-card">
-
-                <div class="reservation-show-card-header">
-
-                    <h2>
-                        {{ __('reservation.reservation_data') }}
-                    </h2>
-
-                </div>
-
-
-                <div class="reservation-show-details">
-
-
-                    {{-- TOUR --}}
-
-                    <div class="reservation-show-detail">
-
-                        <span class="reservation-show-label">
-                            {{ __('reservation.tour') }}
-                        </span>
-
-                        <strong>
-                            {{ $tourName }}
-                        </strong>
-
-                    </div>
-
-
-                    {{-- OPTION --}}
-
-                    <div class="reservation-show-detail">
-
-                        <span class="reservation-show-label">
-                            {{ __('reservation.option') }}
-                        </span>
-
-                        <strong>
-                            {{ $optionName }}
-                        </strong>
-
-                    </div>
-
-
-                    {{-- DATE --}}
-
-                    <div class="reservation-show-detail">
-
-                        <span class="reservation-show-label">
-                            {{ __('reservation.date') }}
-                        </span>
-
-                        <strong>
-                            {{ $reservation->booking_date->format('d/m/Y') }}
-                        </strong>
-
-                    </div>
-
-
-                    {{-- TIME --}}
-
-                    <div class="reservation-show-detail">
-
-                        <span class="reservation-show-label">
-                            {{ __('reservation.time') }}
-                        </span>
-
-                        <strong>
-                            {{ \Carbon\Carbon::parse($reservation->start_at)->format('H:i') }}
-                            —
-                            {{ \Carbon\Carbon::parse($reservation->end_at)->format('H:i') }}
-                        </strong>
-
-                    </div>
-
-
-                    {{-- PARTICIPANTS --}}
-
-                    <div class="reservation-show-detail">
-
-                        <span class="reservation-show-label">
-                            {{ __('reservation.participants') }}
-                        </span>
-
-                        <strong>
-                            {{ $reservation->participants }}
-                        </strong>
-
-                    </div>
-
-
-                    {{-- RESERVATION NUMBER --}}
-
-                    <div class="reservation-show-detail reservation-show-reservation-number">
-
-                        <span class="reservation-show-label">
-                            {{ __('reservation.reservation_number') }}
-                        </span>
-
-                        <strong>
-                            #{{ $reservation->reservation_number }}
-                        </strong>
-
-                    </div>
-
-
-                </div>
-
-            </div>
-
-
-            {{-- =====================================================
-                 STATUS / PAYMENT
-            ====================================================== --}}
-
-            <div class="reservation-show-card">
-
-                <div class="reservation-show-card-header">
-
-                    <h2>
-                        {{ __('reservation.reservation_status') }}
-                    </h2>
-
-                </div>
+            <div class="reservation-show-column">
 
 
                 {{-- =================================================
-                     STATUS
+                     RESERVATION DATA
                 ================================================== --}}
 
-                <div class="reservation-show-status">
+                <div class="reservation-show-card">
 
+                    <div class="reservation-show-card-header">
 
-                    @if($isPendingPayment)
-
-                        <span class="reservation-show-status-badge pending">
-                            {{ __('reservation.pending_payment') }}
-                        </span>
-
-
-                    @elseif($isPaymentSubmitted)
-
-                        <span class="reservation-show-status-badge submitted">
-                            {{ __('reservation.payment_submitted') }}
-                        </span>
-
-
-                    @elseif($isConfirmed)
-
-                        <span class="reservation-show-status-badge confirmed">
-                            {{ __('reservation.confirmed') }}
-                        </span>
-
-
-                    @elseif($isCancelled)
-
-                        <span class="reservation-show-status-badge cancelled">
-                            {{ __('reservation.cancelled') }}
-                        </span>
-
-                    @endif
-
-                </div>
-
-
-                {{-- =================================================
-                     PAYMENT SUMMARY
-                ================================================== --}}
-
-                <div class="reservation-show-payment">
-
-
-                    {{-- TOTAL --}}
-
-                    <div>
-
-                        <span>
-                            {{ __('reservation.tour_price') }}
-                        </span>
-
-                        <strong>
-                            €{{ $totalAmount }}
-                        </strong>
+                        <h2>
+                            {{ __('reservation.reservation_data') }}
+                        </h2>
 
                     </div>
 
 
-                    {{-- DEPOSIT --}}
-
-                    <div>
-
-                        <span>
-                            {{ __('reservation.deposit') }}
-                            ({{ $reservation->deposit_percentage }}%)
-                        </span>
-
-                        <strong>
-                            €{{ $depositAmount }}
-                        </strong>
-
-                    </div>
+                    <div class="reservation-show-details">
 
 
-                    {{-- PAYMENT DEADLINE --}}
+                        {{-- TOUR --}}
 
-                    @if($reservation->payment_deadline_at && $isPendingPayment)
+                        <div class="reservation-show-detail">
 
-                        <div>
-
-                            <span>
-                                {{ __('reservation.payment_deadline') }}
+                            <span class="reservation-show-label">
+                                {{ __('reservation.tour') }}
                             </span>
 
                             <strong>
-                                {{ $reservation->payment_deadline_at->format('d/m/Y H:i') }}
+                                {{ $tourName }}
                             </strong>
 
                         </div>
 
-                    @endif
 
+                        {{-- OPTION --}}
 
-                    {{-- PAYMENT SUBMITTED AT --}}
+                        <div class="reservation-show-detail">
 
-                    @if($isPaymentSubmitted && $reservation->payment_submitted_at)
-
-                        <div>
-
-                            <span>
-                                {{ __('reservation.payment_submitted_at') }}
+                            <span class="reservation-show-label">
+                                {{ __('reservation.option') }}
                             </span>
 
                             <strong>
-                                {{ $reservation->payment_submitted_at->format('d/m/Y H:i') }}
+                                {{ $optionName }}
                             </strong>
 
                         </div>
 
-                    @endif
+
+                        {{-- DATE --}}
+
+                        <div class="reservation-show-detail">
+
+                            <span class="reservation-show-label">
+                                {{ __('reservation.date') }}
+                            </span>
+
+                            <strong>
+                                {{ $reservation->booking_date->format('d/m/Y') }}
+                            </strong>
+
+                        </div>
+
+
+                        {{-- TIME --}}
+
+                        <div class="reservation-show-detail">
+
+                            <span class="reservation-show-label">
+                                {{ __('reservation.time') }}
+                            </span>
+
+                            <strong>
+                                {{ \Carbon\Carbon::parse($reservation->start_at)->format('H:i') }}
+                                —
+                                {{ \Carbon\Carbon::parse($reservation->end_at)->format('H:i') }}
+                            </strong>
+
+                        </div>
+
+
+                        {{-- PARTICIPANTS --}}
+
+                        <div class="reservation-show-detail">
+
+                            <span class="reservation-show-label">
+                                {{ __('reservation.participants') }}
+                            </span>
+
+                            <strong>
+                                {{ $reservation->participants }}
+                            </strong>
+
+                        </div>
+
+
+                        {{-- RESERVATION NUMBER --}}
+
+                        <div class="reservation-show-detail reservation-show-reservation-number">
+
+                            <span class="reservation-show-label">
+                                {{ __('reservation.reservation_number') }}
+                            </span>
+
+                            <strong>
+                                #{{ $reservation->reservation_number }}
+                            </strong>
+
+                        </div>
+
+
+                    </div>
 
                 </div>
 
 
                 {{-- =================================================
-                     PENDING PAYMENT
+                     BANK PAYMENT
+                     Only while payment is pending
                 ================================================== --}}
 
                 @if($isPendingPayment)
 
+                    <div class="reservation-show-card">
 
-                    {{-- NEXT STEP --}}
+                        <div class="reservation-show-card-header">
 
-                    <div class="reservation-show-notice">
-
-                        <strong>
-                            {{ __('reservation.next_step') }}
-                        </strong>
-
-                        <p>
-                            {{ __('reservation.payment_instruction', [
-                                'amount' => '€' . $depositAmount
-                            ]) }}
-                        </p>
-
-                        <p>
-                            {{ __('reservation.proof_instruction') }}
-                        </p>
-
-                    </div>
-
-
-                    {{-- =================================================
-                         BANK DETAILS
-                    ================================================== --}}
-
-                    <div class="reservation-show-bank">
-
-                        <div class="reservation-show-bank-header">
-
-                            <h3>
+                            <h2>
                                 {{ __('reservation.bank_payment') }}
-                            </h3>
+                            </h2>
 
-                            <p>
+                            <p class="reservation-show-card-description">
                                 {{ __('reservation.bank_payment_instruction') }}
                             </p>
 
@@ -407,7 +257,7 @@
                             </div>
 
 
-                            {{-- SWIFT --}}
+                            {{-- SWIFT / BIC --}}
 
                             <div>
 
@@ -440,8 +290,6 @@
                         </div>
 
 
-                        {{-- BANK NOTE --}}
-
                         <div class="reservation-show-bank-note">
 
                             {{ __('reservation.bank_payment_note') }}
@@ -450,178 +298,340 @@
 
                     </div>
 
+                @endif
+
+            </div>
+
+
+            {{-- =====================================================
+                 RIGHT COLUMN
+                 STATUS + ACTIONS
+            ====================================================== --}}
+
+            <div class="reservation-show-column">
+
+
+                {{-- =================================================
+                     STATUS / PAYMENT
+                ================================================== --}}
+
+                <div class="reservation-show-card">
+
+                    <div class="reservation-show-card-header">
+
+                        <h2>
+                            {{ __('reservation.reservation_status') }}
+                        </h2>
+
+                    </div>
+
+
+                    {{-- STATUS --}}
+
+                    <div class="reservation-show-status">
+
+                        @if($isPendingPayment)
+
+                            <span class="reservation-show-status-badge pending">
+                                {{ __('reservation.pending_payment') }}
+                            </span>
+
+                        @elseif($isPaymentSubmitted)
+
+                            <span class="reservation-show-status-badge submitted">
+                                {{ __('reservation.payment_submitted') }}
+                            </span>
+
+                        @elseif($isConfirmed)
+
+                            <span class="reservation-show-status-badge confirmed">
+                                {{ __('reservation.confirmed') }}
+                            </span>
+
+                        @elseif($isCancelled)
+
+                            <span class="reservation-show-status-badge cancelled">
+                                {{ __('reservation.cancelled') }}
+                            </span>
+
+                        @endif
+
+                    </div>
+
+
+                    {{-- PAYMENT SUMMARY --}}
+
+                    <div class="reservation-show-payment">
+
+
+                        {{-- TOTAL --}}
+
+                        <div>
+
+                            <span>
+                                {{ __('reservation.tour_price') }}
+                            </span>
+
+                            <strong>
+                                €{{ $totalAmount }}
+                            </strong>
+
+                        </div>
+
+
+                        {{-- DEPOSIT --}}
+
+                        <div>
+
+                            <span>
+                                {{ __('reservation.deposit') }}
+                                ({{ $reservation->deposit_percentage }}%)
+                            </span>
+
+                            <strong>
+                                €{{ $depositAmount }}
+                            </strong>
+
+                        </div>
+
+
+                        {{-- PAYMENT DEADLINE --}}
+
+                        @if($reservation->payment_deadline_at && $isPendingPayment)
+
+                            <div>
+
+                                <span>
+                                    {{ __('reservation.payment_deadline') }}
+                                </span>
+
+                                <strong>
+                                    {{ $reservation->payment_deadline_at->format('d/m/Y H:i') }}
+                                </strong>
+
+                            </div>
+
+                        @endif
+
+
+                        {{-- PAYMENT SUBMITTED AT --}}
+
+                        @if($isPaymentSubmitted && $reservation->payment_submitted_at)
+
+                            <div>
+
+                                <span>
+                                    {{ __('reservation.payment_submitted_at') }}
+                                </span>
+
+                                <strong>
+                                    {{ $reservation->payment_submitted_at->format('d/m/Y H:i') }}
+                                </strong>
+
+                            </div>
+
+                        @endif
+
+                    </div>
+
 
                     {{-- =================================================
-                         PAYMENT PROOF
+                         PENDING PAYMENT
                     ================================================== --}}
 
-                    <div class="reservation-show-proof">
+                    @if($isPendingPayment)
 
-                        <div class="reservation-show-proof-header">
 
-                            <h3>
-                                {{ __('reservation.payment_proof_title') }}
-                            </h3>
+                        {{-- NEXT STEP --}}
+
+                        <div class="reservation-show-notice">
+
+                            <strong>
+                                {{ __('reservation.next_step') }}
+                            </strong>
 
                             <p>
-                                {{ __('reservation.payment_proof_instruction') }}
+                                {{ __('reservation.payment_instruction', [
+                                    'amount' => '€' . $depositAmount
+                                ]) }}
+                            </p>
+
+                            <p>
+                                {{ __('reservation.proof_instruction') }}
                             </p>
 
                         </div>
 
 
-                        <form
-                            method="POST"
-                            action="{{ route(
-                                'reservations.payment-proof',
-                                $reservation->public_token
-                            ) }}"
-                            enctype="multipart/form-data"
-                            class="reservation-show-proof-form"
-                        >
+                        {{-- PAYMENT PROOF --}}
 
-                            @csrf
+                        <div class="reservation-show-proof">
 
+                            <div class="reservation-show-proof-header">
 
-                            <div class="reservation-show-proof-field">
+                                <h3>
+                                    {{ __('reservation.payment_proof_title') }}
+                                </h3>
 
-                                <label for="payment_proof">
-                                    {{ __('reservation.payment_proof_file') }}
-                                </label>
-
-                                <input
-                                    type="file"
-                                    id="payment_proof"
-                                    name="payment_proof"
-                                    accept=".jpg,.jpeg,.png,.pdf"
-                                    required
-                                >
-
-                                <small>
-                                    {{ __('reservation.payment_proof_formats') }}
-                                </small>
+                                <p>
+                                    {{ __('reservation.payment_proof_instruction') }}
+                                </p>
 
                             </div>
 
 
-                            @error('payment_proof')
-
-                                <p class="reservation-show-form-error">
-                                    {{ $message }}
-                                </p>
-
-                            @enderror
-
-
-                            <button
-                                type="submit"
-                                class="reservation-show-primary-button"
+                            <form
+                                method="POST"
+                                action="{{ route(
+                                    'reservations.payment-proof',
+                                    $reservation->public_token
+                                ) }}"
+                                enctype="multipart/form-data"
+                                class="reservation-show-proof-form"
                             >
-                                {{ __('reservation.payment_proof_submit') }}
-                            </button>
 
-                        </form>
+                                @csrf
 
-                    </div>
+
+                                <div class="reservation-show-proof-field">
+
+                                    <label for="payment_proof">
+                                        {{ __('reservation.payment_proof_file') }}
+                                    </label>
+
+                                    <input
+                                        type="file"
+                                        id="payment_proof"
+                                        name="payment_proof"
+                                        accept=".jpg,.jpeg,.png,.pdf"
+                                        required
+                                    >
+
+                                    <small>
+                                        {{ __('reservation.payment_proof_formats') }}
+                                    </small>
+
+                                </div>
+
+
+                                @error('payment_proof')
+
+                                    <p class="reservation-show-form-error">
+                                        {{ $message }}
+                                    </p>
+
+                                @enderror
+
+
+                                <button
+                                    type="submit"
+                                    class="reservation-show-primary-button"
+                                >
+                                    {{ __('reservation.payment_proof_submit') }}
+                                </button>
+
+                            </form>
+
+                        </div>
+
+
+                        {{-- CANCEL RESERVATION --}}
+
+                        <div class="reservation-show-cancel">
+
+                            <h3>
+                                {{ __('reservation.cancel_title') }}
+                            </h3>
+
+                            <p>
+                                {{ __('reservation.cancel_instruction') }}
+                            </p>
+
+
+                            <form
+                                method="POST"
+                                action="{{ route(
+                                    'reservations.cancel',
+                                    $reservation->public_token
+                                ) }}"
+                                onsubmit="return confirm(
+                                    @js(__('reservation.cancel_confirmation'))
+                                )"
+                            >
+
+                                @csrf
+
+                                <button
+                                    type="submit"
+                                    class="reservation-show-cancel-button"
+                                >
+                                    {{ __('reservation.cancel_button') }}
+                                </button>
+
+                            </form>
+
+                        </div>
 
 
                     {{-- =================================================
-                         CANCEL RESERVATION
+                         PAYMENT SUBMITTED
                     ================================================== --}}
 
-                    <div class="reservation-show-cancel">
+                    @elseif($isPaymentSubmitted)
 
-                        <h3>
-                            {{ __('reservation.cancel_title') }}
-                        </h3>
+                        <div class="reservation-show-success-notice">
 
-                        <p>
-                            {{ __('reservation.cancel_instruction') }}
-                        </p>
+                            <strong>
+                                {{ __('reservation.payment_submitted_title') }}
+                            </strong>
 
+                            <p>
+                                {{ __('reservation.payment_submitted_message') }}
+                            </p>
 
-                        <form
-                            method="POST"
-                            action="{{ route(
-                                'reservations.cancel',
-                                $reservation->public_token
-                            ) }}"
-                            onsubmit="return confirm(
-                                @js(__('reservation.cancel_confirmation'))
-                            )"
-                        >
-
-                            @csrf
-
-                            <button
-                                type="submit"
-                                class="reservation-show-cancel-button"
-                            >
-                                {{ __('reservation.cancel_button') }}
-                            </button>
-
-                        </form>
-
-                    </div>
+                        </div>
 
 
-                {{-- =================================================
-                     PAYMENT SUBMITTED
-                ================================================== --}}
+                    {{-- =================================================
+                         CONFIRMED
+                    ================================================== --}}
 
-                @elseif($isPaymentSubmitted)
+                    @elseif($isConfirmed)
 
-                    <div class="reservation-show-success-notice">
+                        <div class="reservation-show-success-notice">
 
-                        <strong>
-                            {{ __('reservation.payment_submitted_title') }}
-                        </strong>
+                            <strong>
+                                {{ __('reservation.confirmed_title') }}
+                            </strong>
 
-                        <p>
-                            {{ __('reservation.payment_submitted_message') }}
-                        </p>
+                            <p>
+                                {{ __('reservation.confirmed_message') }}
+                            </p>
 
-                    </div>
-
-
-                {{-- =================================================
-                     CONFIRMED
-                ================================================== --}}
-
-                @elseif($isConfirmed)
-
-                    <div class="reservation-show-success-notice">
-
-                        <strong>
-                            {{ __('reservation.confirmed_title') }}
-                        </strong>
-
-                        <p>
-                            {{ __('reservation.confirmed_message') }}
-                        </p>
-
-                    </div>
+                        </div>
 
 
-                {{-- =================================================
-                     CANCELLED
-                ================================================== --}}
+                    {{-- =================================================
+                         CANCELLED
+                    ================================================== --}}
 
-                @elseif($isCancelled)
+                    @elseif($isCancelled)
 
-                    <div class="reservation-show-cancelled-notice">
+                        <div class="reservation-show-cancelled-notice">
 
-                        <strong>
-                            {{ __('reservation.cancelled_title') }}
-                        </strong>
+                            <strong>
+                                {{ __('reservation.cancelled_title') }}
+                            </strong>
 
-                        <p>
-                            {{ __('reservation.cancelled_message') }}
-                        </p>
+                            <p>
+                                {{ __('reservation.cancelled_message') }}
+                            </p>
 
-                    </div>
+                        </div>
 
-                @endif
+                    @endif
+
+                </div>
 
             </div>
 
@@ -630,10 +640,5 @@
     </div>
 
 </section>
-
-
-{{-- =============================================================
-     CANCEL CONFIRMATION
-============================================================= --}}
 
 @endsection

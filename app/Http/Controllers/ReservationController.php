@@ -533,7 +533,8 @@ class ReservationController extends Controller
         */
 
         $path = $validated['payment_proof']->store(
-            'payment-proofs'
+            '',
+            'payment_proofs'
         );
 
 

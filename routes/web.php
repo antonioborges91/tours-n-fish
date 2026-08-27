@@ -132,6 +132,11 @@ Route::middleware(['auth', 'verified'])
         Route::resource('reservations', ReservationController::class)
             ->only(['index', 'show', 'update']);
 
+        Route::get(
+            'reservations/{reservation}/payment-proof',
+            [ReservationController::class, 'paymentProof']
+        )->name('reservations.payment-proof');
+
     });
 
 

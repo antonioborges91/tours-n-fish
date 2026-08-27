@@ -38,6 +38,12 @@ return [
             'report' => false,
         ],
 
+        'payment_proofs' => [
+            'driver' => 'local',
+            'root' => storage_path('app/private/payment-proofs'),
+            'throw' => false,
+        ],
+
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),

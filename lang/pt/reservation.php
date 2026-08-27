@@ -2,9 +2,9 @@
 
 return [
 
-    'success_title' => 'Área da sua reserva',
+    'area_title' => 'Área da sua reserva',
 
-    'success_message' => 'Consulte os dados da sua reserva e acompanhe o estado do pagamento.',
+    'area_description' => 'Consulte os dados da sua reserva e acompanhe o estado do pagamento.',
 
     'reservation_data' => 'Dados da reserva',
 

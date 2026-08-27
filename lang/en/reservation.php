@@ -2,9 +2,9 @@
 
 return [
 
-    'success_title' => 'Your booking',
+    'area_title' => 'Your booking',
 
-    'success_message' => 'View your booking details and check the payment status.',
+    'area_description' => 'View your booking details and check the payment status.',
 
     'reservation_data' => 'Booking details',
 

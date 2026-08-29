@@ -18,6 +18,7 @@
 @import "./components/forms.css";
 
 /* Admin */
+@import "./admin/dashboard.css";
 @import "./admin/reservations.css";
 
 /* Pages */

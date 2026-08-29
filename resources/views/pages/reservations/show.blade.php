@@ -26,7 +26,7 @@
 
 @extends('layouts.app')
 
-@section('title', __('reservation.success_title'))
+@section('title', __('reservation.area_title'))
 
 @section('content')
 

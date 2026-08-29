@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\BlockedPeriod;
+use App\Models\Gallery;
 use App\Models\Reservation;
 use App\Models\Tour;
+use Carbon\Carbon;
 
 class DashboardController extends Controller
 {
@@ -14,18 +16,36 @@ class DashboardController extends Controller
      */
     public function index()
     {
+        $today = Carbon::today();
+
         /*
         |--------------------------------------------------------------------------
-        | Resumo
+        | Totais gerais
         |--------------------------------------------------------------------------
         */
 
-        $toursCount = Tour::query()
-            ->where('available', true)
+        $totalTours = Tour::count();
+
+        $totalReservations = Reservation::count();
+
+        $totalGalleryItems = Gallery::count();
+
+        $totalBlockedPeriods = BlockedPeriod::query()
+            ->whereDate('end_at', '>=', $today)
             ->count();
 
-        $reservationsCount = Reservation::query()
-            ->count();
+
+        /*
+        |--------------------------------------------------------------------------
+        | Reservas que precisam de atenção
+        |--------------------------------------------------------------------------
+        |
+        | Estas são as reservas que interessam mais ao abrir o dashboard:
+        |
+        | - aguardam pagamento;
+        | - têm comprovativo enviado e precisam de ser verificadas.
+        |
+        */
 
         $pendingPaymentCount = Reservation::query()
             ->where('status', 'pending_payment')
@@ -35,47 +55,33 @@ class DashboardController extends Controller
             ->where('status', 'payment_submitted')
             ->count();
 
-        $confirmedCount = Reservation::query()
+
+        /*
+        |--------------------------------------------------------------------------
+        | Estado das reservas
+        |--------------------------------------------------------------------------
+        */
+
+        $confirmedReservationsCount = Reservation::query()
             ->where('status', 'confirmed')
             ->count();
 
-        $cancelledCount = Reservation::query()
+        $cancelledReservationsCount = Reservation::query()
             ->where('status', 'cancelled')
             ->count();
 
-        $expiredCount = Reservation::query()
+        $rejectedReservationsCount = Reservation::query()
+            ->where('status', 'rejected')
+            ->count();
+
+        $expiredReservationsCount = Reservation::query()
             ->where('status', 'expired')
             ->count();
 
-        $activeBlockedPeriodsCount = BlockedPeriod::query()
-            ->where('end_at', '>=', now())
-            ->count();
-
 
         /*
         |--------------------------------------------------------------------------
-        | Reservas que precisam de atenção
-        |--------------------------------------------------------------------------
-        |
-        | O caso mais importante para o administrador é quando o cliente
-        | enviou o comprovativo e está à espera de verificação.
-        |
-        */
-
-        $attentionReservations = Reservation::query()
-            ->with([
-                'tour.translations',
-                'option.translations',
-            ])
-            ->where('status', 'payment_submitted')
-            ->orderByDesc('payment_submitted_at')
-            ->limit(5)
-            ->get();
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | Próximas reservas confirmadas
+        | Próximas reservas
         |--------------------------------------------------------------------------
         */
 
@@ -83,43 +89,84 @@ class DashboardController extends Controller
             ->with([
                 'tour.translations',
                 'option.translations',
+                'schedule',
             ])
-            ->where('status', 'confirmed')
-            ->whereDate('booking_date', '>=', today())
+            ->whereDate('booking_date', '>=', $today)
+            ->whereNotIn('status', [
+                'cancelled',
+                'rejected',
+                'expired',
+            ])
             ->orderBy('booking_date')
             ->orderBy('start_at')
-            ->limit(5)
+            ->orderBy('id')
+            ->limit(6)
             ->get();
 
 
         /*
         |--------------------------------------------------------------------------
-        | Dados para a view
+        | Últimas reservas
         |--------------------------------------------------------------------------
         */
 
+        $latestReservations = Reservation::query()
+            ->with([
+                'tour.translations',
+                'option.translations',
+                'schedule',
+            ])
+            ->latest('created_at')
+            ->limit(6)
+            ->get();
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Reservas que exigem atenção
+        |--------------------------------------------------------------------------
+        */
+
+        $attentionReservations = Reservation::query()
+            ->with([
+                'tour.translations',
+                'option.translations',
+                'schedule',
+            ])
+            ->whereIn('status', [
+                'payment_submitted',
+                'pending_payment',
+            ])
+            ->orderByRaw(
+                "CASE
+                    WHEN status = 'payment_submitted' THEN 0
+                    WHEN status = 'pending_payment' THEN 1
+                    ELSE 2
+                END"
+            )
+            ->orderBy('booking_date')
+            ->orderBy('id')
+            ->limit(6)
+            ->get();
+
+
         return view('admin.dashboard', [
-
-            'toursCount' => $toursCount,
-
-            'reservationsCount' => $reservationsCount,
+            'totalTours' => $totalTours,
+            'totalReservations' => $totalReservations,
+            'totalGalleryItems' => $totalGalleryItems,
+            'totalBlockedPeriods' => $totalBlockedPeriods,
 
             'pendingPaymentCount' => $pendingPaymentCount,
-
             'paymentSubmittedCount' => $paymentSubmittedCount,
 
-            'confirmedCount' => $confirmedCount,
-
-            'cancelledCount' => $cancelledCount,
-
-            'expiredCount' => $expiredCount,
-
-            'activeBlockedPeriodsCount' => $activeBlockedPeriodsCount,
-
-            'attentionReservations' => $attentionReservations,
+            'confirmedReservationsCount' => $confirmedReservationsCount,
+            'cancelledReservationsCount' => $cancelledReservationsCount,
+            'rejectedReservationsCount' => $rejectedReservationsCount,
+            'expiredReservationsCount' => $expiredReservationsCount,
 
             'upcomingReservations' => $upcomingReservations,
-
+            'latestReservations' => $latestReservations,
+            'attentionReservations' => $attentionReservations,
         ]);
     }
 }

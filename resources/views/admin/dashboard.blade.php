@@ -5,28 +5,63 @@
 <div class="admin-dashboard">
 
     {{-- =========================================================
-         CABEÇALHO
+         HEADER
     ========================================================== --}}
 
-    <div class="admin-dashboard-header">
+    <div class="admin-page-header">
 
         <div>
-
-            <span class="admin-dashboard-kicker">
-                Administração
-            </span>
-
-            <h1>
+            <h1 class="admin-page-title">
                 Dashboard
             </h1>
 
-            <p>
-                Visão geral das reservas, passeios e atividade da empresa.
+            <p class="admin-page-description">
+                Visão geral da atividade e das reservas.
             </p>
-
         </div>
 
     </div>
+
+
+    {{-- =========================================================
+         ALERTA DE ATENÇÃO
+    ========================================================== --}}
+
+    @if ($paymentSubmittedCount > 0)
+
+        <a
+            href="{{ route('admin.reservations.index') }}"
+            class="admin-dashboard-alert admin-dashboard-alert-payment"
+        >
+
+            <div class="admin-dashboard-alert-icon">
+                !
+            </div>
+
+            <div class="admin-dashboard-alert-content">
+
+                <strong>
+                    {{ $paymentSubmittedCount }}
+                    {{ $paymentSubmittedCount === 1
+                        ? 'reserva tem um comprovativo'
+                        : 'reservas têm comprovativo'
+                    }}
+                    para verificar
+                </strong>
+
+                <span>
+                    Existem pagamentos submetidos pelos clientes que aguardam confirmação.
+                </span>
+
+            </div>
+
+            <span class="admin-dashboard-alert-action">
+                Ver reservas →
+            </span>
+
+        </a>
+
+    @endif
 
 
     {{-- =========================================================
@@ -40,21 +75,17 @@
             class="admin-dashboard-stat"
         >
 
-            <div class="admin-dashboard-stat-top">
-
-                <span class="admin-dashboard-stat-label">
-                    Passeios ativos
-                </span>
-
-                <span class="admin-dashboard-stat-icon">
-                    →
-                </span>
-
-            </div>
+            <span class="admin-dashboard-stat-label">
+                Passeios
+            </span>
 
             <strong class="admin-dashboard-stat-value">
-                {{ $toursCount }}
+                {{ $totalTours }}
             </strong>
+
+            <span class="admin-dashboard-stat-link">
+                Gerir passeios →
+            </span>
 
         </a>
 
@@ -64,45 +95,37 @@
             class="admin-dashboard-stat"
         >
 
-            <div class="admin-dashboard-stat-top">
-
-                <span class="admin-dashboard-stat-label">
-                    Reservas
-                </span>
-
-                <span class="admin-dashboard-stat-icon">
-                    →
-                </span>
-
-            </div>
+            <span class="admin-dashboard-stat-label">
+                Reservas
+            </span>
 
             <strong class="admin-dashboard-stat-value">
-                {{ $reservationsCount }}
+                {{ $totalReservations }}
             </strong>
+
+            <span class="admin-dashboard-stat-link">
+                Ver reservas →
+            </span>
 
         </a>
 
 
         <a
-            href="{{ route('admin.reservations.index') }}"
-            class="admin-dashboard-stat admin-dashboard-stat-warning"
+            href="{{ route('admin.gallery.index') }}"
+            class="admin-dashboard-stat"
         >
 
-            <div class="admin-dashboard-stat-top">
-
-                <span class="admin-dashboard-stat-label">
-                    Comprovativos por verificar
-                </span>
-
-                <span class="admin-dashboard-stat-icon">
-                    !
-                </span>
-
-            </div>
+            <span class="admin-dashboard-stat-label">
+                Galeria
+            </span>
 
             <strong class="admin-dashboard-stat-value">
-                {{ $paymentSubmittedCount }}
+                {{ $totalGalleryItems }}
             </strong>
+
+            <span class="admin-dashboard-stat-link">
+                Gerir galeria →
+            </span>
 
         </a>
 
@@ -112,21 +135,17 @@
             class="admin-dashboard-stat"
         >
 
-            <div class="admin-dashboard-stat-top">
-
-                <span class="admin-dashboard-stat-label">
-                    Bloqueios ativos
-                </span>
-
-                <span class="admin-dashboard-stat-icon">
-                    →
-                </span>
-
-            </div>
+            <span class="admin-dashboard-stat-label">
+                Bloqueios ativos
+            </span>
 
             <strong class="admin-dashboard-stat-value">
-                {{ $activeBlockedPeriodsCount }}
+                {{ $totalBlockedPeriods }}
             </strong>
+
+            <span class="admin-dashboard-stat-link">
+                Gerir bloqueios →
+            </span>
 
         </a>
 
@@ -134,115 +153,233 @@
 
 
     {{-- =========================================================
-         CONTEÚDO PRINCIPAL
+         RESUMO DAS RESERVAS
     ========================================================== --}}
 
-    <div class="admin-dashboard-grid">
+    <section class="admin-dashboard-section">
+
+        <div class="admin-dashboard-section-header">
+
+            <div>
+                <span class="admin-dashboard-section-label">
+                    Reservas
+                </span>
+
+                <h2>
+                    Estado atual
+                </h2>
+            </div>
+
+            <a
+                href="{{ route('admin.reservations.index') }}"
+                class="admin-dashboard-section-link"
+            >
+                Ver todas
+            </a>
+
+        </div>
+
+
+        <div class="admin-dashboard-status-grid">
+
+            <a
+                href="{{ route('admin.reservations.index') }}"
+                class="admin-dashboard-status-card status-payment"
+            >
+                <span>
+                    A aguardar pagamento
+                </span>
+
+                <strong>
+                    {{ $pendingPaymentCount }}
+                </strong>
+            </a>
+
+
+            <a
+                href="{{ route('admin.reservations.index') }}"
+                class="admin-dashboard-status-card status-submitted"
+            >
+                <span>
+                    Comprovativo enviado
+                </span>
+
+                <strong>
+                    {{ $paymentSubmittedCount }}
+                </strong>
+            </a>
+
+
+            <div class="admin-dashboard-status-card status-confirmed">
+
+                <span>
+                    Confirmadas
+                </span>
+
+                <strong>
+                    {{ $confirmedReservationsCount }}
+                </strong>
+
+            </div>
+
+
+            <div class="admin-dashboard-status-card status-cancelled">
+
+                <span>
+                    Canceladas
+                </span>
+
+                <strong>
+                    {{ $cancelledReservationsCount }}
+                </strong>
+
+            </div>
+
+
+            <div class="admin-dashboard-status-card status-rejected">
+
+                <span>
+                    Rejeitadas
+                </span>
+
+                <strong>
+                    {{ $rejectedReservationsCount }}
+                </strong>
+
+            </div>
+
+
+            <div class="admin-dashboard-status-card status-expired">
+
+                <span>
+                    Expiradas
+                </span>
+
+                <strong>
+                    {{ $expiredReservationsCount }}
+                </strong>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    {{-- =========================================================
+         DUAS COLUNAS
+    ========================================================== --}}
+
+    <div class="admin-dashboard-columns">
 
 
         {{-- =====================================================
-             RESERVAS A AGUARDAR ATENÇÃO
+             RESERVAS QUE EXIGEM ATENÇÃO
         ====================================================== --}}
 
-        <section class="admin-dashboard-card">
+        <section class="admin-dashboard-panel">
 
-            <div class="admin-dashboard-card-header">
+            <div class="admin-dashboard-panel-header">
 
                 <div>
-
-                    <span class="admin-dashboard-card-label">
-                        Ação necessária
+                    <span class="admin-dashboard-section-label">
+                        Atenção
                     </span>
 
                     <h2>
-                        Comprovativos por verificar
+                        Reservas a tratar
                     </h2>
-
                 </div>
 
                 <a
                     href="{{ route('admin.reservations.index') }}"
-                    class="admin-dashboard-card-link"
+                    class="admin-dashboard-section-link"
                 >
-                    Ver reservas
+                    Ver todas
                 </a>
 
             </div>
 
 
-            @if($attentionReservations->isNotEmpty())
+            @if ($attentionReservations->isEmpty())
 
-                <div class="admin-dashboard-list">
+                <div class="admin-dashboard-empty">
+                    <strong>
+                        Tudo tratado.
+                    </strong>
 
-                    @foreach($attentionReservations as $reservation)
+                    <span>
+                        Não existem reservas pendentes de intervenção.
+                    </span>
+                </div>
+
+            @else
+
+                <div class="admin-dashboard-reservation-list">
+
+                    @foreach ($attentionReservations as $reservation)
 
                         @php
-                            $tourTranslation = $reservation->tour?->translation();
-                            $optionTranslation = $reservation->option?->translation();
+                            $tourTranslation = $reservation->tour?->translations
+                                ?->firstWhere('locale', app()->getLocale());
+
+                            $optionTranslation = $reservation->option?->translations
+                                ?->firstWhere('locale', app()->getLocale());
+
+                            $statusLabels = [
+                                'pending_payment' => 'A aguardar pagamento',
+                                'payment_submitted' => 'Comprovativo enviado',
+                                'confirmed' => 'Confirmada',
+                                'rejected' => 'Rejeitada',
+                                'cancelled' => 'Cancelada',
+                                'expired' => 'Expirada',
+                            ];
                         @endphp
 
                         <a
                             href="{{ route('admin.reservations.show', $reservation) }}"
-                            class="admin-dashboard-list-item"
+                            class="admin-dashboard-reservation"
                         >
 
-                            <div class="admin-dashboard-list-main">
+                            <div class="admin-dashboard-reservation-main">
 
                                 <strong>
-                                    #{{ $reservation->reservation_number }}
+                                    #{{ $reservation->reservation_number ?? $reservation->id }}
                                 </strong>
 
                                 <span>
-                                    {{ $reservation->customer_name }}
+                                    {{ $tourTranslation?->name ?? '—' }}
                                 </span>
 
                                 <small>
-
-                                    {{ $tourTranslation?->name ?? 'Passeio' }}
-
-                                    @if($optionTranslation?->name)
-                                        · {{ $optionTranslation->name }}
-                                    @endif
-
+                                    {{ $reservation->customer_name }}
                                 </small>
 
                             </div>
 
 
-                            <div class="admin-dashboard-list-side">
+                            <div class="admin-dashboard-reservation-meta">
 
-                                <span class="admin-status admin-status-payment_submitted">
-                                    Comprovativo enviado
+                                <strong>
+                                    {{ $reservation->booking_date?->format('d/m/Y') ?? '—' }}
+                                </strong>
+
+                                <span>
+                                    {{ \Carbon\Carbon::parse($reservation->start_at)->format('H:i') }}
+                                    -
+                                    {{ \Carbon\Carbon::parse($reservation->end_at)->format('H:i') }}
                                 </span>
 
-                                @if($reservation->payment_submitted_at)
-
-                                    <small>
-                                        {{ $reservation->payment_submitted_at->format('d/m/Y H:i') }}
-                                    </small>
-
-                                @endif
-
                             </div>
+
+
+                            <span class="admin-status admin-status-{{ $reservation->status }}">
+                                {{ $statusLabels[$reservation->status] ?? $reservation->status }}
+                            </span>
 
                         </a>
 
                     @endforeach
-
-                </div>
-
-            @else
-
-                <div class="admin-dashboard-empty">
-
-                    <strong>
-                        Não existem comprovativos pendentes.
-                    </strong>
-
-                    <p>
-                        Quando um cliente enviar um comprovativo,
-                        a reserva aparecerá aqui.
-                    </p>
 
                 </div>
 
@@ -255,67 +392,77 @@
              PRÓXIMAS RESERVAS
         ====================================================== --}}
 
-        <section class="admin-dashboard-card">
+        <section class="admin-dashboard-panel">
 
-            <div class="admin-dashboard-card-header">
+            <div class="admin-dashboard-panel-header">
 
                 <div>
-
-                    <span class="admin-dashboard-card-label">
+                    <span class="admin-dashboard-section-label">
                         Agenda
                     </span>
 
                     <h2>
-                        Próximos passeios
+                        Próximas reservas
                     </h2>
-
                 </div>
 
                 <a
                     href="{{ route('admin.reservations.index') }}"
-                    class="admin-dashboard-card-link"
+                    class="admin-dashboard-section-link"
                 >
-                    Ver reservas
+                    Ver todas
                 </a>
 
             </div>
 
 
-            @if($upcomingReservations->isNotEmpty())
+            @if ($upcomingReservations->isEmpty())
 
-                <div class="admin-dashboard-list">
+                <div class="admin-dashboard-empty">
 
-                    @foreach($upcomingReservations as $reservation)
+                    <strong>
+                        Não existem próximas reservas.
+                    </strong>
+
+                    <span>
+                        As novas reservas aparecerão aqui.
+                    </span>
+
+                </div>
+
+            @else
+
+                <div class="admin-dashboard-reservation-list">
+
+                    @foreach ($upcomingReservations as $reservation)
 
                         @php
-                            $tourTranslation = $reservation->tour?->translation();
-                            $optionTranslation = $reservation->option?->translation();
+                            $tourTranslation = $reservation->tour?->translations
+                                ?->firstWhere('locale', app()->getLocale());
                         @endphp
 
                         <a
                             href="{{ route('admin.reservations.show', $reservation) }}"
-                            class="admin-dashboard-list-item"
+                            class="admin-dashboard-reservation"
                         >
 
-                            <div class="admin-dashboard-date">
+                            <div class="admin-dashboard-reservation-date">
 
                                 <strong>
-                                    {{ $reservation->booking_date->format('d') }}
+                                    {{ $reservation->booking_date?->format('d') }}
                                 </strong>
 
                                 <span>
-                                    {{ mb_strtoupper(
-                                        $reservation->booking_date->translatedFormat('M')
-                                    ) }}
+                                    {{ $reservation->booking_date?->translatedFormat('M') }}
                                 </span>
 
                             </div>
 
 
-                            <div class="admin-dashboard-list-main">
+                            <div class="admin-dashboard-reservation-main">
 
                                 <strong>
-                                    {{ $tourTranslation?->name ?? 'Passeio' }}
+                                    {{ $tourTranslation?->name ?? '—' }}
                                 </strong>
 
                                 <span>
@@ -323,52 +470,22 @@
                                 </span>
 
                                 <small>
-
-                                    {{ \Carbon\Carbon::parse($reservation->start_at)->format('H:i') }}
-
-                                    -
-
-                                    {{ \Carbon\Carbon::parse($reservation->end_at)->format('H:i') }}
-
-                                    ·
-
                                     {{ $reservation->participants }}
                                     {{ $reservation->participants === 1 ? 'pessoa' : 'pessoas' }}
-
-                                    @if($optionTranslation?->name)
-                                        · {{ $optionTranslation->name }}
-                                    @endif
-
+                                    ·
+                                    {{ \Carbon\Carbon::parse($reservation->start_at)->format('H:i') }}
                                 </small>
 
                             </div>
 
 
-                            <div class="admin-dashboard-list-side">
-
-                                <span class="admin-status admin-status-confirmed">
-                                    Confirmada
-                                </span>
-
-                            </div>
+                            <span class="admin-dashboard-reservation-arrow">
+                                →
+                            </span>
 
                         </a>
 
                     @endforeach
-
-                </div>
-
-            @else
-
-                <div class="admin-dashboard-empty">
-
-                    <strong>
-                        Não existem reservas confirmadas próximas.
-                    </strong>
-
-                    <p>
-                        As próximas reservas confirmadas aparecerão aqui.
-                    </p>
 
                 </div>
 
@@ -380,101 +497,79 @@
 
 
     {{-- =========================================================
-         ESTADO DAS RESERVAS
+         ÚLTIMAS RESERVAS
     ========================================================== --}}
 
-    <section class="admin-dashboard-card admin-dashboard-status-card">
+    <section class="admin-dashboard-panel admin-dashboard-latest">
 
-        <div class="admin-dashboard-card-header">
+        <div class="admin-dashboard-panel-header">
 
             <div>
-
-                <span class="admin-dashboard-card-label">
-                    Reservas
+                <span class="admin-dashboard-section-label">
+                    Atividade
                 </span>
 
                 <h2>
-                    Estado das reservas
+                    Últimas reservas
                 </h2>
-
             </div>
 
             <a
                 href="{{ route('admin.reservations.index') }}"
-                class="admin-dashboard-card-link"
+                class="admin-dashboard-section-link"
             >
-                Gerir reservas
+                Ver todas
             </a>
 
         </div>
 
 
-        <div class="admin-dashboard-status-grid">
+        <div class="admin-dashboard-latest-list">
 
+            @foreach ($latestReservations as $reservation)
 
-            <div class="admin-dashboard-status-item">
+                @php
+                    $tourTranslation = $reservation->tour?->translations
+                        ?->firstWhere('locale', app()->getLocale());
 
-                <span class="admin-status admin-status-pending_payment">
-                    A aguardar pagamento
-                </span>
+                    $statusLabels = [
+                        'pending_payment' => 'A aguardar pagamento',
+                        'payment_submitted' => 'Comprovativo enviado',
+                        'confirmed' => 'Confirmada',
+                        'rejected' => 'Rejeitada',
+                        'cancelled' => 'Cancelada',
+                        'expired' => 'Expirada',
+                    ];
+                @endphp
 
-                <strong>
-                    {{ $pendingPaymentCount }}
-                </strong>
+                <a
+                    href="{{ route('admin.reservations.show', $reservation) }}"
+                    class="admin-dashboard-latest-row"
+                >
 
-            </div>
+                    <span class="admin-dashboard-latest-number">
+                        #{{ $reservation->reservation_number ?? $reservation->id }}
+                    </span>
 
+                    <span class="admin-dashboard-latest-tour">
+                        {{ $tourTranslation?->name ?? '—' }}
+                    </span>
 
-            <div class="admin-dashboard-status-item">
+                    <span class="admin-dashboard-latest-customer">
+                        {{ $reservation->customer_name }}
+                    </span>
 
-                <span class="admin-status admin-status-payment_submitted">
-                    Comprovativo enviado
-                </span>
+                    <span class="admin-dashboard-latest-date">
+                        {{ $reservation->created_at?->format('d/m/Y H:i') ?? '—' }}
+                    </span>
 
-                <strong>
-                    {{ $paymentSubmittedCount }}
-                </strong>
+                    <span class="admin-status admin-status-{{ $reservation->status }}">
+                        {{ $statusLabels[$reservation->status] ?? $reservation->status }}
+                    </span>
 
-            </div>
+                </a>
 
-
-            <div class="admin-dashboard-status-item">
-
-                <span class="admin-status admin-status-confirmed">
-                    Confirmadas
-                </span>
-
-                <strong>
-                    {{ $confirmedCount }}
-                </strong>
-
-            </div>
-
-
-            <div class="admin-dashboard-status-item">
-
-                <span class="admin-status admin-status-cancelled">
-                    Canceladas
-                </span>
-
-                <strong>
-                    {{ $cancelledCount }}
-                </strong>
-
-            </div>
-
-
-            <div class="admin-dashboard-status-item">
-
-                <span class="admin-status admin-status-expired">
-                    Expiradas
-                </span>
-
-                <strong>
-                    {{ $expiredCount }}
-                </strong>
-
-            </div>
+            @endforeach
 
         </div>
 

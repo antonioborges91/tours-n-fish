@@ -8,56 +8,129 @@
     width: 100%;
 }
 
-.admin-dashboard-header {
+
+/*
+|--------------------------------------------------------------------------
+| Page Header
+|--------------------------------------------------------------------------
+*/
+
+.admin-page-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1.5rem;
     margin-bottom: 2rem;
 }
 
-.admin-dashboard-kicker {
-    display: block;
-    margin-bottom: .35rem;
-    color: var(--color-primary);
-    font-size: .78rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: .05em;
-}
-
-.admin-dashboard-header h1 {
+.admin-page-title {
     margin: 0;
-    color: #0f172a;
+    color: var(--color-text);
     font-size: 2rem;
-    line-height: 1.2;
+    line-height: 1.15;
     font-weight: 700;
 }
 
-.admin-dashboard-header p {
+.admin-page-description {
     margin: .45rem 0 0;
-    color: #64748b;
+    color: var(--color-text-light);
     font-size: .95rem;
+    line-height: 1.5;
 }
 
 
 /*
 |--------------------------------------------------------------------------
-| Main Statistics
+| Attention Alert
+|--------------------------------------------------------------------------
+*/
+
+.admin-dashboard-alert {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    padding: 1rem 1.15rem;
+    border: 1px solid #f2d48a;
+    border-radius: .9rem;
+    background: #fff8e5;
+    color: var(--color-text);
+    text-decoration: none;
+    transition:
+        border-color .2s,
+        box-shadow .2s,
+        transform .2s;
+}
+
+.admin-dashboard-alert:hover {
+    border-color: #e8c45d;
+    box-shadow: 0 6px 18px rgba(15, 23, 42, .06);
+    transform: translateY(-1px);
+}
+
+.admin-dashboard-alert-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    flex: 0 0 36px;
+    border-radius: 50%;
+    background: #f5c84b;
+    color: #4b3500;
+    font-size: 1rem;
+    font-weight: 800;
+}
+
+.admin-dashboard-alert-content {
+    display: flex;
+    flex-direction: column;
+    gap: .15rem;
+    min-width: 0;
+}
+
+.admin-dashboard-alert-content strong {
+    font-size: .9rem;
+    line-height: 1.4;
+}
+
+.admin-dashboard-alert-content span {
+    color: var(--color-text-light);
+    font-size: .82rem;
+    line-height: 1.45;
+}
+
+.admin-dashboard-alert-action {
+    margin-left: auto;
+    color: var(--color-primary);
+    font-size: .82rem;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| Main Stats
 |--------------------------------------------------------------------------
 */
 
 .admin-dashboard-stats {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 1rem;
-    margin-bottom: 1.5rem;
+    gap: 1.25rem;
+    margin-bottom: 2rem;
 }
 
 .admin-dashboard-stat {
-    display: block;
-    min-width: 0;
-    padding: 1.25rem 1.35rem;
-    background: #fff;
-    border: 1px solid #e5e7eb;
+    display: flex;
+    flex-direction: column;
+    min-height: 145px;
+    padding: 1.4rem;
+    border: 1px solid #e4e9ef;
     border-radius: 1rem;
-    box-shadow: 0 1px 3px rgba(15, 23, 42, .05);
+    background: #fff;
+    box-shadow: 0 3px 12px rgba(15, 23, 42, .04);
     text-decoration: none;
     transition:
         border-color .2s,
@@ -66,164 +139,219 @@
 }
 
 .admin-dashboard-stat:hover {
-    border-color: #cbd5e1;
-    box-shadow: 0 5px 15px rgba(15, 23, 42, .07);
-    transform: translateY(-1px);
-}
-
-.admin-dashboard-stat-warning {
-    border-color: #fde68a;
-}
-
-.admin-dashboard-stat-warning:hover {
-    border-color: #fbbf24;
-}
-
-.admin-dashboard-stat-top {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
+    border-color: #cfd9e5;
+    box-shadow: 0 8px 24px rgba(15, 23, 42, .07);
+    transform: translateY(-2px);
 }
 
 .admin-dashboard-stat-label {
-    color: #64748b;
-    font-size: .82rem;
-    line-height: 1.4;
-}
-
-.admin-dashboard-stat-icon {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 26px;
-    height: 26px;
-    border-radius: 50%;
-    background: #f1f5f9;
-    color: #64748b;
-    font-size: .8rem;
-    font-weight: 700;
-}
-
-.admin-dashboard-stat-warning .admin-dashboard-stat-icon {
-    background: #fef3c7;
-    color: #92400e;
+    color: var(--color-text-light);
+    font-size: .84rem;
+    font-weight: 600;
 }
 
 .admin-dashboard-stat-value {
-    display: block;
-    margin-top: .7rem;
-    color: #0f172a;
-    font-size: 2rem;
+    margin-top: .45rem;
+    color: var(--color-text);
+    font-size: 2.25rem;
     line-height: 1;
     font-weight: 700;
 }
 
-
-/*
-|--------------------------------------------------------------------------
-| Main Dashboard Grid
-|--------------------------------------------------------------------------
-*/
-
-.admin-dashboard-grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 1.5rem;
-    margin-bottom: 1.5rem;
+.admin-dashboard-stat-link {
+    margin-top: auto;
+    color: var(--color-primary);
+    font-size: .78rem;
+    font-weight: 600;
 }
 
 
 /*
 |--------------------------------------------------------------------------
-| Cards
+| Sections
 |--------------------------------------------------------------------------
 */
 
-.admin-dashboard-card {
-    min-width: 0;
-    padding: 1.5rem;
-    background: #fff;
-    border: 1px solid #e5e7eb;
+.admin-dashboard-section,
+.admin-dashboard-panel {
+    border: 1px solid #e4e9ef;
     border-radius: 1rem;
-    box-shadow: 0 1px 3px rgba(15, 23, 42, .05);
+    background: #fff;
+    box-shadow: 0 3px 12px rgba(15, 23, 42, .035);
 }
 
-.admin-dashboard-card-header {
+.admin-dashboard-section {
+    margin-bottom: 1.5rem;
+    padding: 1.4rem;
+}
+
+.admin-dashboard-section-header,
+.admin-dashboard-panel-header {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     justify-content: space-between;
     gap: 1rem;
-    margin-bottom: 1.25rem;
 }
 
-.admin-dashboard-card-label {
+.admin-dashboard-section-header {
+    margin-bottom: 1.15rem;
+}
+
+.admin-dashboard-panel-header {
+    margin-bottom: 1.1rem;
+}
+
+.admin-dashboard-section-label {
     display: block;
-    margin-bottom: .3rem;
+    margin-bottom: .25rem;
     color: var(--color-primary);
-    font-size: .75rem;
-    font-weight: 600;
+    font-size: .7rem;
+    line-height: 1.2;
+    font-weight: 700;
+    letter-spacing: .06em;
     text-transform: uppercase;
-    letter-spacing: .05em;
 }
 
-.admin-dashboard-card h2 {
+.admin-dashboard-section h2,
+.admin-dashboard-panel h2 {
     margin: 0;
-    color: #0f172a;
-    font-size: 1.15rem;
+    color: var(--color-text);
+    font-size: 1.1rem;
     line-height: 1.3;
+    font-weight: 700;
 }
 
-.admin-dashboard-card-link {
-    flex-shrink: 0;
+.admin-dashboard-section-link {
     color: var(--color-primary);
-    font-size: .82rem;
+    font-size: .8rem;
     font-weight: 600;
     text-decoration: none;
+    white-space: nowrap;
 }
 
-.admin-dashboard-card-link:hover {
+.admin-dashboard-section-link:hover {
     text-decoration: underline;
 }
 
 
 /*
 |--------------------------------------------------------------------------
-| Dashboard Lists
+| Status Summary
 |--------------------------------------------------------------------------
 */
 
-.admin-dashboard-list {
+.admin-dashboard-status-grid {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: .75rem;
+}
+
+.admin-dashboard-status-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 86px;
+    padding: 1rem;
+    border: 1px solid #e7ebf0;
+    border-radius: .8rem;
+    background: #f9fafb;
+    text-decoration: none;
+}
+
+.admin-dashboard-status-card span {
+    color: var(--color-text-light);
+    font-size: .75rem;
+    line-height: 1.35;
+}
+
+.admin-dashboard-status-card strong {
+    margin-top: .55rem;
+    color: var(--color-text);
+    font-size: 1.5rem;
+    line-height: 1;
+}
+
+.admin-dashboard-status-card.status-payment {
+    background: #fffaf0;
+    border-color: #f1dfad;
+}
+
+.admin-dashboard-status-card.status-submitted {
+    background: #f1f8ff;
+    border-color: #cfe4f8;
+}
+
+.admin-dashboard-status-card.status-confirmed {
+    background: #f0fbf5;
+    border-color: #ccebd8;
+}
+
+.admin-dashboard-status-card.status-cancelled,
+.admin-dashboard-status-card.status-rejected {
+    background: #fff4f4;
+    border-color: #f0d0d0;
+}
+
+.admin-dashboard-status-card.status-expired {
+    background: #fff8e5;
+    border-color: #ead89e;
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| Two-column layout
+|--------------------------------------------------------------------------
+*/
+
+.admin-dashboard-columns {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.admin-dashboard-panel {
+    min-width: 0;
+    padding: 1.4rem;
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| Reservation Lists
+|--------------------------------------------------------------------------
+*/
+
+.admin-dashboard-reservation-list {
     display: flex;
     flex-direction: column;
 }
 
-.admin-dashboard-list-item {
+.admin-dashboard-reservation {
     display: flex;
     align-items: center;
     gap: 1rem;
-    min-width: 0;
     padding: .9rem 0;
     border-top: 1px solid #edf0f3;
     color: inherit;
     text-decoration: none;
-    transition: background .2s;
 }
 
-.admin-dashboard-list-item:first-child {
-    padding-top: 0;
+.admin-dashboard-reservation:first-child {
     border-top: 0;
+    padding-top: 0;
 }
 
-.admin-dashboard-list-item:last-child {
+.admin-dashboard-reservation:last-child {
     padding-bottom: 0;
 }
 
-.admin-dashboard-list-item:hover .admin-dashboard-list-main > strong {
+.admin-dashboard-reservation:hover .admin-dashboard-reservation-main strong {
     color: var(--color-primary);
 }
 
-.admin-dashboard-list-main {
+.admin-dashboard-reservation-main {
     display: flex;
     flex-direction: column;
     gap: .15rem;
@@ -231,69 +359,124 @@
     flex: 1;
 }
 
-.admin-dashboard-list-main > strong {
-    color: #0f172a;
-    font-size: .9rem;
-    font-weight: 600;
+.admin-dashboard-reservation-main strong {
+    overflow: hidden;
+    color: var(--color-text);
+    font-size: .84rem;
+    line-height: 1.35;
+    font-weight: 700;
+    text-overflow: ellipsis;
+    white-space: nowrap;
     transition: color .2s;
 }
 
-.admin-dashboard-list-main > span {
-    color: #334155;
-    font-size: .84rem;
+.admin-dashboard-reservation-main span {
+    overflow: hidden;
+    color: var(--color-text-light);
+    font-size: .8rem;
+    line-height: 1.35;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
-.admin-dashboard-list-main > small {
-    color: #64748b;
-    font-size: .76rem;
+.admin-dashboard-reservation-main small {
+    color: #8a94a3;
+    font-size: .73rem;
+    line-height: 1.35;
 }
 
-.admin-dashboard-list-side {
+.admin-dashboard-reservation-meta {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    gap: .3rem;
-    flex-shrink: 0;
+    gap: .15rem;
+    flex: 0 0 auto;
 }
 
-.admin-dashboard-list-side small {
-    color: #94a3b8;
+.admin-dashboard-reservation-meta strong {
+    color: var(--color-text);
+    font-size: .78rem;
+}
+
+.admin-dashboard-reservation-meta span {
+    color: var(--color-text-light);
     font-size: .72rem;
+}
+
+.admin-dashboard-reservation-arrow {
+    color: #9aa4b2;
+    font-size: 1rem;
+}
+
+.admin-dashboard-reservation-date {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 46px;
+    min-width: 46px;
+    height: 46px;
+    border-radius: .7rem;
+    background: #f3f6f9;
+}
+
+.admin-dashboard-reservation-date strong {
+    color: var(--color-text);
+    font-size: 1.05rem;
+    line-height: 1;
+}
+
+.admin-dashboard-reservation-date span {
+    margin-top: .2rem;
+    color: var(--color-text-light);
+    font-size: .65rem;
+    text-transform: uppercase;
 }
 
 
 /*
 |--------------------------------------------------------------------------
-| Date
+| Status badges
 |--------------------------------------------------------------------------
 */
 
-.admin-dashboard-date {
-    display: flex;
-    flex-direction: column;
+.admin-status {
+    display: inline-flex;
     align-items: center;
     justify-content: center;
-    flex-shrink: 0;
-    width: 48px;
-    min-height: 48px;
-    padding: .35rem;
-    box-sizing: border-box;
-    border: 1px solid #e2e8f0;
-    border-radius: .7rem;
-    background: #f8fafc;
+    width: fit-content;
+    padding: .3rem .55rem;
+    border-radius: 999px;
+    font-size: .68rem;
+    line-height: 1.2;
+    font-weight: 700;
+    white-space: nowrap;
 }
 
-.admin-dashboard-date strong {
-    color: #0f172a;
-    font-size: 1rem;
-    line-height: 1;
+.admin-status-pending_payment {
+    background: #fff2c7;
+    color: #9a6700;
 }
 
-.admin-dashboard-date span {
-    margin-top: .2rem;
-    color: #64748b;
-    font-size: .62rem;
-    font-weight: 600;
+.admin-status-payment_submitted {
+    background: #dceeff;
+    color: #08659a;
+}
+
+.admin-status-confirmed {
+    background: #dff7e8;
+    color: #13733b;
+}
+
+.admin-status-rejected,
+.admin-status-cancelled {
+    background: #fde2e2;
+    color: #b42318;
+}
+
+.admin-status-expired {
+    background: #fff0c2;
+    color: #9a6700;
 }
 
 
@@ -304,115 +487,93 @@
 */
 
 .admin-dashboard-empty {
-    padding: 1.25rem;
-    border: 1px dashed #dbe3ec;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 150px;
+    padding: 1.5rem;
+    border: 1px dashed #dce2e9;
     border-radius: .8rem;
-    background: #f8fafc;
+    background: #fafbfc;
+    text-align: center;
 }
 
 .admin-dashboard-empty strong {
-    display: block;
-    color: #334155;
+    color: var(--color-text);
     font-size: .85rem;
 }
 
-.admin-dashboard-empty p {
-    margin: .35rem 0 0;
-    color: #64748b;
-    font-size: .78rem;
-    line-height: 1.5;
+.admin-dashboard-empty span {
+    margin-top: .3rem;
+    color: var(--color-text-light);
+    font-size: .76rem;
 }
 
 
 /*
 |--------------------------------------------------------------------------
-| Reservation Status Summary
+| Latest
 |--------------------------------------------------------------------------
 */
 
-.admin-dashboard-status-card {
+.admin-dashboard-latest {
     margin-bottom: 0;
 }
 
-.admin-dashboard-status-grid {
+.admin-dashboard-latest-list {
+    overflow-x: auto;
+}
+
+.admin-dashboard-latest-row {
     display: grid;
-    grid-template-columns: repeat(5, minmax(0, 1fr));
-    gap: .75rem;
-}
-
-.admin-dashboard-status-item {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 1rem;
-    min-width: 0;
-    min-height: 90px;
-    padding: 1rem;
-    border: 1px solid #edf0f3;
-    border-radius: .85rem;
-    background: #fafbfc;
-}
-
-.admin-dashboard-status-item > strong {
-    color: #0f172a;
-    font-size: 1.5rem;
-    line-height: 1;
-}
-
-
-/*
-|--------------------------------------------------------------------------
-| Statuses
-|--------------------------------------------------------------------------
-|
-| Mantemos aqui apenas as classes necessárias ao dashboard.
-| As reservas continuam a ter o seu CSS próprio em reservations.css.
-|
-*/
-
-.admin-status {
-    display: inline-flex;
+    grid-template-columns: 90px minmax(120px, 1fr) minmax(130px, 1fr) 130px 170px;
     align-items: center;
-    justify-content: center;
-    padding: .38rem .7rem;
-    border-radius: 999px;
-    font-size: .72rem;
-    font-weight: 600;
-    line-height: 1.2;
+    gap: 1rem;
+    padding: .85rem 0;
+    border-top: 1px solid #edf0f3;
+    color: inherit;
+    text-decoration: none;
+}
+
+.admin-dashboard-latest-row:first-child {
+    border-top: 0;
+}
+
+.admin-dashboard-latest-row:hover .admin-dashboard-latest-tour {
+    color: var(--color-primary);
+}
+
+.admin-dashboard-latest-number {
+    color: var(--color-text);
+    font-size: .78rem;
+    font-weight: 700;
+}
+
+.admin-dashboard-latest-tour,
+.admin-dashboard-latest-customer,
+.admin-dashboard-latest-date {
+    overflow: hidden;
+    color: var(--color-text-light);
+    font-size: .76rem;
+    text-overflow: ellipsis;
     white-space: nowrap;
 }
 
-.admin-status-pending_payment {
-    background: #fef3c7;
-    color: #92400e;
+.admin-dashboard-latest-tour {
+    color: var(--color-text);
+    font-weight: 600;
+    transition: color .2s;
 }
 
-.admin-status-payment_submitted {
-    background: #dbeafe;
-    color: #1d4ed8;
-}
-
-.admin-status-confirmed {
-    background: #dcfce7;
-    color: #166534;
-}
-
-.admin-status-rejected,
-.admin-status-cancelled {
-    background: #fee2e2;
-    color: #991b1b;
-}
-
-.admin-status-expired {
-    background: #fef3c7;
-    color: #92400e;
+.admin-dashboard-latest-date {
+    text-align: right;
 }
 
 
 /*
 |--------------------------------------------------------------------------
-| Responsive
+| Tablet
 |--------------------------------------------------------------------------
 */
 
@@ -426,47 +587,74 @@
         grid-template-columns: repeat(3, minmax(0, 1fr));
     }
 
-}
-
-
-@media (max-width: 800px) {
-
-    .admin-dashboard-grid {
+    .admin-dashboard-columns {
         grid-template-columns: 1fr;
     }
 
-    .admin-dashboard-status-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
 }
 
 
-@media (max-width: 600px) {
+/*
+|--------------------------------------------------------------------------
+| Mobile
+|--------------------------------------------------------------------------
+*/
+
+@media (max-width: 700px) {
+
+    .admin-page-title {
+        font-size: 1.65rem;
+    }
+
+    .admin-dashboard-alert {
+        align-items: flex-start;
+        flex-wrap: wrap;
+    }
+
+    .admin-dashboard-alert-action {
+        width: 100%;
+        margin-left: 52px;
+    }
 
     .admin-dashboard-stats {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr 1fr;
+        gap: .75rem;
     }
 
-    .admin-dashboard-card {
-        padding: 1.15rem;
+    .admin-dashboard-stat {
+        min-height: 125px;
+        padding: 1rem;
     }
 
-    .admin-dashboard-card-header {
-        align-items: flex-start;
-        flex-direction: column;
-    }
-
-    .admin-dashboard-list-item {
-        align-items: flex-start;
-    }
-
-    .admin-dashboard-list-side {
-        align-items: flex-end;
+    .admin-dashboard-stat-value {
+        font-size: 1.9rem;
     }
 
     .admin-dashboard-status-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .admin-dashboard-section,
+    .admin-dashboard-panel {
+        padding: 1rem;
+    }
+
+    .admin-dashboard-reservation {
+        align-items: flex-start;
+        flex-wrap: wrap;
+    }
+
+    .admin-dashboard-reservation-meta {
+        margin-left: auto;
+    }
+
+    .admin-dashboard-reservation .admin-status {
+        width: 100%;
+        margin-left: 62px;
+    }
+
+    .admin-dashboard-latest-row {
+        min-width: 620px;
     }
 
 }

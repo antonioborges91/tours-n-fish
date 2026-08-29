@@ -24,14 +24,11 @@ use Illuminate\Support\Facades\Session;
 Route::get('/', [HomeController::class, 'index'])
     ->name('home');
 
-
 Route::view('/about', 'pages.about.index')
     ->name('about');
 
-
 Route::get('/tours', [TourController::class, 'index'])
     ->name('tours');
-
 
 Route::get('/tours/{tour}', [TourController::class, 'show'])
     ->name('tours.show');
@@ -48,7 +45,6 @@ Route::post(
     [PublicReservationController::class, 'store']
 )->name('reservations.store');
 
-
 Route::get(
     '/reservation/{reservation:public_token}',
     [PublicReservationController::class, 'show']
@@ -59,7 +55,6 @@ Route::post(
     [PublicReservationController::class, 'uploadPaymentProof']
 )->name('reservations.payment-proof');
 
-
 Route::post(
     '/reservation/{reservation:public_token}/cancel',
     [PublicReservationController::class, 'cancel']
@@ -69,10 +64,8 @@ Route::post(
 Route::get('/gallery', [GalleryController::class, 'index'])
     ->name('gallery');
 
-
 Route::get('/contact', [ContactController::class, 'index'])
     ->name('contact');
-
 
 Route::view('/faq', 'pages.faq.index')
     ->name('faq');
@@ -112,21 +105,51 @@ Route::middleware(['auth', 'verified'])
             ->name('dashboard');
 
 
+        /*
+        |--------------------------------------------------------------------------
+        | Passeios
+        |--------------------------------------------------------------------------
+        */
+
         Route::resource('tours', AdminTourController::class);
 
+        Route::post(
+            'tours/{tour}/move',
+            [AdminTourController::class, 'move']
+        )->name('tours.move');
 
-        Route::post('tours/{tour}/move', [AdminTourController::class, 'move'])
-            ->name('tours.move');
 
+        /*
+        |--------------------------------------------------------------------------
+        | Galeria
+        |--------------------------------------------------------------------------
+        */
 
         Route::resource('gallery', AdminGalleryController::class);
 
+        Route::post(
+            'gallery/{gallery}/move',
+            [AdminGalleryController::class, 'move']
+        )->name('gallery.move');
 
-        Route::post('gallery/{gallery}/move', [AdminGalleryController::class, 'move'])
-            ->name('gallery.move');
+
+        /*
+        |--------------------------------------------------------------------------
+        | Bloqueios
+        |--------------------------------------------------------------------------
+        */
+
+        Route::resource(
+            'blocked-periods',
+            BlockedPeriodController::class
+        );
 
 
-        Route::resource('blocked-periods', BlockedPeriodController::class);
+        /*
+        |--------------------------------------------------------------------------
+        | Reservas
+        |--------------------------------------------------------------------------
+        */
 
         Route::get(
             'reservations/{reservation}/payment-proof',
@@ -138,21 +161,20 @@ Route::middleware(['auth', 'verified'])
             [ReservationController::class, 'confirmPayment']
         )->name('reservations.confirm-payment');
 
-
-        Route::get(
-            'reservations/{reservation}/payment-proof',
-            [ReservationController::class, 'paymentProof']
-        )->name('reservations.payment-proof');
-
+        Route::post(
+            'reservations/{reservation}/cancel',
+            [ReservationController::class, 'cancel']
+        )->name('reservations.cancel');
 
         Route::delete(
             'reservations/{reservation}',
             [ReservationController::class, 'destroy']
         )->name('reservations.destroy');
 
-
-        Route::resource('reservations', ReservationController::class)
-            ->only(['index', 'show']);
+        Route::resource(
+            'reservations',
+            ReservationController::class
+        )->only(['index', 'show']);
 
     });
 
@@ -168,10 +190,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])
         ->name('profile.edit');
 
-
     Route::patch('/profile', [ProfileController::class, 'update'])
         ->name('profile.update');
-
 
     Route::delete('/profile', [ProfileController::class, 'destroy']);
 

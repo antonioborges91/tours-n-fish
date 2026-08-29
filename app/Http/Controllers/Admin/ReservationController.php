@@ -109,6 +109,36 @@ class ReservationController extends Controller
     }
 
     /**
+     * Cancela uma reserva através da administração.
+     */
+    public function cancel(Reservation $reservation)
+    {
+        if ($reservation->status === 'cancelled') {
+            return redirect()
+                ->route('admin.reservations.show', $reservation)
+                ->with(
+                    'error',
+                    'Esta reserva já está cancelada.'
+                );
+        }
+
+        $reservation->update([
+            'status' => 'cancelled',
+            'cancelled_at' => now(),
+        ]);
+
+        return redirect()
+            ->route(
+                'admin.reservations.show',
+                $reservation
+            )
+            ->with(
+                'success',
+                'A reserva foi cancelada com sucesso.'
+            );
+    }
+
+    /**
      * Elimina uma reserva.
      */
     public function destroy(Reservation $reservation)

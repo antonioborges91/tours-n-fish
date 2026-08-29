@@ -202,6 +202,7 @@
             {{-- AÇÕES ADMINISTRATIVAS --}}
             <div class="admin-reservation-actions">
 
+                {{-- Confirmar pagamento --}}
                 @if($reservation->status === 'payment_submitted' && $reservation->payment_proof)
                     <form
                         method="POST"
@@ -218,12 +219,38 @@
                     </form>
                 @endif
 
+
+                {{-- Cancelar reserva --}}
+                @if($reservation->status !== 'cancelled')
+                    <form
+                        method="POST"
+                        action="{{ route('admin.reservations.cancel', $reservation) }}"
+                        onsubmit="return confirm(
+                            '{{ $reservation->status === 'confirmed'
+                                ? 'Esta reserva está confirmada. Tem a certeza que pretende cancelar a reserva? A reserva será mantida na base de dados com o estado "Cancelada".'
+                                : 'Tem a certeza que pretende cancelar esta reserva? A reserva será mantida na base de dados com o estado "Cancelada".'
+                            }}'
+                        )"
+                    >
+                        @csrf
+
+                        <button
+                            type="submit"
+                            class="admin-reservation-action admin-reservation-action-cancel"
+                        >
+                            Cancelar reserva
+                        </button>
+                    </form>
+                @endif
+
+
+                {{-- Eliminar reserva --}}
                 <form
                     method="POST"
                     action="{{ route('admin.reservations.destroy', $reservation) }}"
                     onsubmit="return confirm(
                         '{{ $reservation->payment_proof
-                            ? 'Esta reserva tem um comprovativo de pagamento associado. Ao eliminar, a reserva e o respetivo comprovativo serão removidos definitivamente. Esta ação não pode ser desfeita.'
+                            ? 'ATENÇÃO: esta reserva tem um comprovativo de pagamento associado. A reserva e o respetivo comprovativo serão eliminados definitivamente. Esta ação não pode ser desfeita.'
                             : 'Tem a certeza que pretende eliminar esta reserva? Esta ação não pode ser desfeita.'
                         }}'
                     )"

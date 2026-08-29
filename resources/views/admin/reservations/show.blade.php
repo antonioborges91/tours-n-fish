@@ -198,6 +198,49 @@
 
             </div>
 
+
+            {{-- AÇÕES ADMINISTRATIVAS --}}
+            <div class="admin-reservation-actions">
+
+                @if($reservation->status === 'payment_submitted' && $reservation->payment_proof)
+                    <form
+                        method="POST"
+                        action="{{ route('admin.reservations.confirm-payment', $reservation) }}"
+                    >
+                        @csrf
+
+                        <button
+                            type="submit"
+                            class="admin-reservation-action admin-reservation-action-confirm"
+                        >
+                            Confirmar pagamento
+                        </button>
+                    </form>
+                @endif
+
+                <form
+                    method="POST"
+                    action="{{ route('admin.reservations.destroy', $reservation) }}"
+                    onsubmit="return confirm(
+                        '{{ $reservation->payment_proof
+                            ? 'Esta reserva tem um comprovativo de pagamento associado. Ao eliminar, a reserva e o respetivo comprovativo serão removidos definitivamente. Esta ação não pode ser desfeita.'
+                            : 'Tem a certeza que pretende eliminar esta reserva? Esta ação não pode ser desfeita.'
+                        }}'
+                    )"
+                >
+                    @csrf
+                    @method('DELETE')
+
+                    <button
+                        type="submit"
+                        class="admin-reservation-action admin-reservation-action-delete"
+                    >
+                        Eliminar reserva
+                    </button>
+                </form>
+
+            </div>
+
         </div>
 
         {{-- ESTADO --}}

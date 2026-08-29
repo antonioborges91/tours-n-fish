@@ -133,13 +133,26 @@ Route::middleware(['auth', 'verified'])
             [ReservationController::class, 'paymentProof']
         )->name('reservations.payment-proof');
 
-        Route::resource('reservations', ReservationController::class)
-            ->only(['index', 'show', 'update']);
+        Route::post(
+            'reservations/{reservation}/confirm-payment',
+            [ReservationController::class, 'confirmPayment']
+        )->name('reservations.confirm-payment');
+
 
         Route::get(
             'reservations/{reservation}/payment-proof',
             [ReservationController::class, 'paymentProof']
         )->name('reservations.payment-proof');
+
+
+        Route::delete(
+            'reservations/{reservation}',
+            [ReservationController::class, 'destroy']
+        )->name('reservations.destroy');
+
+
+        Route::resource('reservations', ReservationController::class)
+            ->only(['index', 'show']);
 
     });
 

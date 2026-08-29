@@ -68,4 +68,82 @@ class ReservationController extends Controller
             $disk->path($reservation->payment_proof)
         );
     }
+
+    /**
+     * Confirma o pagamento de uma reserva.
+     */
+    public function confirmPayment(Reservation $reservation)
+    {
+        /*
+        |--------------------------------------------------------------------------
+        | Só é possível confirmar depois de receber o comprovativo
+        |--------------------------------------------------------------------------
+        */
+
+        abort_unless(
+            $reservation->status === 'payment_submitted'
+            && $reservation->payment_proof,
+            403
+        );
+
+        /*
+        |--------------------------------------------------------------------------
+        | Confirmar pagamento
+        |--------------------------------------------------------------------------
+        */
+
+        $reservation->update([
+            'status' => 'confirmed',
+            'confirmed_at' => now(),
+        ]);
+
+        return redirect()
+            ->route(
+                'admin.reservations.show',
+                $reservation
+            )
+            ->with(
+                'success',
+                'O pagamento foi confirmado e a reserva está confirmada.'
+            );
+    }
+
+    /**
+     * Elimina uma reserva.
+     */
+    public function destroy(Reservation $reservation)
+    {
+        /*
+        |--------------------------------------------------------------------------
+        | Guardar o caminho do comprovativo antes de eliminar a reserva
+        |--------------------------------------------------------------------------
+        */
+
+        $paymentProof = $reservation->payment_proof;
+
+        /*
+        |--------------------------------------------------------------------------
+        | Eliminar a reserva
+        |--------------------------------------------------------------------------
+        */
+
+        $reservation->delete();
+
+        /*
+        |--------------------------------------------------------------------------
+        | Eliminar também o comprovativo privado, se existir
+        |--------------------------------------------------------------------------
+        */
+
+        if ($paymentProof) {
+            Storage::disk('payment_proofs')->delete($paymentProof);
+        }
+
+        return redirect()
+            ->route('admin.reservations.index')
+            ->with(
+                'success',
+                'A reserva foi eliminada com sucesso.'
+            );
+    }
 }

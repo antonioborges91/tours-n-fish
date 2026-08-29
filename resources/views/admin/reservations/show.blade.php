@@ -178,14 +178,6 @@
                         <strong class="admin-payment-proof-status is-sent">
                             Recebido
                         </strong>
-
-                        <a
-                            href="{{ route('admin.reservations.payment-proof', $reservation) }}"
-                            class="admin-btn-secondary"
-                            target="_blank"
-                        >
-                            Ver comprovativo
-                        </a>
                     @else
                         <strong class="admin-payment-proof-status">
                             Não enviado

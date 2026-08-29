@@ -137,10 +137,14 @@
     color: #166534;
 }
 
-.admin-status-rejected,
 .admin-status-cancelled {
     background: #fee2e2;
-    color: #b91c1c;
+    color: #991b1b;
+}
+
+.admin-status-expired {
+    background: #fef3c7;
+    color: #92400e;
 }
 
 .admin-status-expired {

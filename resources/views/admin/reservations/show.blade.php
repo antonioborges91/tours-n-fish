@@ -179,15 +179,16 @@
                             Recebido
                         </strong>
 
-                        @if($reservation->payment_submitted_at)
-                            <p>
-                                Enviado em
-                                {{ $reservation->payment_submitted_at->format('d/m/Y H:i') }}
-                            </p>
-                        @endif
+                        <a
+                            href="{{ route('admin.reservations.payment-proof', $reservation) }}"
+                            class="admin-btn-secondary"
+                            target="_blank"
+                        >
+                            Ver comprovativo
+                        </a>
                     @else
-                        <strong class="admin-payment-proof-status is-missing">
-                            Ainda não enviado
+                        <strong class="admin-payment-proof-status">
+                            Não enviado
                         </strong>
                     @endif
                 </div>

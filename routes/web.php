@@ -128,6 +128,10 @@ Route::middleware(['auth', 'verified'])
 
         Route::resource('blocked-periods', BlockedPeriodController::class);
 
+        Route::get(
+            'reservations/{reservation}/payment-proof',
+            [ReservationController::class, 'paymentProof']
+        )->name('reservations.payment-proof');
 
         Route::resource('reservations', ReservationController::class)
             ->only(['index', 'show', 'update']);

@@ -2,24 +2,12 @@
 
 @section('content')
 
-<div class="admin-page">
-
-    {{-- =========================================================
-         CABEÇALHO
-    ========================================================== --}}
+<div class="admin-page admin-reservation-show-page">
 
     <div class="admin-page-header">
-
         <div>
-
-            <h1>
-                Reserva #{{ $reservation->reservation_number }}
-            </h1>
-
-            <p>
-                Detalhes da reserva e informação do cliente.
-            </p>
-
+            <h1>Reserva #{{ $reservation->reservation_number }}</h1>
+            <p>Detalhes da reserva e informação do cliente.</p>
         </div>
 
         <a
@@ -28,441 +16,251 @@
         >
             ← Voltar às reservas
         </a>
-
     </div>
 
+    @php
+        $statusLabels = [
+            'pending_payment' => 'A aguardar pagamento',
+            'payment_submitted' => 'Comprovativo enviado',
+            'confirmed' => 'Confirmada',
+            'rejected' => 'Rejeitada',
+            'cancelled' => 'Cancelada',
+            'expired' => 'Expirada',
+        ];
 
-    {{-- =========================================================
-         RESUMO DA RESERVA
-    ========================================================== --}}
+        $statusLabel = $statusLabels[$reservation->status]
+            ?? $reservation->status;
+    @endphp
 
     <div class="admin-reservation-grid">
 
-
-        {{-- =====================================================
-             RESERVA
-        ====================================================== --}}
-
+        {{-- RESERVA --}}
         <div class="admin-card">
 
             <div class="admin-card-header">
-
                 <div>
-
-                    <span class="admin-card-label">
-                        Reserva
-                    </span>
-
+                    <span class="admin-card-label">Reserva</span>
                     <h2>
                         {{ $reservation->tour?->translation()?->name ?? '—' }}
                     </h2>
-
                 </div>
 
-
-                @php
-
-                    $statusLabels = [
-                        'pending_payment' => 'A aguardar pagamento',
-                        'payment_submitted' => 'Comprovativo enviado',
-                        'confirmed' => 'Confirmada',
-                        'rejected' => 'Rejeitada',
-                        'cancelled' => 'Cancelada',
-                        'expired' => 'Expirada',
-                    ];
-
-                    $statusLabel =
-                        $statusLabels[$reservation->status]
-                        ?? $reservation->status;
-
-                @endphp
-
-
-                <span
-                    class="admin-status admin-status-{{ $reservation->status }}"
-                >
+                <span class="admin-status admin-status-{{ $reservation->status }}">
                     {{ $statusLabel }}
                 </span>
-
             </div>
-
 
             <div class="admin-detail-list">
 
                 <div class="admin-detail-row">
-
-                    <span>
-                        Passeio
-                    </span>
-
+                    <span>Passeio</span>
                     <strong>
                         {{ $reservation->tour?->translation()?->name ?? '—' }}
                     </strong>
-
                 </div>
 
-
                 <div class="admin-detail-row">
-
-                    <span>
-                        Opção
-                    </span>
-
+                    <span>Opção</span>
                     <strong>
                         {{ $reservation->option?->translation()?->name ?? '—' }}
                     </strong>
-
                 </div>
 
-
                 <div class="admin-detail-row">
-
-                    <span>
-                        Data
-                    </span>
-
+                    <span>Data</span>
                     <strong>
                         {{ $reservation->booking_date?->format('d/m/Y') ?? '—' }}
                     </strong>
-
                 </div>
 
-
                 <div class="admin-detail-row">
-
-                    <span>
-                        Horário
-                    </span>
-
+                    <span>Horário</span>
                     <strong>
-
                         {{ \Carbon\Carbon::parse($reservation->start_at)->format('H:i') }}
-
                         -
-
                         {{ \Carbon\Carbon::parse($reservation->end_at)->format('H:i') }}
-
                     </strong>
-
                 </div>
 
-
                 <div class="admin-detail-row">
-
-                    <span>
-                        Pessoas
-                    </span>
-
-                    <strong>
-                        {{ $reservation->participants }}
-                    </strong>
-
+                    <span>Pessoas</span>
+                    <strong>{{ $reservation->participants }}</strong>
                 </div>
 
             </div>
 
         </div>
 
-
-
-        {{-- =====================================================
-             CLIENTE
-        ====================================================== --}}
-
+        {{-- CLIENTE --}}
         <div class="admin-card">
 
             <div class="admin-card-header">
-
                 <div>
-
-                    <span class="admin-card-label">
-                        Cliente
-                    </span>
-
-                    <h2>
-                        Dados do cliente
-                    </h2>
-
+                    <span class="admin-card-label">Cliente</span>
+                    <h2>Dados do cliente</h2>
                 </div>
-
             </div>
-
 
             <div class="admin-detail-list">
 
                 <div class="admin-detail-row">
-
-                    <span>
-                        Nome
-                    </span>
-
-                    <strong>
-                        {{ $reservation->customer_name }}
-                    </strong>
-
+                    <span>Nome</span>
+                    <strong>{{ $reservation->customer_name }}</strong>
                 </div>
-
 
                 <div class="admin-detail-row">
-
-                    <span>
-                        Email
-                    </span>
-
-                    <strong>
-                        {{ $reservation->customer_email }}
-                    </strong>
-
+                    <span>Email</span>
+                    <strong>{{ $reservation->customer_email }}</strong>
                 </div>
-
 
                 <div class="admin-detail-row">
-
-                    <span>
-                        Telefone
-                    </span>
-
-                    <strong>
-                        {{ $reservation->customer_phone }}
-                    </strong>
-
+                    <span>Telefone</span>
+                    <strong>{{ $reservation->customer_phone }}</strong>
                 </div>
-
 
                 <div class="admin-detail-row admin-detail-row-column">
-
-                    <span>
-                        Observações
-                    </span>
-
+                    <span>Observações</span>
                     <p>
                         {{ $reservation->customer_message ?: 'Sem observações.' }}
                     </p>
-
                 </div>
 
             </div>
 
         </div>
 
-
-
-        {{-- =====================================================
-             PAGAMENTO
-        ====================================================== --}}
-
+        {{-- PAGAMENTO --}}
         <div class="admin-card">
 
             <div class="admin-card-header">
-
                 <div>
-
-                    <span class="admin-card-label">
-                        Pagamento
-                    </span>
-
-                    <h2>
-                        Valores e prazo
-                    </h2>
-
+                    <span class="admin-card-label">Pagamento</span>
+                    <h2>Valores e comprovativo</h2>
                 </div>
-
             </div>
-
 
             <div class="admin-detail-list">
 
                 <div class="admin-detail-row">
-
-                    <span>
-                        Total da reserva
-                    </span>
-
+                    <span>Total da reserva</span>
                     <strong>
-                        €{{ number_format(
-                            $reservation->total_amount,
-                            2,
-                            ',',
-                            '.'
-                        ) }}
+                        €{{ number_format($reservation->total_amount, 2, ',', '.') }}
                     </strong>
-
                 </div>
 
-
                 <div class="admin-detail-row">
-
                     <span>
-                        Sinal
-                        ({{ number_format(
-                            $reservation->deposit_percentage,
-                            0
-                        ) }}%)
+                        Sinal ({{ number_format($reservation->deposit_percentage, 0) }}%)
                     </span>
-
                     <strong>
-                        €{{ number_format(
-                            $reservation->deposit_amount,
-                            2,
-                            ',',
-                            '.'
-                        ) }}
+                        €{{ number_format($reservation->deposit_amount, 2, ',', '.') }}
                     </strong>
-
                 </div>
 
-
                 <div class="admin-detail-row">
-
-                    <span>
-                        Prazo de pagamento
-                    </span>
-
+                    <span>Prazo de pagamento</span>
                     <strong>
-
                         {{ $reservation->payment_deadline_at
                             ? $reservation->payment_deadline_at->format('d/m/Y H:i')
                             : '—'
                         }}
-
                     </strong>
-
                 </div>
 
+            </div>
 
-                <div class="admin-detail-row">
+            <div class="admin-payment-proof">
 
-                    <span>
-                        Comprovativo
-                    </span>
+                <div>
+                    <span class="admin-card-label">Comprovativo</span>
 
-                    <strong>
-
-                        @if ($reservation->payment_proof)
-
-                            Enviado
-
-                        @else
-
-                            Ainda não enviado
-
-                        @endif
-
-                    </strong>
-
-                </div>
-
-
-                @if ($reservation->payment_submitted_at)
-
-                    <div class="admin-detail-row">
-
-                        <span>
-                            Enviado em
-                        </span>
-
-                        <strong>
-                            {{ $reservation->payment_submitted_at->format('d/m/Y H:i') }}
+                    @if($reservation->payment_proof)
+                        <strong class="admin-payment-proof-status is-sent">
+                            Recebido
                         </strong>
 
-                    </div>
+                        @if($reservation->payment_submitted_at)
+                            <p>
+                                Enviado em
+                                {{ $reservation->payment_submitted_at->format('d/m/Y H:i') }}
+                            </p>
+                        @endif
+                    @else
+                        <strong class="admin-payment-proof-status is-missing">
+                            Ainda não enviado
+                        </strong>
+                    @endif
+                </div>
 
+                @if($reservation->payment_proof)
+                    <a
+                        href="{{ route('admin.reservations.payment-proof', $reservation) }}"
+                        target="_blank"
+                        rel="noopener"
+                        class="admin-payment-proof-button"
+                    >
+                        Ver comprovativo
+                    </a>
                 @endif
 
             </div>
 
         </div>
 
-
-
-        {{-- =====================================================
-             ESTADO
-        ====================================================== --}}
-
+        {{-- ESTADO --}}
         <div class="admin-card">
 
             <div class="admin-card-header">
-
                 <div>
-
-                    <span class="admin-card-label">
-                        Estado
-                    </span>
-
-                    <h2>
-                        Histórico da reserva
-                    </h2>
-
+                    <span class="admin-card-label">Estado</span>
+                    <h2>Histórico da reserva</h2>
                 </div>
-
             </div>
-
 
             <div class="admin-detail-list">
 
                 <div class="admin-detail-row">
-
-                    <span>
-                        Estado atual
-                    </span>
-
-                    <strong>
-                        {{ $statusLabel }}
-                    </strong>
-
+                    <span>Estado atual</span>
+                    <strong>{{ $statusLabel }}</strong>
                 </div>
 
-
                 <div class="admin-detail-row">
-
-                    <span>
-                        Pedido criado em
-                    </span>
-
+                    <span>Pedido criado em</span>
                     <strong>
                         {{ $reservation->created_at?->format('d/m/Y H:i') ?? '—' }}
                     </strong>
-
                 </div>
 
-
-                @if ($reservation->confirmed_at)
-
+                @if($reservation->payment_submitted_at)
                     <div class="admin-detail-row">
+                        <span>Comprovativo enviado em</span>
+                        <strong>
+                            {{ $reservation->payment_submitted_at->format('d/m/Y H:i') }}
+                        </strong>
+                    </div>
+                @endif
 
-                        <span>
-                            Confirmada em
-                        </span>
-
+                @if($reservation->confirmed_at)
+                    <div class="admin-detail-row">
+                        <span>Confirmada em</span>
                         <strong>
                             {{ $reservation->confirmed_at->format('d/m/Y H:i') }}
                         </strong>
-
                     </div>
-
                 @endif
 
-
-                @if ($reservation->cancelled_at)
-
+                @if($reservation->cancelled_at)
                     <div class="admin-detail-row">
-
-                        <span>
-                            Cancelada em
-                        </span>
-
+                        <span>Cancelada em</span>
                         <strong>
                             {{ $reservation->cancelled_at->format('d/m/Y H:i') }}
                         </strong>
-
                     </div>
-
                 @endif
 
             </div>
 
         </div>
-
 
     </div>
 

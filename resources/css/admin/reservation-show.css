@@ -1,33 +1,11 @@
 /*
 |--------------------------------------------------------------------------
-| Admin Reservations
+| Admin Reservation - Visualização
 |--------------------------------------------------------------------------
 */
 
-.admin-page {
+.admin-reservation-show-page {
     width: 100%;
-}
-
-.admin-page-header {
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-    gap: 1.5rem;
-    margin-bottom: 2rem;
-}
-
-.admin-page-header h1 {
-    margin: 0;
-    color: #0f172a;
-    font-size: 2rem;
-    line-height: 1.2;
-    font-weight: 700;
-}
-
-.admin-page-header p {
-    margin: .45rem 0 0;
-    color: #64748b;
-    font-size: .95rem;
 }
 
 .admin-reservation-grid {
@@ -123,10 +101,12 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: .4rem .75rem;
+    min-height: 30px;
+    padding: .35rem .7rem;
     border-radius: 999px;
-    font-size: .78rem;
+    font-size: .76rem;
     font-weight: 600;
+    line-height: 1.2;
     white-space: nowrap;
 }
 
@@ -145,26 +125,72 @@
     color: #166534;
 }
 
-.admin-status-rejected {
+.admin-status-rejected,
+.admin-status-cancelled {
     background: #fee2e2;
-    color: #991b1b;
+    color: #b91c1c;
 }
 
-.admin-status-cancelled,
 .admin-status-expired {
-    background: #fee2e2;
-    color: #991b1b;
+    background: #fef3c7;
+    color: #92400e;
 }
 
+.admin-payment-proof {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 1.25rem;
+    padding-top: 1.15rem;
+    border-top: 1px solid #edf0f3;
+}
 
-/*
-|--------------------------------------------------------------------------
-| Responsive
-|--------------------------------------------------------------------------
-*/
+.admin-payment-proof-status {
+    display: block;
+    margin-top: .15rem;
+    font-size: .92rem;
+    font-weight: 600;
+}
+
+.admin-payment-proof-status.is-sent {
+    color: #166534;
+}
+
+.admin-payment-proof-status.is-missing {
+    color: #64748b;
+}
+
+.admin-payment-proof p {
+    margin: .25rem 0 0;
+    color: #64748b;
+    font-size: .82rem;
+}
+
+.admin-payment-proof-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 42px;
+    padding: .6rem 1rem;
+    border: 1px solid #005eb8;
+    border-radius: .7rem;
+    background: #005eb8;
+    color: #fff;
+    font-size: .88rem;
+    font-weight: 600;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background .2s, transform .2s, box-shadow .2s;
+}
+
+.admin-payment-proof-button:hover {
+    background: #004d96;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(0, 94, 184, .18);
+}
 
 @media (max-width: 800px) {
-
     .admin-page-header {
         align-items: stretch;
         flex-direction: column;
@@ -188,4 +214,12 @@
         text-align: left;
     }
 
+    .admin-payment-proof {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .admin-payment-proof-button {
+        width: 100%;
+    }
 }

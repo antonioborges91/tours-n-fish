@@ -19,7 +19,9 @@
 
 /* Admin */
 @import "./admin/dashboard.css";
-@import "./admin/reservations.css";
+@import "./admin/reservation.css";
+@import "./admin/reservation-show.css";
+
 
 /* Pages */
 @import "./sections/home.css";

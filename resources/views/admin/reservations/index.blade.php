@@ -2,272 +2,144 @@
 
 @section('content')
 
-<div class="flex items-end justify-between">
+<div class="admin-page admin-reservations-page">
 
-    <div>
-
-        <h1 class="text-3xl font-bold">
-            Reservas
-        </h1>
-
-        <p class="mt-1 text-gray-500">
-            Gerir as reservas dos passeios.
-        </p>
-
+    <div class="admin-page-header">
+        <div>
+            <h1>Reservas</h1>
+            <p>Gerir as reservas dos passeios.</p>
+        </div>
     </div>
 
-</div>
+    @if(session('success'))
+        <div class="admin-alert admin-alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
 
-@if(session('success'))
+    <div class="admin-reservations-table-card">
 
-    <div class="mb-6 mt-6 rounded-lg border border-green-300 bg-green-50 p-4 text-green-700">
+        <div class="admin-reservations-table-wrap">
+            <table class="admin-reservations-table">
 
-        {{ session('success') }}
+                <thead>
+                    <tr>
+                        <th>Reserva</th>
+                        <th>Data</th>
+                        <th>Passeio</th>
+                        <th>Horário</th>
+                        <th>Cliente</th>
+                        <th class="is-center">Pessoas</th>
+                        <th class="is-right">Valor</th>
+                        <th class="is-center">Estado</th>
+                        <th class="is-right">Ações</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                @forelse($reservations as $reservation)
+
+                    @php
+                        $tourTranslation = $reservation->tour?->translation();
+                        $optionTranslation = $reservation->option?->translation();
+
+                        $statusLabels = [
+                            'pending_payment' => 'A aguardar pagamento',
+                            'payment_submitted' => 'Comprovativo enviado',
+                            'confirmed' => 'Confirmada',
+                            'rejected' => 'Rejeitada',
+                            'cancelled' => 'Cancelada',
+                            'expired' => 'Expirada',
+                        ];
+
+                        $statusLabel = $statusLabels[$reservation->status]
+                            ?? $reservation->status;
+                    @endphp
+
+                    <tr>
+
+                        <td>
+                            <strong class="admin-reservation-number">
+                                #{{ $reservation->reservation_number }}
+                            </strong>
+                        </td>
+
+                        <td>
+                            <strong>
+                                {{ $reservation->booking_date?->format('d/m/Y') ?? '—' }}
+                            </strong>
+                        </td>
+
+                        <td>
+                            <div class="admin-table-primary">
+                                {{ $tourTranslation?->name ?? 'Passeio' }}
+                            </div>
+
+                            @if($optionTranslation?->name)
+                                <div class="admin-table-secondary">
+                                    {{ $optionTranslation->name }}
+                                </div>
+                            @endif
+                        </td>
+
+                        <td>
+                            {{ \Carbon\Carbon::parse($reservation->start_at)->format('H:i') }}
+                            -
+                            {{ \Carbon\Carbon::parse($reservation->end_at)->format('H:i') }}
+                        </td>
+
+                        <td>
+                            <div class="admin-table-primary">
+                                {{ $reservation->customer_name }}
+                            </div>
+
+                            <div class="admin-table-secondary">
+                                {{ $reservation->customer_email }}
+                            </div>
+                        </td>
+
+                        <td class="is-center">
+                            {{ $reservation->participants }}
+                        </td>
+
+                        <td class="is-right">
+                            <strong>
+                                € {{ number_format($reservation->total_amount, 2, ',', '.') }}
+                            </strong>
+                        </td>
+
+                        <td class="is-center">
+                            <span class="admin-status admin-status-{{ $reservation->status }}">
+                                {{ $statusLabel }}
+                            </span>
+                        </td>
+
+                        <td class="is-right">
+                            <a
+                                href="{{ route('admin.reservations.show', $reservation) }}"
+                                class="admin-reservation-action"
+                            >
+                                Ver
+                            </a>
+                        </td>
+
+                    </tr>
+
+                @empty
+
+                    <tr>
+                        <td colspan="9" class="admin-reservations-empty">
+                            Ainda não existem reservas.
+                        </td>
+                    </tr>
+
+                @endforelse
+                </tbody>
+
+            </table>
+        </div>
 
     </div>
-
-@endif
-
-<div class="mt-8 overflow-hidden rounded-xl border border-gray-200 bg-white">
-
-    <table class="w-full">
-
-        <thead class="bg-gray-100">
-
-            <tr>
-
-                <th class="p-4 text-left">
-                    Reserva
-                </th>
-
-                <th class="p-4 text-left">
-                    Data
-                </th>
-
-                <th class="p-4 text-left">
-                    Passeio
-                </th>
-
-                <th class="p-4 text-left">
-                    Horário
-                </th>
-
-                <th class="p-4 text-left">
-                    Cliente
-                </th>
-
-                <th class="p-4 text-center">
-                    Pessoas
-                </th>
-
-                <th class="p-4 text-right">
-                    Valor
-                </th>
-
-                <th class="p-4 text-center">
-                    Estado
-                </th>
-
-                <th class="p-4 text-right">
-                    Ações
-                </th>
-
-            </tr>
-
-        </thead>
-
-        <tbody>
-
-        @forelse($reservations as $reservation)
-
-            @php
-                $tourTranslation = $reservation->tour?->translation();
-                $optionTranslation = $reservation->option?->translation();
-            @endphp
-
-            <tr class="border-t">
-
-                <td class="p-4">
-
-                    <div class="font-medium text-gray-900">
-
-                        #{{ $reservation->reservation_number }}
-
-                    </div>
-
-                </td>
-
-                <td class="p-4">
-
-                    <div class="font-medium text-gray-900">
-
-                        {{ $reservation->booking_date->format('d/m/Y') }}
-
-                    </div>
-
-                </td>
-
-                <td class="p-4">
-
-                    <div class="font-medium text-gray-900">
-
-                        {{ $tourTranslation?->name ?? 'Passeio' }}
-
-                    </div>
-
-                    @if($optionTranslation?->name)
-
-                        <div class="text-sm text-gray-500">
-
-                            {{ $optionTranslation->name }}
-
-                        </div>
-
-                    @endif
-
-                </td>
-
-                <td class="p-4">
-
-                    {{ \Carbon\Carbon::parse($reservation->start_at)->format('H:i') }}
-
-                    -
-
-                    {{ \Carbon\Carbon::parse($reservation->end_at)->format('H:i') }}
-
-                </td>
-
-                <td class="p-4">
-
-                    <div class="font-medium text-gray-900">
-
-                        {{ $reservation->customer_name }}
-
-                    </div>
-
-                    <div class="text-sm text-gray-500">
-
-                        {{ $reservation->customer_email }}
-
-                    </div>
-
-                </td>
-
-                <td class="p-4 text-center">
-
-                    {{ $reservation->participants }}
-
-                </td>
-
-                <td class="p-4 text-right">
-
-                    € {{ number_format($reservation->total_amount, 2, ',', '.') }}
-
-                </td>
-
-                <td class="p-4 text-center">
-
-                    @switch($reservation->status)
-
-                        @case('pending_payment')
-
-                            <span class="rounded-full bg-yellow-100 px-3 py-1 text-sm text-yellow-700">
-
-                                A aguardar pagamento
-
-                            </span>
-
-                            @break
-
-                        @case('payment_submitted')
-
-                            <span class="rounded-full bg-blue-100 px-3 py-1 text-sm text-blue-700">
-
-                                Comprovativo enviado
-
-                            </span>
-
-                            @break
-
-                        @case('confirmed')
-
-                            <span class="rounded-full bg-green-100 px-3 py-1 text-sm text-green-700">
-
-                                Confirmada
-
-                            </span>
-
-                            @break
-
-                        @case('rejected')
-
-                            <span class="rounded-full bg-red-100 px-3 py-1 text-sm text-red-700">
-
-                                Rejeitada
-
-                            </span>
-
-                            @break
-
-                        @case('cancelled')
-
-                            <span class="rounded-full bg-gray-100 px-3 py-1 text-sm text-gray-700">
-
-                                Cancelada
-
-                            </span>
-
-                            @break
-
-                        @default
-
-                            <span class="rounded-full bg-gray-100 px-3 py-1 text-sm text-gray-700">
-
-                                {{ $reservation->status }}
-
-                            </span>
-
-                    @endswitch
-
-                </td>
-
-                <td class="p-4">
-
-                    <div class="flex items-center justify-end gap-2">
-
-                        <a
-                            href="{{ route('admin.reservations.show', $reservation) }}"
-                            class="admin-btn-secondary">
-
-                            Ver
-
-                        </a>
-
-                    </div>
-
-                </td>
-
-            </tr>
-
-        @empty
-
-            <tr>
-
-                <td
-                    colspan="9"
-                    class="py-12 text-center text-gray-500">
-
-                    Ainda não existem reservas.
-
-                </td>
-
-            </tr>
-
-        @endforelse
-
-        </tbody>
-
-    </table>
 
 </div>
 

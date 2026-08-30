@@ -202,8 +202,13 @@
             {{-- AÇÕES ADMINISTRATIVAS --}}
             <div class="admin-reservation-actions">
 
-                {{-- Confirmar pagamento --}}
+                {{-- =====================================================
+                    PAGAMENTO: CONFIRMAR / REJEITAR COMPROVATIVO
+                ====================================================== --}}
+
                 @if($reservation->status === 'payment_submitted' && $reservation->payment_proof)
+
+                    {{-- Confirmar pagamento --}}
                     <form
                         method="POST"
                         action="{{ route('admin.reservations.confirm-payment', $reservation) }}"
@@ -217,28 +222,40 @@
                             Confirmar pagamento
                         </button>
                     </form>
+
+
+                    {{-- Rejeitar comprovativo --}}
+                    <form
+                        method="POST"
+                        action="{{ route('admin.reservations.reject-payment', $reservation) }}"
+                        onsubmit="return confirm(
+                            'Tem a certeza que pretende rejeitar este comprovativo? A reserva ficará marcada como rejeitada e o cliente terá de efetuar uma nova reserva.'
+                        )"
+                    >
+                        @csrf
+
+                        <button
+                            type="submit"
+                            class="admin-reservation-action admin-reservation-action-reject"
+                        >
+                            Rejeitar comprovativo
+                        </button>
+                    </form>
+
                 @endif
 
-                <form
-    method="POST"
-    action="{{ route('admin.reservations.reject-payment', $reservation) }}"
-    onsubmit="return confirm(
-        'Tem a certeza que pretende rejeitar este comprovativo? A reserva ficará marcada como rejeitada e o cliente terá de efetuar uma nova reserva.'
-    )"
->
-    @csrf
 
-    <button
-        type="submit"
-        class="admin-reservation-action admin-reservation-action-reject"
-    >
-        Rejeitar comprovativo
-    </button>
-</form>
+                {{-- =====================================================
+                    CANCELAR RESERVA
+                    Só é permitido enquanto a reserva ainda estiver ativa.
+                ====================================================== --}}
 
+                @if(in_array($reservation->status, [
+                    'pending_payment',
+                    'payment_submitted',
+                    'confirmed',
+                ]))
 
-                {{-- Cancelar reserva --}}
-                @if($reservation->status !== 'cancelled')
                     <form
                         method="POST"
                         action="{{ route('admin.reservations.cancel', $reservation) }}"
@@ -258,10 +275,15 @@
                             Cancelar reserva
                         </button>
                     </form>
+
                 @endif
 
 
-                {{-- Eliminar reserva --}}
+                {{-- =====================================================
+                    ELIMINAR RESERVA
+                    Continua disponível em qualquer estado.
+                ====================================================== --}}
+
                 <form
                     method="POST"
                     action="{{ route('admin.reservations.destroy', $reservation) }}"

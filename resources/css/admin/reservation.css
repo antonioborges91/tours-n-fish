@@ -238,6 +238,18 @@
     color: #991b1b;
 }
 
+.admin-reservation-action-reject {
+    border-color: #fecaca;
+    background: #fff;
+    color: #b91c1c;
+}
+
+.admin-reservation-action-reject:hover {
+    border-color: #fca5a5;
+    background: #fef2f2;
+    color: #991b1b;
+}
+
 .admin-reservations-empty {
     padding: 4rem 1rem !important;
     color: #64748b !important;

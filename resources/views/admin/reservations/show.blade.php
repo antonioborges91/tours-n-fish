@@ -219,6 +219,23 @@
                     </form>
                 @endif
 
+                <form
+    method="POST"
+    action="{{ route('admin.reservations.reject-payment', $reservation) }}"
+    onsubmit="return confirm(
+        'Tem a certeza que pretende rejeitar este comprovativo? A reserva ficará marcada como rejeitada e o cliente terá de efetuar uma nova reserva.'
+    )"
+>
+    @csrf
+
+    <button
+        type="submit"
+        class="admin-reservation-action admin-reservation-action-reject"
+    >
+        Rejeitar comprovativo
+    </button>
+</form>
+
 
                 {{-- Cancelar reserva --}}
                 @if($reservation->status !== 'cancelled')

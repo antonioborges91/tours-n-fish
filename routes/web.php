@@ -162,6 +162,11 @@ Route::middleware(['auth', 'verified'])
         )->name('reservations.confirm-payment');
 
         Route::post(
+            'reservations/{reservation}/reject-payment',
+            [ReservationController::class, 'rejectPayment']
+        )->name('reservations.reject-payment');
+
+        Route::post(
             'reservations/{reservation}/cancel',
             [ReservationController::class, 'cancel']
         )->name('reservations.cancel');

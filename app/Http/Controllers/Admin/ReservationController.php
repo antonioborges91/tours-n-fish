@@ -109,6 +109,44 @@ class ReservationController extends Controller
     }
 
     /**
+     * Rejeita o comprovativo de pagamento de uma reserva.
+     */
+    public function rejectPayment(Reservation $reservation)
+    {
+        /*
+        |--------------------------------------------------------------------------
+        | Só é possível rejeitar depois de receber o comprovativo
+        |--------------------------------------------------------------------------
+        */
+
+        abort_unless(
+            $reservation->status === 'payment_submitted'
+            && $reservation->payment_proof,
+            403
+        );
+
+        /*
+        |--------------------------------------------------------------------------
+        | Rejeitar reserva
+        |--------------------------------------------------------------------------
+        */
+
+        $reservation->update([
+            'status' => 'rejected',
+        ]);
+
+        return redirect()
+            ->route(
+                'admin.reservations.show',
+                $reservation
+            )
+            ->with(
+                'success',
+                'O comprovativo foi rejeitado e a reserva foi marcada como rejeitada.'
+            );
+    }
+
+    /**
      * Cancela uma reserva através da administração.
      */
     public function cancel(Reservation $reservation)

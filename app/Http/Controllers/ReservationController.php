@@ -434,6 +434,7 @@ class ReservationController extends Controller
                 $query
                     ->whereIn('status', [
                         'confirmed',
+                        'payment_submitted',
                     ])
                     ->orWhere(function ($query) {
 

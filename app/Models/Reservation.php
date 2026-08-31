@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Str;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use App\Models\BlockedPeriod;
 
 class Reservation extends Model
 {
@@ -98,4 +100,12 @@ class Reservation extends Model
             'tour_option_schedule_id'
         );
     }
+
+    public function blockedPeriods(): HasMany
+    {
+        return $this->hasMany(
+            BlockedPeriod::class,
+            'reservation_id'
+        );
+    }   
 }

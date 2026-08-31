@@ -69,7 +69,10 @@ class TourController extends Controller
             ->where(function ($query) {
 
                 $query
-                    ->where('status', 'confirmed')
+                    ->whereIn('status', [
+                        'confirmed',
+                        'payment_submitted',
+                    ])
 
                     ->orWhere(function ($query) {
 

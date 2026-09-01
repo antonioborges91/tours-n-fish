@@ -17,6 +17,217 @@
         </div>
     @endif
 
+    <div class="admin-reservations-filters-card">
+
+        <form
+            method="GET"
+            action="{{ route('admin.reservations.index') }}"
+            class="admin-reservations-filters"
+        >
+
+            <div class="admin-reservations-filter-field admin-reservations-filter-search">
+
+                <label for="reservation-search">
+                    Pesquisa
+                </label>
+
+                <input
+                    id="reservation-search"
+                    type="text"
+                    name="search"
+                    value="{{ request('search') }}"
+                    placeholder="Nome, email, telefone ou nº da reserva"
+                >
+
+            </div>
+
+            <div class="admin-reservations-filter-field">
+
+                <label for="reservation-date-from">
+                    Data desde
+                </label>
+
+                <input
+                    id="reservation-date-from"
+                    type="date"
+                    name="date_from"
+                    value="{{ request('date_from') }}"
+                >
+
+            </div>
+
+            <div class="admin-reservations-filter-field">
+
+                <label for="reservation-date-to">
+                    Data até
+                </label>
+
+                <input
+                    id="reservation-date-to"
+                    type="date"
+                    name="date_to"
+                    value="{{ request('date_to') }}"
+                >
+
+            </div>
+
+            <div class="admin-reservations-filter-field">
+
+                <label for="reservation-status">
+                    Estado
+                </label>
+
+                <select
+                    id="reservation-status"
+                    name="status"
+                >
+                    <option value="">Todos os estados</option>
+
+                    <option
+                        value="pending_payment"
+                        @selected(request('status') === 'pending_payment')
+                    >
+                        A aguardar pagamento
+                    </option>
+
+                    <option
+                        value="payment_submitted"
+                        @selected(request('status') === 'payment_submitted')
+                    >
+                        Comprovativo enviado
+                    </option>
+
+                    <option
+                        value="confirmed"
+                        @selected(request('status') === 'confirmed')
+                    >
+                        Confirmada
+                    </option>
+
+                    <option
+                        value="rejected"
+                        @selected(request('status') === 'rejected')
+                    >
+                        Rejeitada
+                    </option>
+
+                    <option
+                        value="cancelled"
+                        @selected(request('status') === 'cancelled')
+                    >
+                        Cancelada
+                    </option>
+
+                    <option
+                        value="expired"
+                        @selected(request('status') === 'expired')
+                    >
+                        Expirada
+                    </option>
+                </select>
+
+            </div>
+
+            <div class="admin-reservations-filter-actions">
+
+                <button
+                    type="submit"
+                    class="admin-reservations-filter-submit"
+                >
+                    Filtrar
+                </button>
+
+                @if(request()->hasAny([
+                    'search',
+                    'date_from',
+                    'date_to',
+                    'status',
+                ]))
+                    <a
+                        href="{{ route('admin.reservations.index') }}"
+                        class="admin-reservations-filter-reset"
+                    >
+                        Limpar
+                    </a>
+                @endif
+
+            </div>
+
+        </form>
+
+        @if(request()->hasAny([
+            'search',
+            'date_from',
+            'date_to',
+            'status',
+        ]))
+
+            <div class="admin-reservations-active-filters">
+
+                <span class="admin-reservations-active-label">
+                    Filtros ativos:
+                </span>
+
+                @if(request('search'))
+                    <a
+                        href="{{ request()->fullUrlWithQuery(['search' => null, 'page' => null]) }}"
+                        class="admin-reservation-filter-tag"
+                    >
+                        Pesquisa: {{ request('search') }}
+                        <span aria-hidden="true">×</span>
+                    </a>
+                @endif
+
+                @if(request('date_from'))
+                    <a
+                        href="{{ request()->fullUrlWithQuery(['date_from' => null, 'page' => null]) }}"
+                        class="admin-reservation-filter-tag"
+                    >
+                        Desde: {{ \Carbon\Carbon::parse(request('date_from'))->format('d/m/Y') }}
+                        <span aria-hidden="true">×</span>
+                    </a>
+                @endif
+
+                @if(request('date_to'))
+                    <a
+                        href="{{ request()->fullUrlWithQuery(['date_to' => null, 'page' => null]) }}"
+                        class="admin-reservation-filter-tag"
+                    >
+                        Até: {{ \Carbon\Carbon::parse(request('date_to'))->format('d/m/Y') }}
+                        <span aria-hidden="true">×</span>
+                    </a>
+                @endif
+
+                @if(request('status'))
+
+                    @php
+                        $activeStatusLabels = [
+                            'pending_payment' => 'A aguardar pagamento',
+                            'payment_submitted' => 'Comprovativo enviado',
+                            'confirmed' => 'Confirmada',
+                            'rejected' => 'Rejeitada',
+                            'cancelled' => 'Cancelada',
+                            'expired' => 'Expirada',
+                        ];
+                    @endphp
+
+                    <a
+                        href="{{ request()->fullUrlWithQuery(['status' => null, 'page' => null]) }}"
+                        class="admin-reservation-filter-tag"
+                    >
+                        Estado:
+                        {{ $activeStatusLabels[request('status')] ?? request('status') }}
+                        <span aria-hidden="true">×</span>
+                    </a>
+
+                @endif
+
+            </div>
+
+        @endif
+
+    </div>
+
     <div class="admin-reservations-table-card">
 
         <div class="admin-reservations-table-wrap">
@@ -129,7 +340,16 @@
 
                     <tr>
                         <td colspan="9" class="admin-reservations-empty">
-                            Ainda não existem reservas.
+                            @if(request()->hasAny([
+                                'search',
+                                'date_from',
+                                'date_to',
+                                'status',
+                            ]))
+                                Não foram encontradas reservas com os filtros selecionados.
+                            @else
+                                Ainda não existem reservas.
+                            @endif
                         </td>
                     </tr>
 
@@ -138,6 +358,14 @@
 
             </table>
         </div>
+
+        @if($reservations->hasPages())
+
+            <div class="admin-reservations-pagination">
+                {{ $reservations->links() }}
+            </div>
+
+        @endif
 
     </div>
 

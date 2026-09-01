@@ -30,7 +30,7 @@
     @if ($paymentSubmittedCount > 0)
 
         <a
-            href="{{ route('admin.reservations.index') }}"
+            href="{{ route('admin.reservations.index', ['status' => 'payment_submitted']) }}"
             class="admin-dashboard-alert admin-dashboard-alert-payment"
         >
 
@@ -183,7 +183,7 @@
         <div class="admin-dashboard-status-grid">
 
             <a
-                href="{{ route('admin.reservations.index') }}"
+                href="{{ route('admin.reservations.index', ['status' => 'pending_payment']) }}"
                 class="admin-dashboard-status-card status-payment"
             >
                 <span>
@@ -197,7 +197,7 @@
 
 
             <a
-                href="{{ route('admin.reservations.index') }}"
+                href="{{ route('admin.reservations.index', ['status' => 'payment_submitted']) }}"
                 class="admin-dashboard-status-card status-submitted"
             >
                 <span>
@@ -210,7 +210,10 @@
             </a>
 
 
-            <div class="admin-dashboard-status-card status-confirmed">
+            <a
+                href="{{ route('admin.reservations.index', ['status' => 'confirmed']) }}"
+                class="admin-dashboard-status-card status-confirmed"
+            >
 
                 <span>
                     Confirmadas
@@ -220,10 +223,13 @@
                     {{ $confirmedReservationsCount }}
                 </strong>
 
-            </div>
+            </a>
 
 
-            <div class="admin-dashboard-status-card status-cancelled">
+            <a
+                href="{{ route('admin.reservations.index', ['status' => 'cancelled']) }}"
+                class="admin-dashboard-status-card status-cancelled"
+            >
 
                 <span>
                     Canceladas
@@ -233,10 +239,13 @@
                     {{ $cancelledReservationsCount }}
                 </strong>
 
-            </div>
+            </a>
 
 
-            <div class="admin-dashboard-status-card status-rejected">
+            <a
+                href="{{ route('admin.reservations.index', ['status' => 'rejected']) }}"
+                class="admin-dashboard-status-card status-rejected"
+            >
 
                 <span>
                     Rejeitadas
@@ -246,10 +255,13 @@
                     {{ $rejectedReservationsCount }}
                 </strong>
 
-            </div>
+            </a>
 
 
-            <div class="admin-dashboard-status-card status-expired">
+            <a
+                href="{{ route('admin.reservations.index', ['status' => 'expired']) }}"
+                class="admin-dashboard-status-card status-expired"
+            >
 
                 <span>
                     Expiradas
@@ -259,7 +271,7 @@
                     {{ $expiredReservationsCount }}
                 </strong>
 
-            </div>
+            </a>
 
         </div>
 

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\BlockedPeriod;
 use App\Models\Reservation;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
@@ -14,18 +15,96 @@ class ReservationController extends Controller
     /**
      * Lista todas as reservas.
      */
-    public function index()
+    public function index(Request $request)
     {
+        $allowedStatuses = [
+            'pending_payment',
+            'payment_submitted',
+            'confirmed',
+            'rejected',
+            'cancelled',
+            'expired',
+        ];
+
+        $status = $request->input('status');
+
+        if (! in_array($status, $allowedStatuses, true)) {
+            $status = null;
+        }
+
+        $search = trim(
+            (string) $request->input('search')
+        );
+
+        $dateFrom = $request->input('date_from');
+        $dateTo = $request->input('date_to');
+
         $reservations = Reservation::query()
             ->with([
                 'tour.translations',
                 'option.translations',
                 'schedule',
             ])
+            ->when($search !== '', function ($query) use ($search) {
+
+                $query->where(function ($query) use ($search) {
+
+                    $query
+                        ->where(
+                            'reservation_number',
+                            'like',
+                            '%' . $search . '%'
+                        )
+                        ->orWhere(
+                            'customer_name',
+                            'like',
+                            '%' . $search . '%'
+                        )
+                        ->orWhere(
+                            'customer_email',
+                            'like',
+                            '%' . $search . '%'
+                        )
+                        ->orWhere(
+                            'customer_phone',
+                            'like',
+                            '%' . $search . '%'
+                        );
+
+                });
+
+            })
+            ->when($status, function ($query) use ($status) {
+
+                $query->where(
+                    'status',
+                    $status
+                );
+
+            })
+            ->when($dateFrom, function ($query) use ($dateFrom) {
+
+                $query->whereDate(
+                    'booking_date',
+                    '>=',
+                    $dateFrom
+                );
+
+            })
+            ->when($dateTo, function ($query) use ($dateTo) {
+
+                $query->whereDate(
+                    'booking_date',
+                    '<=',
+                    $dateTo
+                );
+
+            })
             ->orderByDesc('booking_date')
             ->orderBy('start_at')
             ->orderByDesc('id')
-            ->get();
+            ->paginate(20)
+            ->withQueryString();
 
         return view(
             'admin.reservations.index',

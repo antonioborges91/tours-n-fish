@@ -2,177 +2,157 @@
 
 @section('content')
 
-<div class="flex items-end justify-between">
+<div class="admin-page admin-blocked-periods-page">
 
-    <div>
+    <div class="admin-page-header">
 
-        <h1 class="text-3xl font-bold">
-            Períodos Bloqueados
-        </h1>
+        <div>
+            <h1>Períodos Bloqueados</h1>
 
-        <p class="mt-1 text-gray-500">
-            Gerir os dias e períodos em que não estão disponíveis passeios.
-        </p>
+            <p>
+                Gerir os dias e períodos em que não estão disponíveis passeios.
+            </p>
+        </div>
 
-    </div>
-
-    <a
-        href="{{ route('admin.blocked-periods.create') }}"
-        class="admin-btn-primary">
-
-        + Adicionar Período
-
-    </a>
-
-</div>
-
-@if(session('success'))
-
-    <div class="mb-6 mt-6 rounded-lg border border-green-300 bg-green-50 p-4 text-green-700">
-
-        {{ session('success') }}
+        <a
+            href="{{ route('admin.blocked-periods.create') }}"
+            class="admin-blocked-add-button"
+        >
+            + Adicionar Período
+        </a>
 
     </div>
 
-@endif
+    @if(session('success'))
 
-<div class="mt-8 overflow-hidden rounded-xl border border-gray-200 bg-white">
+        <div class="admin-alert admin-alert-success">
+            {{ session('success') }}
+        </div>
 
-    <table class="w-full">
+    @endif
 
-        <thead class="bg-gray-100">
+    <div class="admin-blocked-table-card">
 
-            <tr>
+        <div class="admin-blocked-table-wrap">
 
-                <th class="p-4 text-left">
-                    Início
-                </th>
+            <table class="admin-blocked-table">
 
-                <th class="p-4 text-left">
-                    Fim
-                </th>
+                <thead>
 
-                <th class="p-4 text-left">
-                    Motivo
-                </th>
+                    <tr>
+                        <th>Início</th>
+                        <th>Fim</th>
+                        <th>Motivo</th>
+                        <th class="is-right">Ações</th>
+                    </tr>
 
-                <th class="p-4 text-right">
-                    Ações
-                </th>
+                </thead>
 
-            </tr>
+                <tbody>
 
-        </thead>
+                @forelse($blockedPeriods as $blockedPeriod)
 
-        <tbody>
+                    <tr>
 
-        @forelse($blockedPeriods as $blockedPeriod)
+                        <td>
 
-            <tr class="border-t">
+                            <div class="admin-blocked-date">
+                                {{ $blockedPeriod->start_at->format('d/m/Y') }}
+                            </div>
 
-                <td class="p-4">
+                            <div class="admin-blocked-time">
+                                {{ $blockedPeriod->start_at->format('H:i') }}
+                            </div>
 
-                    <div class="font-medium text-gray-900">
+                        </td>
 
-                        {{ $blockedPeriod->start_at->format('d/m/Y') }}
+                        <td>
 
-                    </div>
+                            <div class="admin-blocked-date">
+                                {{ $blockedPeriod->end_at->format('d/m/Y') }}
+                            </div>
 
-                    <div class="text-sm text-gray-500">
+                            <div class="admin-blocked-time">
+                                {{ $blockedPeriod->end_at->format('H:i') }}
+                            </div>
 
-                        {{ $blockedPeriod->start_at->format('H:i') }}
+                        </td>
 
-                    </div>
+                        <td>
 
-                </td>
+                            @if($blockedPeriod->reason)
 
-                <td class="p-4">
+                                <div class="admin-blocked-reason">
+                                    {{ $blockedPeriod->reason }}
+                                </div>
 
-                    <div class="font-medium text-gray-900">
+                            @else
 
-                        {{ $blockedPeriod->end_at->format('d/m/Y') }}
+                                <span class="admin-blocked-no-reason">
+                                    Sem motivo indicado
+                                </span>
 
-                    </div>
+                            @endif
 
-                    <div class="text-sm text-gray-500">
+                        </td>
 
-                        {{ $blockedPeriod->end_at->format('H:i') }}
+                        <td class="is-right">
 
-                    </div>
+                            <div class="admin-blocked-actions">
 
-                </td>
+                                <a
+                                    href="{{ route('admin.blocked-periods.edit', $blockedPeriod) }}"
+                                    class="admin-reservation-action"
+                                >
+                                    Editar
+                                </a>
 
-                <td class="p-4">
+                                <form
+                                    action="{{ route('admin.blocked-periods.destroy', $blockedPeriod) }}"
+                                    method="POST"
+                                    onsubmit="return confirm('Tem a certeza que pretende eliminar este período bloqueado?');"
+                                >
 
-                    @if($blockedPeriod->reason)
+                                    @csrf
+                                    @method('DELETE')
 
-                        {{ $blockedPeriod->reason }}
+                                    <button
+                                        type="submit"
+                                        class="admin-reservation-action admin-reservation-action-delete"
+                                    >
+                                        Eliminar
+                                    </button>
 
-                    @else
+                                </form>
 
-                        <span class="text-gray-400">
-                            Sem motivo indicado
-                        </span>
+                            </div>
 
-                    @endif
+                        </td>
 
-                </td>
+                    </tr>
 
-                <td class="p-4">
+                @empty
 
-                    <div class="flex items-center justify-end gap-2">
+                    <tr>
 
-                        <a
-                            href="{{ route('admin.blocked-periods.edit', $blockedPeriod) }}"
-                            class="admin-btn-secondary">
+                        <td
+                            colspan="4"
+                            class="admin-blocked-empty"
+                        >
+                            Ainda não existem períodos bloqueados.
+                        </td>
 
-                            Editar
+                    </tr>
 
-                        </a>
+                @endforelse
 
-                        <form
-                            action="{{ route('admin.blocked-periods.destroy', $blockedPeriod) }}"
-                            method="POST"
-                            onsubmit="return confirm('Tem a certeza que pretende eliminar este período bloqueado?');">
+                </tbody>
 
-                            @csrf
-                            @method('DELETE')
+            </table>
 
-                            <button
-                                type="submit"
-                                class="admin-btn-danger">
+        </div>
 
-                                Eliminar
-
-                            </button>
-
-                        </form>
-
-                    </div>
-
-                </td>
-
-            </tr>
-
-        @empty
-
-            <tr>
-
-                <td
-                    colspan="4"
-                    class="py-12 text-center text-gray-500">
-
-                    Ainda não existem períodos bloqueados.
-
-                </td>
-
-            </tr>
-
-        @endforelse
-
-        </tbody>
-
-    </table>
+    </div>
 
 </div>
 

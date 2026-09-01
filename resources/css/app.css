@@ -21,6 +21,7 @@
 @import "./admin/dashboard.css";
 @import "./admin/reservation.css";
 @import "./admin/reservation-show.css";
+@import "./admin/blocked-period.css";
 
 
 /* Pages */

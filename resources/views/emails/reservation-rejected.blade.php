@@ -1,0 +1,280 @@
+@php
+    $locale = $reservation->locale ?? config('app.locale');
+@endphp
+
+<!DOCTYPE html>
+<html lang="{{ $locale }}">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>
+        @if($locale === 'en')
+            Booking #{{ $reservation->reservation_number }} — Payment proof rejected — Tours N Fish
+        @else
+            Reserva #{{ $reservation->reservation_number }} — Comprovativo rejeitado — Tours N Fish
+        @endif
+    </title>
+
+</head>
+
+<body style="
+    margin:0;
+    padding:0;
+    background-color:#f3f6f9;
+    font-family:Arial, Helvetica, sans-serif;
+    color:#1f2937;
+">
+
+<div style="
+    width:100%;
+    padding:35px 15px;
+    box-sizing:border-box;
+">
+
+<div style="
+    max-width:650px;
+    margin:0 auto;
+">
+
+<div style="
+    background-color:#123b66;
+    padding:30px;
+    border-radius:12px 12px 0 0;
+    text-align:center;
+">
+
+    <div style="
+        font-size:28px;
+        font-weight:bold;
+        color:#ffffff;
+        letter-spacing:0.3px;
+    ">
+        Tours N Fish
+    </div>
+
+    <div style="
+        margin-top:8px;
+        font-size:14px;
+        color:#dbeafe;
+    ">
+        Fishing Tours in the Azores
+    </div>
+
+</div>
+
+<div style="
+    background-color:#ffffff;
+    padding:35px 30px;
+    border-radius:0 0 12px 12px;
+">
+
+<p style="
+    margin:0 0 15px 0;
+    font-size:16px;
+    line-height:1.6;
+">
+    @if($locale === 'en')
+        Dear {{ $reservation->customer_name }},
+    @else
+        Caro(a) {{ $reservation->customer_name }},
+    @endif
+</p>
+
+<div style="
+    margin:25px 0;
+    padding:24px;
+    background-color:#fef2f2;
+    border-radius:10px;
+    text-align:center;
+">
+
+    <h1 style="
+        margin:0 0 12px 0;
+        font-size:24px;
+        color:#b91c1c;
+    ">
+        @if($locale === 'en')
+            Payment proof rejected
+        @else
+            Comprovativo de pagamento rejeitado
+        @endif
+    </h1>
+
+    <p style="
+        margin:0;
+        font-size:16px;
+        line-height:1.7;
+        color:#475569;
+    ">
+        @if($locale === 'en')
+            The payment proof submitted for booking
+            #{{ $reservation->reservation_number }}
+            could not be accepted and, as a result, your booking has been cancelled.
+        @else
+            O comprovativo de pagamento enviado para a reserva
+            #{{ $reservation->reservation_number }}
+            não pôde ser aceite e, por esse motivo, a sua reserva foi cancelada.
+        @endif
+    </p>
+
+</div>
+
+<div style="
+    margin:28px 0;
+    padding:20px;
+    background-color:#eef5fb;
+    border-radius:9px;
+    text-align:center;
+">
+
+    <div style="
+        font-size:12px;
+        font-weight:bold;
+        letter-spacing:1px;
+        color:#64748b;
+    ">
+        @if($locale === 'en')
+            BOOKING NUMBER
+        @else
+            NÚMERO DA RESERVA
+        @endif
+    </div>
+
+    <div style="
+        margin-top:7px;
+        font-size:27px;
+        font-weight:bold;
+        color:#123b66;
+    ">
+        #{{ $reservation->reservation_number }}
+    </div>
+
+</div>
+
+<p style="
+    margin:25px 0 0 0;
+    font-size:16px;
+    line-height:1.7;
+    color:#475569;
+">
+
+    @if($locale === 'en')
+        If you would still like to join this tour, you will need to make a new booking through our website.
+    @else
+        Se ainda pretender realizar este passeio, deverá efetuar uma nova reserva através do nosso website.
+    @endif
+
+</p>
+
+<p style="
+    margin:15px 0 0 0;
+    font-size:16px;
+    line-height:1.7;
+    color:#475569;
+">
+
+    @if($locale === 'en')
+        Availability will be checked again when you make the new booking.
+    @else
+        A disponibilidade será novamente verificada no momento da nova reserva.
+    @endif
+
+</p>
+
+<div style="
+    margin:35px 0 0 0;
+    padding:27px 20px;
+    background-color:#eef5fb;
+    border-radius:10px;
+    text-align:center;
+">
+
+    <h2 style="
+        margin:0 0 10px 0;
+        font-size:20px;
+        color:#123b66;
+    ">
+        @if($locale === 'en')
+            Make a new booking
+        @else
+            Fazer uma nova reserva
+        @endif
+    </h2>
+
+    <p style="
+        margin:0 auto 22px auto;
+        max-width:500px;
+        font-size:15px;
+        line-height:1.7;
+        color:#475569;
+    ">
+        @if($locale === 'en')
+            Please use our website to choose a new date and time.
+        @else
+            Utilize o nosso website para escolher uma nova data e horário.
+        @endif
+    </p>
+
+    <a
+        href="{{ url('/') }}"
+        style="
+            display:inline-block;
+            padding:14px 28px;
+            background-color:#123b66;
+            color:#ffffff;
+            text-decoration:none;
+            border-radius:7px;
+            font-size:15px;
+            font-weight:bold;
+        "
+    >
+        @if($locale === 'en')
+            Make a new booking
+        @else
+            Fazer nova reserva
+        @endif
+    </a>
+
+</div>
+
+<div style="
+    margin-top:35px;
+    padding-top:25px;
+    border-top:1px solid #e5e7eb;
+    text-align:center;
+">
+
+    <p style="
+        margin:0;
+        font-size:14px;
+        line-height:1.6;
+        color:#64748b;
+    ">
+        @if($locale === 'en')
+            Thank you for your understanding.
+        @else
+            Obrigado pela sua compreensão.
+        @endif
+    </p>
+
+    <p style="
+        margin:8px 0 0 0;
+        font-size:14px;
+        font-weight:bold;
+        color:#123b66;
+    ">
+        Tours N Fish
+    </p>
+
+</div>
+
+</div>
+</div>
+</div>
+
+</body>
+</html>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Mail\ReservationConfirmed;
+use App\Mail\ReservationRejected;
 use App\Models\BlockedPeriod;
 use App\Models\Reservation;
 use Carbon\Carbon;
@@ -204,6 +205,11 @@ class ReservationController extends Controller
         $reservation->update([
             'status' => 'rejected',
         ]);
+
+        Mail::to($reservation->customer_email)
+            ->send(
+                new ReservationRejected($reservation)
+            );
 
         return redirect()
             ->route(

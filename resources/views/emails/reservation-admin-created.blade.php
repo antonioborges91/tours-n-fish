@@ -303,7 +303,36 @@
         text-align:right;
         font-weight:bold;
     ">
-        {{ $reservation->status }}
+        @switch($reservation->status)
+
+            @case('pending_payment')
+                A aguardar pagamento
+                @break
+
+            @case('payment_submitted')
+                Comprovativo enviado
+                @break
+
+            @case('confirmed')
+                Confirmada
+                @break
+
+            @case('rejected')
+                Rejeitada
+                @break
+
+            @case('cancelled')
+                Cancelada
+                @break
+
+            @case('expired')
+                Expirada
+                @break
+
+            @default
+                {{ $reservation->status }}
+
+        @endswitch
     </td>
 </tr>
 

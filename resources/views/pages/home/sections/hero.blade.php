@@ -22,7 +22,7 @@
 
             <div class="hero-actions">
 
-                <a href="#" class="btn-secondary">
+                <a href="{{ route('tours') }}" class="btn-secondary">
                     {{ __('home.explore') }}
 
                     <x-lucide-chevron-right class="btn-icon w-4 h-4"/>

@@ -63,7 +63,7 @@
 
                 @include('components.navbar.language-switch')
 
-                <a href="#" class="btn-primary">
+                <a href="{{ route('tours') }}" class="btn-primary">
                     {{ __('navigation.book_now') }}
                 </a>
 

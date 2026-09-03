@@ -2,309 +2,266 @@
 
 @section('content')
 
-<div class="flex items-center justify-between mb-8">
+<div class="admin-page admin-tours-page">
 
-    <div>
+    <div class="admin-page-header">
 
-        <h1 class="text-3xl font-bold">
-            Passeios
-        </h1>
+        <div>
+            <h1>Passeios</h1>
 
-        <p class="mt-1 text-gray-500">
-            Gerir os passeios do Tours N Fish.
-        </p>
+            <p>
+                Gerir os passeios do Tours N Fish.
+            </p>
+        </div>
 
-    </div>
-
-    <a
-        href="{{ route('admin.tours.create') }}"
-        class="admin-btn-primary">
-
-        + Novo Passeio
-
-    </a>
-
-</div>
-
-@if(session('success'))
-
-    <div class="mb-6 rounded-lg border border-green-300 bg-green-50 p-4 text-green-700">
-
-        {{ session('success') }}
+        <a
+            href="{{ route('admin.tours.create') }}"
+            class="admin-tours-add-button"
+        >
+            + Novo Passeio
+        </a>
 
     </div>
 
-@endif
+    @if(session('success'))
 
-<div class="overflow-hidden rounded-lg bg-white shadow">
+        <div class="admin-alert admin-alert-success">
+            {{ session('success') }}
+        </div>
 
-    <table class="w-full">
+    @endif
 
-        <thead class="bg-gray-100">
+    <div class="admin-tours-table-card">
 
-            <tr>
+        <div class="admin-tours-table-wrap">
 
-                <th class="p-4 text-left">
-                    Capa
-                </th>
+            <table class="admin-tours-table">
 
-                <th class="p-4 text-left">
-                    Nome
-                </th>
+                <thead>
+                    <tr>
+                        <th>Capa</th>
+                        <th>Nome</th>
+                        <th>Preço</th>
+                        <th>Duração</th>
+                        <th class="is-center">Disponível</th>
+                        <th class="is-center">Home</th>
+                        <th class="is-right">Ações</th>
+                    </tr>
+                </thead>
 
-                <th class="p-4 text-left">
-                    Preço
-                </th>
+                <tbody>
 
-                <th class="p-4 text-left">
-                    Duração
-                </th>
+                @forelse($tours as $tour)
 
-                <th class="p-4 text-center">
-                    Disponível
-                </th>
+                    @php
+                        $isFirst = $loop->first;
+                        $isLast = $loop->last;
 
-                <th class="p-4 text-center">
-                    Home
-                </th>
+                        $translation = $tour->translations
+                            ->firstWhere('locale', 'pt');
 
-                <th class="p-4 text-right">
-                    Ações
-                </th>
+                        $option = $tour->options
+                            ->sortBy('display_order')
+                            ->first();
 
-            </tr>
+                        $formattedDuration = '—';
 
-        </thead>
+                        if ($option) {
 
-        <tbody>
+                            $minutes = (int) $option->duration_minutes;
 
-        @forelse($tours as $tour)
+                            if ($minutes < 60) {
 
-    @php
-        $isFirst = $loop->first;
-        $isLast = $loop->last;
-    @endphp
+                                $formattedDuration = $minutes . ' min';
 
-            @php
+                            } else {
 
-                $translation = $tour->translations
-                    ->firstWhere('locale', 'pt');
+                                $hours = intdiv($minutes, 60);
+                                $remainingMinutes = $minutes % 60;
 
-                $option = $tour->options
-                    ->sortBy('display_order')
-                    ->first();
+                                $formattedDuration = $hours . ' h';
 
-                $formattedDuration = '—';
+                                if ($remainingMinutes > 0) {
+                                    $formattedDuration .= ' ' . $remainingMinutes . ' min';
+                                }
 
-                if ($option) {
+                            }
 
-                    $minutes = (int) $option->duration_minutes;
-
-                    if ($minutes < 60) {
-
-                        $formattedDuration = $minutes . ' min';
-
-                    } else {
-
-                        $hours = intdiv($minutes, 60);
-                        $remainingMinutes = $minutes % 60;
-
-                        $formattedDuration = $hours . ' h';
-
-                        if ($remainingMinutes > 0) {
-                            $formattedDuration .= ' ' . $remainingMinutes . ' min';
                         }
+                    @endphp
 
-                    }
+                    <tr>
 
-                }
+                        <td>
+                            <img
+                                src="{{ asset('storage/' . $tour->cover_image) }}"
+                                alt="{{ $translation?->name }}"
+                                class="admin-tours-thumbnail"
+                            >
+                        </td>
 
-            @endphp
+                        <td>
+                            <div class="admin-tours-name">
+                                {{ $translation?->name ?? 'Sem nome' }}
+                            </div>
+                        </td>
 
-            <tr class="border-t">
+                        <td>
+                            @if($option)
+                                € {{ number_format($option->price, 2, ',', '.') }}
+                            @else
+                                —
+                            @endif
+                        </td>
 
-                <td class="p-4">
+                        <td>
+                            {{ $formattedDuration }}
+                        </td>
 
-                    <img
-                        src="{{ asset('storage/' . $tour->cover_image) }}"
-                        alt="{{ $translation?->name }}"
-                        class="h-24 w-24 rounded-lg object-cover">
+                        <td class="is-center">
 
-                </td>
+                            @if($tour->available)
 
-                <td class="p-4 font-medium">
+                                <span class="admin-tours-status admin-tours-status-available">
+                                    Disponível
+                                </span>
 
-                    <div class="max-w-xs truncate">
+                            @else
 
-                        {{ $translation?->name ?? 'Sem nome' }}
+                                <span class="admin-tours-status admin-tours-status-unavailable">
+                                    Indisponível
+                                </span>
 
-                    </div>
+                            @endif
 
-                </td>
+                        </td>
 
-                <td class="p-4">
+                        <td class="is-center">
 
-                    @if($option)
+                            @if($tour->featured_home)
 
-                        € {{ number_format($option->price, 2, ',', '.') }}
+                                <span class="admin-tours-home-active" aria-label="Em destaque na Home">
+                                    ⭐
+                                </span>
 
-                    @else
+                            @else
 
-                        —
+                                <span class="admin-tours-home-inactive" aria-label="Não está em destaque na Home">
+                                    ★
+                                </span>
 
-                    @endif
+                            @endif
 
-                </td>
+                        </td>
 
-                <td class="p-4">
+                        <td class="is-right">
 
-                    {{ $formattedDuration }}
+                            <div class="admin-tours-actions">
 
-                </td>
+                                @unless($isFirst)
 
-                <td class="p-4 text-center">
+                                    <form
+                                        action="{{ route('admin.tours.move', $tour) }}"
+                                        method="POST"
+                                    >
+                                        @csrf
 
-                    @if($tour->available)
+                                        <input
+                                            type="hidden"
+                                            name="direction"
+                                            value="up"
+                                        >
 
-                        <span class="rounded-full bg-green-100 px-3 py-1 text-sm text-green-700">
+                                        <button
+                                            type="submit"
+                                            class="admin-tours-order-button"
+                                            aria-label="Mover para cima"
+                                        >
+                                            ↑
+                                        </button>
 
-                            Disponível
+                                    </form>
 
-                        </span>
+                                @endunless
 
-                    @else
+                                @unless($isLast)
 
-                        <span class="rounded-full bg-red-100 px-3 py-1 text-sm text-red-700">
+                                    <form
+                                        action="{{ route('admin.tours.move', $tour) }}"
+                                        method="POST"
+                                    >
+                                        @csrf
 
-                            Indisponível
+                                        <input
+                                            type="hidden"
+                                            name="direction"
+                                            value="down"
+                                        >
 
-                        </span>
+                                        <button
+                                            type="submit"
+                                            class="admin-tours-order-button"
+                                            aria-label="Mover para baixo"
+                                        >
+                                            ↓
+                                        </button>
 
-                    @endif
+                                    </form>
 
-                </td>
+                                @endunless
 
-                <td class="p-4 text-center text-xl">
+                                <a
+                                    href="{{ route('admin.tours.edit', $tour) }}"
+                                    class="admin-reservation-action"
+                                >
+                                    Editar
+                                </a>
 
-                    @if($tour->featured_home)
+                                <form
+                                    action="{{ route('admin.tours.destroy', $tour) }}"
+                                    method="POST"
+                                    onsubmit="return confirm('Tem a certeza que pretende eliminar este passeio?');"
+                                >
+                                    @csrf
+                                    @method('DELETE')
 
-                        ⭐
+                                    <button
+                                        type="submit"
+                                        class="admin-reservation-action admin-reservation-action-delete"
+                                    >
+                                        Eliminar
+                                    </button>
 
-                    @else
+                                </form>
 
-                        <span class="text-gray-400">
-                            ★
-                        </span>
+                            </div>
 
-                    @endif
+                        </td>
 
-                </td>
+                    </tr>
 
-                <td class="p-4">
+                @empty
 
-                    <div class="flex justify-end items-center gap-2">
+                    <tr>
 
-    @unless($isFirst)
+                        <td
+                            colspan="7"
+                            class="admin-tours-empty"
+                        >
+                            Ainda não existem passeios.
+                        </td>
 
-        <form
-            action="{{ route('admin.tours.move', $tour) }}"
-            method="POST">
+                    </tr>
 
-            @csrf
+                @endforelse
 
-            <input
-                type="hidden"
-                name="direction"
-                value="up">
+                </tbody>
 
-            <button
-                type="submit"
-                class="admin-btn-secondary">
+            </table>
 
-                ↑
+        </div>
 
-            </button>
-
-        </form>
-
-    @endunless
-
-    @unless($isLast)
-
-        <form
-            action="{{ route('admin.tours.move', $tour) }}"
-            method="POST">
-
-            @csrf
-
-            <input
-                type="hidden"
-                name="direction"
-                value="down">
-
-            <button
-                type="submit"
-                class="admin-btn-secondary">
-
-                ↓
-
-            </button>
-
-        </form>
-
-    @endunless
-
-    <a
-        href="{{ route('admin.tours.edit', $tour) }}"
-        class="admin-btn-secondary">
-
-        Editar
-
-    </a>
-
-    <form
-        action="{{ route('admin.tours.destroy', $tour) }}"
-        method="POST"
-        onsubmit="return confirm('Tem a certeza que pretende eliminar este passeio?');">
-
-        @csrf
-        @method('DELETE')
-
-        <button
-            type="submit"
-            class="admin-btn-danger">
-
-            Eliminar
-
-        </button>
-
-    </form>
-
-</div>
-
-                </td>
-
-            </tr>
-
-        @empty
-
-            <tr>
-
-                <td
-                    colspan="7"
-                    class="py-12 text-center text-gray-500">
-
-                    Ainda não existem passeios.
-
-                </td>
-
-            </tr>
-
-        @endforelse
-
-        </tbody>
-
-    </table>
+    </div>
 
 </div>
 

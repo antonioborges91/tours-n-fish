@@ -1,0 +1,914 @@
+/* =========================================================
+   Admin Tours
+   ========================================================= */
+
+.admin-tours-page {
+    width: 100%;
+}
+
+
+/* =========================================================
+   Header
+   ========================================================= */
+
+.admin-tours-page .admin-page-header {
+    margin-bottom: 2rem;
+}
+
+.admin-tours-page .admin-page-header h1 {
+    margin: 0;
+
+    color: #111827;
+
+    font-size: 2rem;
+    line-height: 1.2;
+    font-weight: 700;
+}
+
+.admin-tours-page .admin-page-header p {
+    margin-top: 0.25rem;
+
+    color: #6b7280;
+
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   Add button
+   ========================================================= */
+
+.admin-tours-add-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+
+    padding: 0.65rem 1rem;
+
+    border: 1px solid #d1d5db;
+    border-radius: 0.5rem;
+
+    background: #111827;
+    color: #ffffff;
+
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1.25rem;
+
+    text-decoration: none;
+    white-space: nowrap;
+
+    transition:
+        background-color 0.15s ease,
+        border-color 0.15s ease,
+        transform 0.15s ease;
+}
+
+.admin-tours-add-button:hover {
+    background: #1f2937;
+    border-color: #1f2937;
+}
+
+.admin-tours-add-button:active {
+    transform: translateY(1px);
+}
+
+
+/* =========================================================
+   Alerts
+   ========================================================= */
+
+.admin-tours-page .admin-alert {
+    margin-bottom: 1.5rem;
+}
+
+.admin-tours-page .admin-alert-error ul {
+    margin: 0;
+    padding-left: 1.25rem;
+
+    list-style: disc;
+}
+
+
+/* =========================================================
+   Table card
+   ========================================================= */
+
+.admin-tours-table-card {
+    overflow: hidden;
+
+    border: 1px solid #e5e7eb;
+    border-radius: 0.75rem;
+
+    background: #ffffff;
+
+    box-shadow:
+        0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+.admin-tours-table-wrap {
+    width: 100%;
+
+    overflow-x: auto;
+}
+
+.admin-tours-table {
+    width: 100%;
+    min-width: 900px;
+
+    border-collapse: collapse;
+}
+
+.admin-tours-table thead {
+    background: #f9fafb;
+}
+
+.admin-tours-table th {
+    padding: 0.9rem 1rem;
+
+    border-bottom: 1px solid #e5e7eb;
+
+    color: #374151;
+
+    font-size: 0.75rem;
+    font-weight: 700;
+    line-height: 1rem;
+
+    letter-spacing: 0.025em;
+    text-transform: uppercase;
+
+    white-space: nowrap;
+}
+
+.admin-tours-table td {
+    padding: 1rem;
+
+    border-bottom: 1px solid #f3f4f6;
+
+    color: #374151;
+
+    font-size: 0.875rem;
+
+    vertical-align: middle;
+}
+
+.admin-tours-table tbody tr:last-child td {
+    border-bottom: 0;
+}
+
+.admin-tours-table tbody tr:hover {
+    background: #fafafa;
+}
+
+.admin-tours-table .is-center {
+    text-align: center;
+}
+
+.admin-tours-table .is-right {
+    text-align: right;
+}
+
+
+/* =========================================================
+   Tour thumbnail
+   ========================================================= */
+
+.admin-tours-thumbnail {
+    display: block;
+
+    width: 180px;
+    height: 120px;
+
+    border: 1px solid #e5e7eb;
+    border-radius: 0.5rem;
+
+    background: #f9fafb;
+
+    object-fit: cover;
+}
+
+
+/* =========================================================
+   Tour name
+   ========================================================= */
+
+.admin-tours-name {
+    color: #111827;
+
+    font-size: 0.9rem;
+    font-weight: 600;
+
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   Availability
+   ========================================================= */
+
+.admin-tours-status {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 82px;
+
+    padding: 0.3rem 0.65rem;
+
+    border-radius: 999px;
+
+    font-size: 0.75rem;
+    font-weight: 600;
+    line-height: 1rem;
+
+    white-space: nowrap;
+}
+
+.admin-tours-status-available {
+    background: #ecfdf5;
+    color: #047857;
+}
+
+.admin-tours-status-unavailable {
+    background: #f3f4f6;
+    color: #6b7280;
+}
+
+
+/* =========================================================
+   Home
+   ========================================================= */
+
+.admin-tours-home-active,
+.admin-tours-home-inactive {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 1.1rem;
+    line-height: 1;
+}
+
+.admin-tours-home-active {
+    color: #f59e0b;
+}
+
+.admin-tours-home-inactive {
+    color: #d1d5db;
+}
+
+
+/* =========================================================
+   Actions
+   ========================================================= */
+
+.admin-tours-actions {
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.5rem;
+
+    flex-wrap: wrap;
+}
+
+.admin-tours-order-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 2rem;
+    height: 2rem;
+
+    padding: 0;
+
+    border: 1px solid #d1d5db;
+    border-radius: 0.375rem;
+
+    background: #ffffff;
+    color: #374151;
+
+    font-size: 1rem;
+    line-height: 1;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.15s ease,
+        border-color 0.15s ease,
+        color 0.15s ease;
+}
+
+.admin-tours-order-button:hover {
+    background: #f9fafb;
+    border-color: #9ca3af;
+    color: #111827;
+}
+
+.admin-tours-actions .admin-reservation-action {
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   Empty state
+   ========================================================= */
+
+.admin-tours-empty {
+    padding: 3rem 1rem !important;
+
+    color: #6b7280 !important;
+
+    text-align: center;
+}
+
+
+/* =========================================================
+   Forms
+   ========================================================= */
+
+.admin-tours-form-card {
+    width: 100%;
+
+    padding: 1.5rem;
+
+    border: 1px solid #e5e7eb;
+    border-radius: 0.75rem;
+
+    background: #ffffff;
+
+    box-shadow:
+        0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+.admin-tours-section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+
+    margin-bottom: 1.5rem;
+}
+
+.admin-tours-section-header h2 {
+    margin: 0;
+
+    color: #111827;
+
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+    font-weight: 600;
+}
+
+.admin-tours-section-header p {
+    margin-top: 0.25rem;
+
+    color: #6b7280;
+
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+}
+
+.admin-tours-section-header-actions {
+    flex-shrink: 0;
+}
+
+
+/* =========================================================
+   Form fields
+   ========================================================= */
+
+.admin-tours-form-fields {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.admin-tours-form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 1.5rem;
+}
+
+.admin-tours-form-field {
+    min-width: 0;
+}
+
+.admin-tours-form-field-full {
+    width: 100%;
+}
+
+.admin-tours-form-label {
+    display: block;
+
+    margin-bottom: 0.5rem;
+
+    color: #111827;
+
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1.25rem;
+}
+
+.admin-tours-form-input,
+.admin-tours-file-input {
+    display: block;
+
+    width: 100%;
+
+    border: 1px solid #d1d5db;
+    border-radius: 0.5rem;
+
+    background: #ffffff;
+    color: #374151;
+
+    font-size: 0.875rem;
+}
+
+.admin-tours-form-input {
+    padding: 0.65rem 0.75rem;
+}
+
+.admin-tours-form-input:focus,
+.admin-tours-file-input:focus {
+    outline: none;
+
+    border-color: #9ca3af;
+
+    box-shadow:
+        0 0 0 2px rgba(17, 24, 39, 0.08);
+}
+
+textarea.admin-tours-form-input {
+    min-height: 100px;
+
+    resize: vertical;
+}
+
+.admin-tours-file-input {
+    padding: 0.5rem;
+
+    cursor: pointer;
+}
+
+.admin-tours-file-input:hover {
+    border-color: #9ca3af;
+}
+
+.admin-tours-file-input::file-selector-button {
+    margin-right: 1rem;
+
+    padding: 0.5rem 1rem;
+
+    border: 0;
+    border-radius: 0.5rem;
+
+    background: #f3f4f6;
+    color: #374151;
+
+    font-size: 0.875rem;
+    font-weight: 500;
+
+    cursor: pointer;
+}
+
+.admin-tours-file-input:hover::file-selector-button {
+    background: #e5e7eb;
+}
+
+.admin-tours-form-help {
+    margin-top: 0.5rem;
+
+    color: #6b7280;
+
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+}
+
+
+/* =========================================================
+   Current cover
+   ========================================================= */
+
+.admin-tours-current-cover {
+    display: block;
+
+    width: auto;
+    max-width: 100%;
+    height: 16rem;
+
+    margin-bottom: 1.5rem;
+
+    border: 1px solid #e5e7eb;
+    border-radius: 0.75rem;
+
+    background: #f9fafb;
+
+    object-fit: contain;
+}
+
+
+/* =========================================================
+   Recommendations
+   ========================================================= */
+
+.admin-tours-recommendations {
+    margin-top: 1rem;
+
+    padding: 1rem;
+
+    border: 1px solid #bfdbfe;
+    border-radius: 0.5rem;
+
+    background: #eff6ff;
+}
+
+.admin-tours-recommendations-title {
+    margin: 0;
+
+    color: #1e3a8a;
+
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1.25rem;
+}
+
+.admin-tours-recommendations-list {
+    margin: 0.5rem 0 0;
+    padding: 0;
+
+    list-style: none;
+
+    color: #1e40af;
+
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+}
+
+.admin-tours-recommendations-list li + li {
+    margin-top: 0.25rem;
+}
+
+.admin-tours-recommendations-note {
+    margin: 0.75rem 0 0;
+
+    color: #1d4ed8;
+
+    font-size: 0.75rem;
+    line-height: 1rem;
+}
+
+
+/* =========================================================
+   Image information
+   ========================================================= */
+
+.admin-tours-image-info {
+    margin-top: 1rem;
+
+    padding: 1rem;
+
+    border: 1px solid #e5e7eb;
+    border-radius: 0.5rem;
+
+    background: #f9fafb;
+}
+
+.admin-tours-image-info-title {
+    margin: 0;
+
+    color: #111827;
+
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1.25rem;
+}
+
+.admin-tours-image-info-details {
+    margin-top: 0.5rem;
+
+    color: #4b5563;
+
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+}
+
+.admin-tours-image-info-details .space-y-1 > * + * {
+    margin-top: 0.25rem;
+}
+
+
+/* =========================================================
+   Checkboxes
+   ========================================================= */
+
+.admin-tours-checkbox-options {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+
+    flex-wrap: wrap;
+}
+
+.admin-tours-checkbox-option {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    color: #111827;
+
+    font-size: 0.875rem;
+    font-weight: 500;
+
+    cursor: pointer;
+}
+
+.admin-tours-checkbox {
+    width: 1rem;
+    height: 1rem;
+
+    margin: 0;
+}
+
+
+/* =========================================================
+   Options
+   ========================================================= */
+
+.admin-tours-option-card {
+    margin-bottom: 1.5rem;
+    padding: 1.5rem;
+
+    border: 1px solid #e5e7eb;
+    border-radius: 0.75rem;
+
+    background: #f9fafb;
+}
+
+.admin-tours-option-card:last-child {
+    margin-bottom: 0;
+}
+
+.admin-tours-option-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+
+    margin-bottom: 1.5rem;
+}
+
+.admin-tours-option-header h3 {
+    margin: 0;
+
+    color: #111827;
+
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+    font-weight: 600;
+}
+
+.admin-tours-option-divider {
+    height: 1px;
+
+    margin: 1.5rem 0;
+
+    background: #e5e7eb;
+}
+
+.admin-tours-schedule-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+
+    margin-bottom: 1rem;
+}
+
+.admin-tours-schedule-header h4 {
+    margin: 0;
+
+    color: #111827;
+
+    font-size: 0.95rem;
+    font-weight: 600;
+}
+
+.admin-tours-option-schedules {
+    width: 100%;
+}
+
+.admin-tours-schedule-row {
+    display: grid;
+    grid-template-columns:
+        minmax(0, 1fr)
+        minmax(0, 1fr)
+        auto;
+
+    align-items: end;
+
+    gap: 1rem;
+
+    margin-bottom: 1rem;
+}
+
+.admin-tours-schedule-row:last-child {
+    margin-bottom: 0;
+}
+
+.admin-tours-schedule-action {
+    padding-bottom: 0;
+}
+
+.admin-tours-empty-message {
+    margin: 0;
+
+    color: #6b7280;
+}
+
+
+/* =========================================================
+   Gallery inside tour form
+   ========================================================= */
+
+.admin-tours-gallery-row {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+
+    align-items: end;
+
+    gap: 1rem;
+
+    margin-bottom: 1rem;
+}
+
+.admin-tours-gallery-row:last-child {
+    margin-bottom: 0;
+}
+
+.admin-tours-gallery-preview {
+    flex-shrink: 0;
+}
+
+.admin-tours-gallery-thumbnail {
+    display: block;
+
+    width: 10rem;
+    height: 7rem;
+
+    border: 1px solid #e5e7eb;
+    border-radius: 0.5rem;
+
+    background: #f9fafb;
+
+    object-fit: cover;
+}
+
+.admin-tours-gallery-field {
+    min-width: 0;
+}
+
+.admin-tours-gallery-action {
+    flex-shrink: 0;
+}
+
+
+/* =========================================================
+   Form actions
+   ========================================================= */
+
+.admin-tours-form-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+
+    flex-wrap: wrap;
+}
+
+
+/* =========================================================
+   Responsive
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+    .admin-tours-page .admin-page-header {
+        align-items: flex-start;
+        gap: 1rem;
+    }
+
+    .admin-tours-add-button {
+        width: 100%;
+    }
+
+    .admin-tours-form-card {
+        padding: 1rem;
+    }
+
+    .admin-tours-form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-tours-section-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .admin-tours-section-header-actions {
+        width: 100%;
+    }
+
+    .admin-tours-section-header-actions .admin-btn-primary {
+        width: 100%;
+    }
+
+    .admin-tours-current-cover {
+        height: 13rem;
+    }
+
+    .admin-tours-actions {
+        justify-content: flex-start;
+    }
+
+    .admin-tours-checkbox-options {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .admin-tours-schedule-row {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-tours-schedule-action {
+        width: 100%;
+    }
+
+    .admin-tours-schedule-action button {
+        width: 100%;
+    }
+
+    .admin-tours-gallery-row {
+        grid-template-columns: 1fr;
+        align-items: stretch;
+    }
+
+    .admin-tours-gallery-thumbnail {
+        width: 100%;
+        max-width: 16rem;
+        height: auto;
+        aspect-ratio: 3 / 2;
+    }
+
+    .admin-tours-gallery-action button {
+        width: 100%;
+    }
+
+}
+
+
+@media (max-width: 600px) {
+
+    .admin-tours-page .admin-page-header h1 {
+        font-size: 1.65rem;
+    }
+
+    .admin-tours-table {
+        min-width: 900px;
+    }
+
+    .admin-tours-option-card {
+        padding: 1rem;
+    }
+
+    .admin-tours-option-header,
+    .admin-tours-schedule-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .admin-tours-option-header button,
+    .admin-tours-schedule-header button {
+        width: 100%;
+    }
+
+}
+
+
+@media (max-width: 480px) {
+
+    .admin-tours-form-actions {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .admin-tours-form-actions .admin-btn-primary,
+    .admin-tours-form-actions .admin-btn-secondary {
+        width: 100%;
+        justify-content: center;
+        text-align: center;
+    }
+
+}

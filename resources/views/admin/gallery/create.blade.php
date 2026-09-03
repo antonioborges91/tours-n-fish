@@ -2,25 +2,25 @@
 
 @section('content')
 
-<div class="max-w-3xl">
+<div class="admin-page admin-gallery-page">
 
-    <div class="mb-8">
+    <div class="admin-page-header">
 
-        <h1 class="text-3xl font-bold">
-            Nova Fotografia
-        </h1>
+        <div>
+            <h1>Nova Fotografia</h1>
 
-        <p class="mt-1 text-gray-500">
-            Adicionar uma fotografia à galeria.
-        </p>
+            <p>
+                Adicionar uma fotografia à galeria.
+            </p>
+        </div>
 
     </div>
 
     @if ($errors->any())
 
-        <div class="mb-6 rounded-lg border border-red-300 bg-red-50 p-4 text-red-700">
+        <div class="admin-gallery-error">
 
-            <ul class="list-disc pl-5 space-y-1">
+            <ul>
 
                 @foreach ($errors->all() as $error)
 
@@ -34,68 +34,65 @@
 
     @endif
 
-    <div class="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
+    <div class="admin-gallery-form-card">
 
         <form
             action="{{ route('admin.gallery.store') }}"
             method="POST"
-            enctype="multipart/form-data">
+            enctype="multipart/form-data"
+        >
 
             @csrf
 
-            <div class="mb-6">
+            <div class="admin-gallery-form-section">
 
-                <label
-                    for="image"
-                    class="mb-2 block text-sm font-semibold text-gray-900">
+                <div class="admin-gallery-form-field">
 
-                    Fotografia
+                    <label for="image">
+                        Fotografia
+                    </label>
 
-                </label>
+                    <input
+                        type="file"
+                        name="image"
+                        id="image"
+                        accept="image/jpeg,image/png,image/webp"
+                        required
+                    >
 
-                <input
-                    type="file"
-                    name="image"
-                    id="image"
-                    accept="image/jpeg,image/png,image/webp"
-                    required
-                    class="block w-full rounded-lg border border-gray-300 bg-white text-sm text-gray-700
-                           file:mr-4 file:rounded-lg file:border-0
-                           file:bg-gray-100 file:px-4 file:py-2
-                           file:text-sm file:font-medium
-                           hover:file:bg-gray-200">
+                </div>
 
-                <div class="mt-3 rounded-lg border border-blue-200 bg-blue-50 p-4">
+                <div class="admin-gallery-info">
 
-                    <p class="font-semibold text-blue-900">
+                    <p class="admin-gallery-info-title">
                         Recomendações para a fotografia
                     </p>
 
-                    <ul class="mt-2 space-y-1 text-sm text-blue-800">
+                    <ul class="admin-gallery-info-list">
 
                         <li>
-                            • Horizontal: <strong>3:2</strong>
+                            Horizontal: <strong>3:2</strong>
                         </li>
 
                         <li>
-                            • Vertical: <strong>2:3</strong> ou <strong>4:5</strong>
+                            Vertical: <strong>2:3</strong> ou <strong>4:5</strong>
                         </li>
 
                         <li>
-                            • Recomendado: <strong>1800 px ou mais no lado maior</strong>
+                            Recomendado: <strong>1800 px ou mais no lado maior</strong>
                         </li>
 
                         <li>
-                            • Mínimo indicado: <strong>1200 px no lado maior</strong>
+                            Mínimo indicado: <strong>1200 px no lado maior</strong>
                         </li>
 
                         <li>
-                            • Tamanho máximo do ficheiro: <strong>5 MB</strong>
+                            Tamanho máximo do ficheiro: <strong>5 MB</strong>
                         </li>
 
                     </ul>
 
-                    <p class="mt-3 text-xs text-blue-700">
+                    <p class="admin-gallery-info-description">
                         A fotografia pode ser horizontal ou vertical.
                         A proporção original será preservada na galeria.
                     </p>
@@ -104,60 +101,59 @@
 
                 <div
                     id="image-info"
-                    class="mt-4 hidden rounded-lg border border-gray-200 bg-gray-50 p-4">
+                    class="admin-gallery-image-info is-hidden"
+                >
 
-                    <p class="text-sm font-semibold text-gray-900">
+                    <p class="admin-gallery-image-info-title">
                         Informação da imagem
                     </p>
 
                     <div
                         id="image-details"
-                        class="mt-2 text-sm text-gray-600">
-                    </div>
+                        class="admin-gallery-image-details"
+                    ></div>
 
                 </div>
 
             </div>
 
-            <div class="mb-6">
+            <div class="admin-gallery-active-field">
 
-                <label class="flex items-center gap-3">
+                <label class="admin-gallery-checkbox-label">
 
                     <input
                         type="checkbox"
                         name="is_active"
                         value="1"
                         checked
-                        class="h-4 w-4 rounded border-gray-300">
+                    >
 
-                    <span class="text-sm font-medium text-gray-900">
+                    <span>
                         Ativa
                     </span>
 
                 </label>
 
-                <p class="mt-1 ml-7 text-sm text-gray-500">
+                <p>
                     Apenas fotografias ativas serão mostradas na galeria pública.
                 </p>
 
             </div>
 
-            <div class="flex items-center gap-3">
+            <div class="admin-gallery-form-actions">
 
                 <button
                     type="submit"
-                    class="admin-btn-primary">
-
+                    class="admin-btn-primary"
+                >
                     Guardar
-
                 </button>
 
                 <a
                     href="{{ route('admin.gallery.index') }}"
-                    class="admin-btn-secondary">
-
+                    class="admin-btn-secondary"
+                >
                     Cancelar
-
                 </a>
 
             </div>
@@ -179,7 +175,7 @@ document.getElementById('image').addEventListener('change', function (event) {
 
     if (!file) {
 
-        info.classList.add('hidden');
+        info.classList.add('is-hidden');
         details.innerHTML = '';
 
         return;
@@ -280,7 +276,7 @@ document.getElementById('image').addEventListener('change', function (event) {
                 '</div>' +
             '</div>';
 
-        info.classList.remove('hidden');
+        info.classList.remove('is-hidden');
 
     };
 

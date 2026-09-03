@@ -1,0 +1,589 @@
+/* =========================================================
+   Admin Gallery
+   ========================================================= */
+
+.admin-gallery-page {
+    width: 100%;
+}
+
+/* ---------------------------------------------------------
+   Header
+   --------------------------------------------------------- */
+
+.admin-gallery-page .admin-page-header {
+    margin-bottom: 2rem;
+}
+
+.admin-gallery-page .admin-page-header h1 {
+    margin: 0;
+}
+
+.admin-gallery-page .admin-page-header p {
+    margin-top: 0.25rem;
+    color: #6b7280;
+}
+
+/* ---------------------------------------------------------
+   Add button
+   --------------------------------------------------------- */
+
+.admin-gallery-add-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+
+    padding: 0.65rem 1rem;
+
+    border: 1px solid #d1d5db;
+    border-radius: 0.5rem;
+
+    background: #111827;
+    color: #ffffff;
+
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1.25rem;
+
+    text-decoration: none;
+
+    transition:
+        background-color 0.15s ease,
+        border-color 0.15s ease,
+        transform 0.15s ease;
+}
+
+.admin-gallery-add-button:hover {
+    background: #1f2937;
+    border-color: #1f2937;
+}
+
+.admin-gallery-add-button:active {
+    transform: translateY(1px);
+}
+
+/* ---------------------------------------------------------
+   Alerts
+   --------------------------------------------------------- */
+
+.admin-gallery-page .admin-alert {
+    margin-bottom: 1.5rem;
+}
+
+.admin-gallery-page .admin-alert-error ul {
+    margin: 0;
+    padding-left: 1.25rem;
+
+    list-style: disc;
+}
+
+/* ---------------------------------------------------------
+   Table card
+   --------------------------------------------------------- */
+
+.admin-gallery-table-card {
+    overflow: hidden;
+
+    border: 1px solid #e5e7eb;
+    border-radius: 0.75rem;
+
+    background: #ffffff;
+
+    box-shadow:
+        0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+.admin-gallery-table-wrap {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.admin-gallery-table {
+    width: 100%;
+    min-width: 700px;
+
+    border-collapse: collapse;
+}
+
+.admin-gallery-table thead {
+    background: #f9fafb;
+}
+
+.admin-gallery-table th {
+    padding: 0.9rem 1rem;
+
+    border-bottom: 1px solid #e5e7eb;
+
+    color: #374151;
+
+    font-size: 0.75rem;
+    font-weight: 700;
+    line-height: 1rem;
+
+    letter-spacing: 0.025em;
+    text-transform: uppercase;
+
+    white-space: nowrap;
+}
+
+.admin-gallery-table td {
+    padding: 1rem;
+
+    border-bottom: 1px solid #f3f4f6;
+
+    color: #374151;
+
+    font-size: 0.875rem;
+    vertical-align: middle;
+}
+
+.admin-gallery-table tbody tr:last-child td {
+    border-bottom: 0;
+}
+
+.admin-gallery-table tbody tr:hover {
+    background: #fafafa;
+}
+
+.admin-gallery-table .is-center {
+    text-align: center;
+}
+
+.admin-gallery-table .is-right {
+    text-align: right;
+}
+
+/* ---------------------------------------------------------
+   Gallery thumbnail
+   --------------------------------------------------------- */
+
+.admin-gallery-thumbnail {
+    display: block;
+
+    width: 96px;
+    height: 64px;
+
+    border: 1px solid #e5e7eb;
+    border-radius: 0.5rem;
+
+    background: #f9fafb;
+
+    object-fit: cover;
+}
+
+/* ---------------------------------------------------------
+   Status
+   --------------------------------------------------------- */
+
+.admin-gallery-status {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 72px;
+
+    padding: 0.3rem 0.65rem;
+
+    border-radius: 999px;
+
+    font-size: 0.75rem;
+    font-weight: 600;
+    line-height: 1rem;
+}
+
+.admin-gallery-status-active {
+    background: #ecfdf5;
+    color: #047857;
+}
+
+.admin-gallery-status-inactive {
+    background: #f3f4f6;
+    color: #6b7280;
+}
+
+/* ---------------------------------------------------------
+   Order
+   --------------------------------------------------------- */
+
+.admin-gallery-order {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 2rem;
+    height: 2rem;
+
+    border-radius: 0.375rem;
+
+    background: #f3f4f6;
+
+    color: #374151;
+
+    font-size: 0.8125rem;
+    font-weight: 600;
+}
+
+/* ---------------------------------------------------------
+   Actions
+   --------------------------------------------------------- */
+
+.admin-gallery-actions {
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.5rem;
+
+    flex-wrap: wrap;
+}
+
+.admin-gallery-order-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 2rem;
+    height: 2rem;
+
+    padding: 0;
+
+    border: 1px solid #d1d5db;
+    border-radius: 0.375rem;
+
+    background: #ffffff;
+    color: #374151;
+
+    font-size: 1rem;
+    line-height: 1;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.15s ease,
+        border-color 0.15s ease,
+        color 0.15s ease;
+}
+
+.admin-gallery-order-button:hover {
+    background: #f9fafb;
+    border-color: #9ca3af;
+    color: #111827;
+}
+
+.admin-gallery-actions .admin-reservation-action {
+    white-space: nowrap;
+}
+
+/* ---------------------------------------------------------
+   Empty state
+   --------------------------------------------------------- */
+
+.admin-gallery-empty {
+    padding: 3rem 1rem !important;
+
+    color: #6b7280 !important;
+
+    text-align: center;
+}
+
+/* =========================================================
+   Gallery Forms
+   ========================================================= */
+
+.admin-gallery-form-card {
+    width: 100%;
+    max-width: 48rem;
+
+    padding: 1.5rem;
+
+    border: 1px solid #e5e7eb;
+    border-radius: 0.75rem;
+
+    background: #ffffff;
+
+    box-shadow:
+        0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+.admin-gallery-form-section {
+    margin-bottom: 1.5rem;
+}
+
+.admin-gallery-form-label {
+    display: block;
+
+    margin-bottom: 0.5rem;
+
+    color: #111827;
+
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1.25rem;
+}
+
+.admin-gallery-form-help {
+    margin-top: 0.5rem;
+
+    color: #6b7280;
+
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+}
+
+/* ---------------------------------------------------------
+   Current image
+   --------------------------------------------------------- */
+
+.admin-gallery-current-image {
+    margin-bottom: 1.5rem;
+}
+
+.admin-gallery-current-thumbnail {
+    display: block;
+
+    width: auto;
+    max-width: 100%;
+    height: 16rem;
+
+    border: 1px solid #e5e7eb;
+    border-radius: 0.75rem;
+
+    background: #f9fafb;
+
+    object-fit: contain;
+}
+
+/* ---------------------------------------------------------
+   File input
+   --------------------------------------------------------- */
+
+.admin-gallery-file-input {
+    display: block;
+
+    width: 100%;
+
+    border: 1px solid #d1d5db;
+    border-radius: 0.5rem;
+
+    background: #ffffff;
+
+    color: #374151;
+
+    font-size: 0.875rem;
+
+    cursor: pointer;
+}
+
+.admin-gallery-file-input:hover {
+    border-color: #9ca3af;
+}
+
+.admin-gallery-file-input:focus {
+    outline: none;
+    border-color: #9ca3af;
+    box-shadow: 0 0 0 2px rgba(17, 24, 39, 0.08);
+}
+
+.admin-gallery-file-input::file-selector-button {
+    margin-right: 1rem;
+
+    padding: 0.5rem 1rem;
+
+    border: 0;
+    border-radius: 0.5rem;
+
+    background: #f3f4f6;
+    color: #374151;
+
+    font-size: 0.875rem;
+    font-weight: 500;
+
+    cursor: pointer;
+}
+
+.admin-gallery-file-input:hover::file-selector-button {
+    background: #e5e7eb;
+}
+
+/* ---------------------------------------------------------
+   Recommendations
+   --------------------------------------------------------- */
+
+.admin-gallery-recommendations {
+    margin-top: 1rem;
+
+    padding: 1rem;
+
+    border: 1px solid #bfdbfe;
+    border-radius: 0.5rem;
+
+    background: #eff6ff;
+}
+
+.admin-gallery-recommendations-title {
+    margin: 0;
+
+    color: #1e3a8a;
+
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1.25rem;
+}
+
+.admin-gallery-recommendations-list {
+    margin: 0.5rem 0 0;
+    padding: 0;
+
+    list-style: none;
+
+    color: #1e40af;
+
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+}
+
+.admin-gallery-recommendations-list li + li {
+    margin-top: 0.25rem;
+}
+
+.admin-gallery-recommendations-note {
+    margin: 0.75rem 0 0;
+
+    color: #1d4ed8;
+
+    font-size: 0.75rem;
+    line-height: 1rem;
+}
+
+/* ---------------------------------------------------------
+   Image information
+   --------------------------------------------------------- */
+
+.admin-gallery-image-info {
+    margin-top: 1rem;
+
+    padding: 1rem;
+
+    border: 1px solid #e5e7eb;
+    border-radius: 0.5rem;
+
+    background: #f9fafb;
+}
+
+.admin-gallery-image-info.hidden {
+    display: none;
+}
+
+.admin-gallery-image-info-title {
+    margin: 0;
+
+    color: #111827;
+
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1.25rem;
+}
+
+.admin-gallery-image-details {
+    margin-top: 0.5rem;
+
+    color: #4b5563;
+
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+}
+
+.admin-gallery-image-details > div > div + div {
+    margin-top: 0.25rem;
+}
+
+.admin-gallery-image-details > div > div:last-child {
+    padding-top: 0.25rem;
+}
+
+/* ---------------------------------------------------------
+   Active option
+   --------------------------------------------------------- */
+
+.admin-gallery-active-option {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+
+    color: #111827;
+
+    font-size: 0.875rem;
+    font-weight: 500;
+
+    cursor: pointer;
+}
+
+.admin-gallery-active-checkbox {
+    width: 1rem;
+    height: 1rem;
+
+    margin: 0;
+
+    border: 1px solid #d1d5db;
+    border-radius: 0.25rem;
+}
+
+.admin-gallery-active-help {
+    margin-left: 1.75rem;
+}
+
+/* ---------------------------------------------------------
+   Form actions
+   --------------------------------------------------------- */
+
+.admin-gallery-form-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+
+    flex-wrap: wrap;
+}
+
+/* =========================================================
+   Responsive
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+    .admin-gallery-page .admin-page-header {
+        align-items: flex-start;
+        gap: 1rem;
+    }
+
+    .admin-gallery-add-button {
+        width: 100%;
+    }
+
+    .admin-gallery-form-card {
+        padding: 1rem;
+    }
+
+    .admin-gallery-current-thumbnail {
+        height: 13rem;
+    }
+
+    .admin-gallery-actions {
+        justify-content: flex-start;
+    }
+
+}
+
+@media (max-width: 480px) {
+
+    .admin-gallery-form-actions {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .admin-gallery-form-actions .admin-btn-primary,
+    .admin-gallery-form-actions .admin-btn-secondary {
+        width: 100%;
+        justify-content: center;
+        text-align: center;
+    }
+
+}

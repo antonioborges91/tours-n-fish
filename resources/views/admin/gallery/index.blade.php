@@ -2,221 +2,210 @@
 
 @section('content')
 
-<div class="flex items-end justify-between">
+<div class="admin-page admin-gallery-page">
 
-    <div>
+    <div class="admin-page-header">
 
-        <h1 class="text-3xl font-bold">
-            Galeria
-        </h1>
+        <div>
+            <h1>Galeria</h1>
 
-        <p class="mt-1 text-gray-500">
-            Gerir as fotografias da galeria.
-        </p>
+            <p>
+                Gerir as fotografias da galeria.
+            </p>
+        </div>
 
-    </div>
-
-    <a
-        href="{{ route('admin.gallery.create') }}"
-        class="admin-btn-primary">
-
-        + Adicionar Fotografia
-
-    </a>
-
-</div>
-
-@if(session('success'))
-
-    <div class="mb-6 mt-6 rounded-lg border border-green-300 bg-green-50 p-4 text-green-700">
-
-        {{ session('success') }}
+        <a
+            href="{{ route('admin.gallery.create') }}"
+            class="admin-gallery-add-button"
+        >
+            + Adicionar Fotografia
+        </a>
 
     </div>
 
-@endif
+    @if(session('success'))
 
-<div class="mt-8 overflow-hidden rounded-xl border border-gray-200 bg-white">
+        <div class="admin-alert admin-alert-success">
+            {{ session('success') }}
+        </div>
 
-    <table class="w-full">
+    @endif
 
-        <thead class="bg-gray-100">
+    <div class="admin-gallery-table-card">
 
-            <tr>
+        <div class="admin-gallery-table-wrap">
 
-                <th class="p-4 text-left">
-                    Fotografia
-                </th>
+            <table class="admin-gallery-table">
 
-                <th class="p-4 text-center">
-                    Estado
-                </th>
+                <thead>
 
-                <th class="p-4 text-center">
-                    Ordem
-                </th>
+                    <tr>
+                        <th>Fotografia</th>
+                        <th class="is-center">Estado</th>
+                        <th class="is-center">Ordem</th>
+                        <th class="is-right">Ações</th>
+                    </tr>
 
-                <th class="p-4 text-right">
-                    Ações
-                </th>
+                </thead>
 
-            </tr>
+                <tbody>
 
-        </thead>
+                @forelse($photos as $photo)
 
-        <tbody>
+                    @php
+                        $isFirst = $loop->first;
+                        $isLast = $loop->last;
+                    @endphp
 
-        @forelse($photos as $photo)
+                    <tr>
 
-            @php
-                $isFirst = $loop->first;
-                $isLast = $loop->last;
-            @endphp
+                        <td>
 
-            <tr class="border-t">
+                            <img
+                                src="{{ asset('storage/' . $photo->image) }}"
+                                alt="Fotografia"
+                                class="admin-gallery-thumbnail"
+                            >
 
-                <td class="p-4">
+                        </td>
 
-                    <img
-                        src="{{ asset('storage/' . $photo->image) }}"
-                        alt="Fotografia"
-                        class="h-24 w-24 rounded-lg object-cover">
+                        <td class="is-center">
 
-                </td>
+                            @if($photo->is_active)
 
-                <td class="p-4 text-center">
+                                <span class="admin-gallery-status admin-gallery-status-active">
+                                    Ativa
+                                </span>
 
-                    @if($photo->is_active)
+                            @else
 
-                        <span class="rounded-full bg-green-100 px-3 py-1 text-sm text-green-700">
+                                <span class="admin-gallery-status admin-gallery-status-inactive">
+                                    Inativa
+                                </span>
 
-                            Ativa
+                            @endif
 
-                        </span>
+                        </td>
 
-                    @else
+                        <td class="is-center">
 
-                        <span class="rounded-full bg-red-100 px-3 py-1 text-sm text-red-700">
+                            <span class="admin-gallery-order">
+                                {{ $photo->sort_order }}
+                            </span>
 
-                            Inativa
+                        </td>
 
-                        </span>
+                        <td class="is-right">
 
-                    @endif
+                            <div class="admin-gallery-actions">
 
-                </td>
+                                @unless($isFirst)
 
-                <td class="p-4 text-center">
+                                    <form
+                                        action="{{ route('admin.gallery.move', $photo) }}"
+                                        method="POST"
+                                    >
 
-                    {{ $photo->sort_order }}
+                                        @csrf
 
-                </td>
+                                        <input
+                                            type="hidden"
+                                            name="direction"
+                                            value="up"
+                                        >
 
-                <td class="p-4">
+                                        <button
+                                            type="submit"
+                                            class="admin-gallery-order-button"
+                                            aria-label="Mover para cima"
+                                        >
+                                            ↑
+                                        </button>
 
-                    <div class="flex items-center justify-end gap-2">
+                                    </form>
 
-                        @unless($isFirst)
+                                @endunless
 
-                            <form
-                                action="{{ route('admin.gallery.move', $photo) }}"
-                                method="POST">
+                                @unless($isLast)
 
-                                @csrf
+                                    <form
+                                        action="{{ route('admin.gallery.move', $photo) }}"
+                                        method="POST"
+                                    >
 
-                                <input
-                                    type="hidden"
-                                    name="direction"
-                                    value="up">
+                                        @csrf
 
-                                <button
-                                    type="submit"
-                                    class="admin-btn-secondary">
+                                        <input
+                                            type="hidden"
+                                            name="direction"
+                                            value="down"
+                                        >
 
-                                    ↑
+                                        <button
+                                            type="submit"
+                                            class="admin-gallery-order-button"
+                                            aria-label="Mover para baixo"
+                                        >
+                                            ↓
+                                        </button>
 
-                                </button>
+                                    </form>
 
-                            </form>
+                                @endunless
 
-                        @endunless
+                                <a
+                                    href="{{ route('admin.gallery.edit', $photo) }}"
+                                    class="admin-reservation-action"
+                                >
+                                    Editar
+                                </a>
 
-                        @unless($isLast)
+                                <form
+                                    action="{{ route('admin.gallery.destroy', $photo) }}"
+                                    method="POST"
+                                    onsubmit="return confirm('Tem a certeza que pretende eliminar esta fotografia?');"
+                                >
 
-                            <form
-                                action="{{ route('admin.gallery.move', $photo) }}"
-                                method="POST">
+                                    @csrf
+                                    @method('DELETE')
 
-                                @csrf
+                                    <button
+                                        type="submit"
+                                        class="admin-reservation-action admin-reservation-action-delete"
+                                    >
+                                        Eliminar
+                                    </button>
 
-                                <input
-                                    type="hidden"
-                                    name="direction"
-                                    value="down">
+                                </form>
 
-                                <button
-                                    type="submit"
-                                    class="admin-btn-secondary">
+                            </div>
 
-                                    ↓
+                        </td>
 
-                                </button>
+                    </tr>
 
-                            </form>
+                @empty
 
-                        @endunless
+                    <tr>
 
-                        <a
-                            href="{{ route('admin.gallery.edit', $photo) }}"
-                            class="admin-btn-secondary">
+                        <td
+                            colspan="4"
+                            class="admin-gallery-empty"
+                        >
+                            Ainda não existem fotografias.
+                        </td>
 
-                            Editar
+                    </tr>
 
-                        </a>
+                @endforelse
 
-                        <form
-                            action="{{ route('admin.gallery.destroy', $photo) }}"
-                            method="POST"
-                            onsubmit="return confirm('Tem a certeza que pretende eliminar esta fotografia?');">
+                </tbody>
 
-                            @csrf
-                            @method('DELETE')
+            </table>
 
-                            <button
-                                type="submit"
-                                class="admin-btn-danger">
+        </div>
 
-                                Eliminar
-
-                            </button>
-
-                        </form>
-
-                    </div>
-
-                </td>
-
-            </tr>
-
-        @empty
-
-            <tr>
-
-                <td
-                    colspan="4"
-                    class="py-12 text-center text-gray-500">
-
-                    Ainda não existem fotografias.
-
-                </td>
-
-            </tr>
-
-        @endforelse
-
-        </tbody>
-
-    </table>
+    </div>
 
 </div>
 

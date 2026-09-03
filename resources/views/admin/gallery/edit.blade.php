@@ -2,72 +2,66 @@
 
 @section('content')
 
-<div class="max-w-3xl">
+<div class="admin-page admin-gallery-page">
 
-    <div class="mb-8">
+    <div class="admin-page-header">
 
-        <h1 class="text-3xl font-bold">
-            Editar Fotografia
-        </h1>
+        <div>
+            <h1>Editar Fotografia</h1>
 
-        <p class="mt-1 text-gray-500">
-            Atualizar a fotografia da galeria.
-        </p>
+            <p>
+                Atualizar a fotografia da galeria.
+            </p>
+        </div>
 
     </div>
 
     @if ($errors->any())
 
-        <div class="mb-6 rounded-lg border border-red-300 bg-red-50 p-4 text-red-700">
+        <div class="admin-alert admin-alert-error">
 
-            <ul class="list-disc pl-5 space-y-1">
-
+            <ul>
                 @foreach ($errors->all() as $error)
-
                     <li>{{ $error }}</li>
-
                 @endforeach
-
             </ul>
 
         </div>
 
     @endif
 
-    <div class="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
+    <div class="admin-gallery-form-card">
 
         <form
             action="{{ route('admin.gallery.update', $gallery) }}"
             method="POST"
-            enctype="multipart/form-data">
+            enctype="multipart/form-data"
+        >
 
             @csrf
             @method('PUT')
 
-            <div class="mb-6">
+            <div class="admin-gallery-form-section">
 
-                <label
-                    class="mb-3 block text-sm font-semibold text-gray-900">
-
+                <label class="admin-gallery-form-label">
                     Fotografia atual
-
                 </label>
 
-                <div class="mb-6">
+                <div class="admin-gallery-current-image">
 
                     <img
                         src="{{ asset('storage/' . $gallery->image) }}"
                         alt="Fotografia da galeria"
-                        class="h-64 w-auto max-w-full rounded-xl border border-gray-200 object-contain">
+                        class="admin-gallery-current-thumbnail"
+                    >
 
                 </div>
 
                 <label
                     for="image"
-                    class="mb-2 block text-sm font-semibold text-gray-900">
-
+                    class="admin-gallery-form-label"
+                >
                     Substituir fotografia
-
                 </label>
 
                 <input
@@ -75,23 +69,20 @@
                     name="image"
                     id="image"
                     accept="image/jpeg,image/png,image/webp"
-                    class="block w-full rounded-lg border border-gray-300 bg-white text-sm text-gray-700
-                           file:mr-4 file:rounded-lg file:border-0
-                           file:bg-gray-100 file:px-4 file:py-2
-                           file:text-sm file:font-medium
-                           hover:file:bg-gray-200">
+                    class="admin-gallery-file-input"
+                >
 
-                <p class="mt-2 text-sm text-gray-500">
+                <p class="admin-gallery-form-help">
                     Deixe vazio para manter a fotografia atual.
                 </p>
 
-                <div class="mt-4 rounded-lg border border-blue-200 bg-blue-50 p-4">
+                <div class="admin-gallery-recommendations">
 
-                    <p class="font-semibold text-blue-900">
+                    <p class="admin-gallery-recommendations-title">
                         Recomendações para a fotografia
                     </p>
 
-                    <ul class="mt-2 space-y-1 text-sm text-blue-800">
+                    <ul class="admin-gallery-recommendations-list">
 
                         <li>
                             • Horizontal: <strong>3:2</strong>
@@ -115,7 +106,7 @@
 
                     </ul>
 
-                    <p class="mt-3 text-xs text-blue-700">
+                    <p class="admin-gallery-recommendations-note">
                         A fotografia pode ser horizontal ou vertical.
                         A proporção original será preservada na galeria.
                     </p>
@@ -124,60 +115,61 @@
 
                 <div
                     id="image-info"
-                    class="mt-4 hidden rounded-lg border border-gray-200 bg-gray-50 p-4">
+                    class="admin-gallery-image-info hidden"
+                >
 
-                    <p class="text-sm font-semibold text-gray-900">
+                    <p class="admin-gallery-image-info-title">
                         Informação da nova imagem
                     </p>
 
                     <div
                         id="image-details"
-                        class="mt-2 text-sm text-gray-600">
+                        class="admin-gallery-image-details"
+                    >
                     </div>
 
                 </div>
 
             </div>
 
-            <div class="mb-6">
+            <div class="admin-gallery-form-section">
 
-                <label class="flex items-center gap-3">
+                <label class="admin-gallery-active-option">
 
                     <input
                         type="checkbox"
                         name="is_active"
                         value="1"
                         @checked($gallery->is_active)
-                        class="h-4 w-4 rounded border-gray-300">
+                        class="admin-gallery-active-checkbox"
+                    >
 
-                    <span class="text-sm font-medium text-gray-900">
+                    <span>
                         Ativa
                     </span>
 
                 </label>
 
-                <p class="mt-1 ml-7 text-sm text-gray-500">
+                <p class="admin-gallery-form-help admin-gallery-active-help">
                     Apenas fotografias ativas serão mostradas na galeria pública.
                 </p>
 
             </div>
 
-            <div class="flex items-center gap-3">
+            <div class="admin-gallery-form-actions">
 
                 <button
                     type="submit"
-                    class="admin-btn-primary">
-
+                    class="admin-btn-primary"
+                >
                     Guardar
-
                 </button>
 
                 <a
                     href="{{ route('admin.gallery.index') }}"
-                    class="admin-btn-secondary">
-
+                    class="admin-btn-secondary"
+                >
                     Cancelar
-
                 </a>
 
             </div>

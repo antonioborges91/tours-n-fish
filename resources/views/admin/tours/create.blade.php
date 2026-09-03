@@ -2,148 +2,138 @@
 
 @section('content')
 
-<div class="flex items-center justify-between mb-8">
+<div class="admin-page admin-tours-page">
 
-    <div>
+    <div class="admin-page-header">
 
-        <h1 class="text-3xl font-bold">
-            Novo Passeio
-        </h1>
+        <div>
+            <h1>Novo Passeio</h1>
 
-        <p class="mt-1 text-gray-500">
-            Criar um novo passeio.
-        </p>
+            <p>
+                Criar um novo passeio.
+            </p>
+        </div>
+
+        <a
+            href="{{ route('admin.tours.index') }}"
+            class="admin-btn-secondary"
+        >
+            ← Voltar
+        </a>
 
     </div>
 
-    <a
-        href="{{ route('admin.tours.index') }}"
-        class="admin-btn-secondary">
+    <form
+        action="{{ route('admin.tours.store') }}"
+        method="POST"
+        enctype="multipart/form-data"
+    >
 
-        ← Voltar
+        @csrf
 
-    </a>
+        @if ($errors->any())
 
-</div>
+            <div class="admin-alert admin-alert-error">
 
-<form
-    action="{{ route('admin.tours.store') }}"
-    method="POST"
-    enctype="multipart/form-data">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
 
-    @csrf
+            </div>
 
-    @if ($errors->any())
+        @endif
 
-        <div class="mb-6 rounded-lg border border-red-300 bg-red-50 p-4">
+        {{-- Informações Gerais --}}
 
-            <ul class="list-disc pl-5 text-red-700">
+        <div class="admin-tours-form-card">
 
-                @foreach ($errors->all() as $error)
+            <div class="admin-tours-section-header">
+                <h2>Informações Gerais</h2>
+            </div>
 
-                    <li>{{ $error }}</li>
+            <div class="admin-tours-form-grid">
 
-                @endforeach
+                <div class="admin-tours-form-field admin-tours-form-field-full">
 
-            </ul>
+                    <label
+                        for="cover_image"
+                        class="admin-tours-form-label"
+                    >
+                        Imagem de Capa
+                    </label>
 
-        </div>
+                    <input
+                        type="file"
+                        name="cover_image"
+                        id="cover_image"
+                        class="admin-tours-file-input"
+                        accept="image/jpeg,image/png,image/webp"
+                    >
 
-    @endif
+                    <div class="admin-tours-recommendations">
 
-    {{-- Informações Gerais --}}
+                        <p class="admin-tours-recommendations-title">
+                            Recomendações para a imagem de capa
+                        </p>
 
-    <div class="bg-white rounded-lg shadow p-8 mb-8">
+                        <ul class="admin-tours-recommendations-list">
 
-        <h2 class="text-xl font-semibold mb-6">
-            Informações Gerais
-        </h2>
+                            <li>
+                                • Formato recomendado:
+                                <strong>3:2 horizontal</strong>
+                            </li>
 
-        <div class="grid grid-cols-1 gap-6">
+                            <li>
+                                • Resolução recomendada:
+                                <strong>1800 × 1200 px ou superior</strong>
+                            </li>
 
-            <div>
+                            <li>
+                                • Mínimo indicado:
+                                <strong>1200 × 800 px</strong>
+                            </li>
 
-                <label
-                    for="cover_image"
-                    class="form-label">
+                            <li>
+                                • Tamanho máximo do ficheiro:
+                                <strong>5 MB</strong>
+                            </li>
 
-                    Imagem de Capa
+                        </ul>
 
-                </label>
+                        <p class="admin-tours-recommendations-note">
+                            Esta imagem será utilizada como capa do passeio
+                            na Home, na página de passeios e na página de detalhe.
+                        </p>
 
-                <input
-                    type="file"
-                    name="cover_image"
-                    id="cover_image"
-                    class="form-input"
-                    accept="image/jpeg,image/png,image/webp">
-
-                <div class="mt-4 rounded-lg border border-blue-200 bg-blue-50 p-4">
-
-                    <p class="font-semibold text-blue-900">
-                        Recomendações para a imagem de capa
-                    </p>
-
-                    <ul class="mt-2 space-y-1 text-sm text-blue-800">
-
-                        <li>
-                            • Formato recomendado:
-                            <strong>3:2 horizontal</strong>
-                        </li>
-
-                        <li>
-                            • Resolução recomendada:
-                            <strong>1800 × 1200 px ou superior</strong>
-                        </li>
-
-                        <li>
-                            • Mínimo indicado:
-                            <strong>1200 × 800 px</strong>
-                        </li>
-
-                        <li>
-                            • Tamanho máximo do ficheiro:
-                            <strong>5 MB</strong>
-                        </li>
-
-                    </ul>
-
-                    <p class="mt-3 text-xs text-blue-700">
-
-                        Esta imagem será utilizada como capa do passeio
-                        na Home, na página de passeios e na página de detalhe.
-
-                    </p>
-
-                </div>
-
-                <div
-                    id="cover-image-info"
-                    class="mt-4 hidden rounded-lg border border-gray-200 bg-gray-50 p-4">
-
-                    <p class="text-sm font-semibold text-gray-900">
-                        Informação da imagem
-                    </p>
+                    </div>
 
                     <div
-                        id="cover-image-details"
-                        class="mt-2 text-sm text-gray-600">
+                        id="cover-image-info"
+                        class="admin-tours-image-info hidden"
+                    >
+
+                        <p class="admin-tours-image-info-title">
+                            Informação da imagem
+                        </p>
+
+                        <div
+                            id="cover-image-details"
+                            class="admin-tours-image-details"
+                        ></div>
+
                     </div>
 
                 </div>
 
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-
-                <div>
+                <div class="admin-tours-form-field">
 
                     <label
                         for="max_capacity"
-                        class="form-label">
-
+                        class="admin-tours-form-label"
+                    >
                         Capacidade Máxima
-
                     </label>
 
                     <input
@@ -152,530 +142,525 @@
                         id="max_capacity"
                         min="1"
                         value="{{ old('max_capacity') }}"
-                        class="form-input">
+                        class="admin-tours-form-input"
+                    >
+
+                </div>
+
+                <div class="admin-tours-form-field admin-tours-form-options">
+
+                    <label class="admin-tours-checkbox-option">
+
+                        <input
+                            type="checkbox"
+                            name="available"
+                            value="1"
+                            @checked(old('available'))
+                            class="admin-tours-checkbox"
+                        >
+
+                        <span>Disponível</span>
+
+                    </label>
+
+                    <label class="admin-tours-checkbox-option">
+
+                        <input
+                            type="checkbox"
+                            name="featured_home"
+                            value="1"
+                            @checked(old('featured_home'))
+                            class="admin-tours-checkbox"
+                        >
+
+                        <span>Destacado na Home</span>
+
+                    </label>
 
                 </div>
 
             </div>
 
-            <div class="flex items-center gap-8">
-
-                <label class="flex items-center gap-2">
-
-                    <input
-                        type="checkbox"
-                        name="available"
-                        value="1"
-                        @checked(old('available'))
-                        class="form-checkbox">
-
-                    Disponível
-
-                </label>
-
-                <label class="flex items-center gap-2">
-
-                    <input
-                        type="checkbox"
-                        name="featured_home"
-                        value="1"
-                        @checked(old('featured_home'))
-                        class="form-checkbox">
-
-                    Destacado na Home
-
-                </label>
-
-            </div>
-
         </div>
 
-    </div>
 
+        {{-- Português --}}
 
-    {{-- Português --}}
+        <div class="admin-tours-form-card">
 
-    <div class="bg-white rounded-lg shadow p-8 mb-8">
-
-        <h2 class="text-xl font-semibold mb-6">
-            Português
-        </h2>
-
-        <div class="space-y-6">
-
-            <div>
-
-                <label class="form-label">
-                    Nome
-                </label>
-
-                <input
-                    type="text"
-                    name="pt_name"
-                    value="{{ old('pt_name') }}"
-                    class="form-input">
-
+            <div class="admin-tours-section-header">
+                <h2>Português</h2>
             </div>
 
-            <div>
+            <div class="admin-tours-form-fields">
 
-                <label class="form-label">
-                    Descrição Curta
-                </label>
+                <div class="admin-tours-form-field">
 
-                <textarea
-                    name="pt_short_description"
-                    rows="3"
-                    class="form-input">{{ old('pt_short_description') }}</textarea>
-
-            </div>
-
-            <div>
-
-                <label class="form-label">
-                    Descrição
-                </label>
-
-                <textarea
-                    name="pt_description"
-                    rows="6"
-                    class="form-input">{{ old('pt_description') }}</textarea>
-
-            </div>
-
-            <div>
-
-                <label class="form-label">
-                    Informações
-                </label>
-
-                <textarea
-                    name="pt_information"
-                    rows="6"
-                    class="form-input">{{ old('pt_information') }}</textarea>
-
-            </div>
-
-        </div>
-
-    </div>
-
-
-    {{-- English --}}
-
-    <div class="bg-white rounded-lg shadow p-8 mb-8">
-
-        <h2 class="text-xl font-semibold mb-6">
-            English
-        </h2>
-
-        <div class="space-y-6">
-
-            <div>
-
-                <label class="form-label">
-                    Name
-                </label>
-
-                <input
-                    type="text"
-                    name="en_name"
-                    value="{{ old('en_name') }}"
-                    class="form-input">
-
-            </div>
-
-            <div>
-
-                <label class="form-label">
-                    Short Description
-                </label>
-
-                <textarea
-                    name="en_short_description"
-                    rows="3"
-                    class="form-input">{{ old('en_short_description') }}</textarea>
-
-            </div>
-
-            <div>
-
-                <label class="form-label">
-                    Description
-                </label>
-
-                <textarea
-                    name="en_description"
-                    rows="6"
-                    class="form-input">{{ old('en_description') }}</textarea>
-
-            </div>
-
-            <div>
-
-                <label class="form-label">
-                    Information
-                </label>
-
-                <textarea
-                    name="en_information"
-                    rows="6"
-                    class="form-input">{{ old('en_information') }}</textarea>
-
-            </div>
-
-        </div>
-
-    </div>
-
-
-    {{-- Opções --}}
-
-    <div class="bg-white rounded-lg shadow p-8 mb-8">
-
-        <div class="flex items-center justify-between mb-6">
-
-            <div>
-
-                <h2 class="text-xl font-semibold">
-                    Opções
-                </h2>
-
-                <p class="text-sm text-gray-500 mt-1">
-                    Cada passeio pode ter uma ou várias opções
-                    (ex.: Meio Dia, Dia Inteiro...).
-                </p>
-
-            </div>
-
-            <button
-                type="button"
-                id="add-option"
-                class="admin-btn-primary">
-
-                + Adicionar Opção
-
-            </button>
-
-        </div>
-
-        <div id="options-container">
-
-            <p
-                id="no-options"
-                class="text-gray-500">
-
-                Ainda não existem opções.
-
-            </p>
-
-        </div>
-
-    </div>
-
-
-    <template id="option-template">
-
-        <div class="option-card border rounded-lg p-6 mb-6 bg-gray-50">
-
-            <div class="flex items-center justify-between mb-6">
-
-                <h3 class="text-lg font-semibold">
-                    Opção
-                </h3>
-
-                <button
-                    type="button"
-                    class="remove-option admin-btn-secondary">
-
-                    Remover
-
-                </button>
-
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-
-                <div>
-
-                    <label class="form-label">
-                        Nome (PT)
+                    <label class="admin-tours-form-label">
+                        Nome
                     </label>
 
                     <input
                         type="text"
-                        data-name="pt_name"
-                        class="form-input">
+                        name="pt_name"
+                        value="{{ old('pt_name') }}"
+                        class="admin-tours-form-input"
+                    >
 
                 </div>
 
-                <div>
+                <div class="admin-tours-form-field">
 
-                    <label class="form-label">
-                        Nome (EN)
+                    <label class="admin-tours-form-label">
+                        Descrição Curta
+                    </label>
+
+                    <textarea
+                        name="pt_short_description"
+                        rows="3"
+                        class="admin-tours-form-input"
+                    >{{ old('pt_short_description') }}</textarea>
+
+                </div>
+
+                <div class="admin-tours-form-field">
+
+                    <label class="admin-tours-form-label">
+                        Descrição
+                    </label>
+
+                    <textarea
+                        name="pt_description"
+                        rows="6"
+                        class="admin-tours-form-input"
+                    >{{ old('pt_description') }}</textarea>
+
+                </div>
+
+                <div class="admin-tours-form-field">
+
+                    <label class="admin-tours-form-label">
+                        Informações
+                    </label>
+
+                    <textarea
+                        name="pt_information"
+                        rows="6"
+                        class="admin-tours-form-input"
+                    >{{ old('pt_information') }}</textarea>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        {{-- English --}}
+
+        <div class="admin-tours-form-card">
+
+            <div class="admin-tours-section-header">
+                <h2>English</h2>
+            </div>
+
+            <div class="admin-tours-form-fields">
+
+                <div class="admin-tours-form-field">
+
+                    <label class="admin-tours-form-label">
+                        Name
                     </label>
 
                     <input
                         type="text"
-                        data-name="en_name"
-                        class="form-input">
+                        name="en_name"
+                        value="{{ old('en_name') }}"
+                        class="admin-tours-form-input"
+                    >
 
                 </div>
 
-                <div>
+                <div class="admin-tours-form-field">
 
-                    <label class="form-label">
-                        Duração (minutos)
+                    <label class="admin-tours-form-label">
+                        Short Description
                     </label>
 
-                    <input
-                        type="number"
-                        min="1"
-                        data-name="duration_minutes"
-                        class="form-input">
+                    <textarea
+                        name="en_short_description"
+                        rows="3"
+                        class="admin-tours-form-input"
+                    >{{ old('en_short_description') }}</textarea>
 
                 </div>
 
-                <div>
+                <div class="admin-tours-form-field">
 
-                    <label class="form-label">
-                        Preço (€)
+                    <label class="admin-tours-form-label">
+                        Description
                     </label>
 
-                    <input
-                        type="number"
-                        step="0.01"
-                        min="0"
-                        data-name="price"
-                        class="form-input">
+                    <textarea
+                        name="en_description"
+                        rows="6"
+                        class="admin-tours-form-input"
+                    >{{ old('en_description') }}</textarea>
+
+                </div>
+
+                <div class="admin-tours-form-field">
+
+                    <label class="admin-tours-form-label">
+                        Information
+                    </label>
+
+                    <textarea
+                        name="en_information"
+                        rows="6"
+                        class="admin-tours-form-input"
+                    >{{ old('en_information') }}</textarea>
 
                 </div>
 
             </div>
 
-            <hr class="my-6">
+        </div>
 
-            <div class="flex items-center justify-between mb-4">
 
-                <h4 class="font-semibold">
-                    Horários
-                </h4>
+        {{-- Opções --}}
+
+        <div class="admin-tours-form-card">
+
+            <div class="admin-tours-section-header admin-tours-section-header-actions">
+
+                <div>
+                    <h2>Opções</h2>
+
+                    <p>
+                        Cada passeio pode ter uma ou várias opções
+                        (ex.: Meio Dia, Dia Inteiro...).
+                    </p>
+                </div>
 
                 <button
                     type="button"
-                    class="add-option-schedule admin-btn-primary">
-
-                    + Horário
-
+                    id="add-option"
+                    class="admin-btn-primary"
+                >
+                    + Adicionar Opção
                 </button>
 
             </div>
 
-            <div class="option-schedules">
+            <div id="options-container">
 
-                <p class="text-gray-500 no-option-schedules">
-                    Ainda não existem horários.
+                <p
+                    id="no-options"
+                    class="admin-tours-empty-message"
+                >
+                    Ainda não existem opções.
                 </p>
 
             </div>
 
         </div>
 
-    </template>
 
+        <template id="option-template">
 
-    <template id="schedule-template">
+            <div class="admin-tours-option-card">
 
-        <div class="schedule-row grid grid-cols-12 gap-4 items-end mb-4">
+                <div class="admin-tours-option-header">
 
-            <div class="col-span-5">
+                    <h3>Opção</h3>
 
-                <label class="form-label">
-                    Hora Início
-                </label>
+                    <button
+                        type="button"
+                        class="remove-option admin-btn-secondary"
+                    >
+                        Remover
+                    </button>
 
-                <input
-                    type="time"
-                    data-field="start_time"
-                    class="form-input">
+                </div>
+
+                <div class="admin-tours-form-grid">
+
+                    <div class="admin-tours-form-field">
+
+                        <label class="admin-tours-form-label">
+                            Nome (PT)
+                        </label>
+
+                        <input
+                            type="text"
+                            data-name="pt_name"
+                            class="admin-tours-form-input"
+                        >
+
+                    </div>
+
+                    <div class="admin-tours-form-field">
+
+                        <label class="admin-tours-form-label">
+                            Nome (EN)
+                        </label>
+
+                        <input
+                            type="text"
+                            data-name="en_name"
+                            class="admin-tours-form-input"
+                        >
+
+                    </div>
+
+                    <div class="admin-tours-form-field">
+
+                        <label class="admin-tours-form-label">
+                            Duração (minutos)
+                        </label>
+
+                        <input
+                            type="number"
+                            min="1"
+                            data-name="duration_minutes"
+                            class="admin-tours-form-input"
+                        >
+
+                    </div>
+
+                    <div class="admin-tours-form-field">
+
+                        <label class="admin-tours-form-label">
+                            Preço (€)
+                        </label>
+
+                        <input
+                            type="number"
+                            step="0.01"
+                            min="0"
+                            data-name="price"
+                            class="admin-tours-form-input"
+                        >
+
+                    </div>
+
+                </div>
+
+                <div class="admin-tours-divider"></div>
+
+                <div class="admin-tours-schedule-header">
+
+                    <h4>Horários</h4>
+
+                    <button
+                        type="button"
+                        class="add-option-schedule admin-btn-primary"
+                    >
+                        + Horário
+                    </button>
+
+                </div>
+
+                <div class="option-schedules">
+
+                    <p class="admin-tours-empty-message no-option-schedules">
+                        Ainda não existem horários.
+                    </p>
+
+                </div>
 
             </div>
 
-            <div class="col-span-5">
+        </template>
 
-                <label class="form-label">
-                    Hora Fim
-                </label>
 
-                <input
-                    type="time"
-                    data-field="end_time"
-                    class="form-input">
+        <template id="schedule-template">
+
+            <div class="schedule-row admin-tours-schedule-row">
+
+                <div class="admin-tours-form-field">
+
+                    <label class="admin-tours-form-label">
+                        Hora Início
+                    </label>
+
+                    <input
+                        type="time"
+                        data-field="start_time"
+                        class="admin-tours-form-input"
+                    >
+
+                </div>
+
+                <div class="admin-tours-form-field">
+
+                    <label class="admin-tours-form-label">
+                        Hora Fim
+                    </label>
+
+                    <input
+                        type="time"
+                        data-field="end_time"
+                        class="admin-tours-form-input"
+                    >
+
+                </div>
+
+                <div class="admin-tours-schedule-remove">
+
+                    <button
+                        type="button"
+                        class="admin-btn-danger remove-schedule"
+                    >
+                        Remover
+                    </button>
+
+                </div>
 
             </div>
 
-            <div class="col-span-2">
+        </template>
+
+
+        {{-- Galeria --}}
+
+        <div class="admin-tours-form-card">
+
+            <div class="admin-tours-section-header admin-tours-section-header-actions">
+
+                <div>
+                    <h2>Galeria</h2>
+
+                    <p>
+                        Fotografias adicionais deste passeio.
+                    </p>
+                </div>
 
                 <button
                     type="button"
-                    class="admin-btn-danger remove-schedule">
+                    id="add-image"
+                    class="admin-btn-primary"
+                >
+                    + Adicionar Imagem
+                </button>
 
+            </div>
+
+            <div class="admin-tours-recommendations">
+
+                <p class="admin-tours-recommendations-title">
+                    Recomendações para as fotografias
+                </p>
+
+                <ul class="admin-tours-recommendations-list">
+
+                    <li>
+                        • Horizontal:
+                        <strong>3:2</strong>
+                    </li>
+
+                    <li>
+                        • Vertical:
+                        <strong>2:3</strong> ou <strong>4:5</strong>
+                    </li>
+
+                    <li>
+                        • Resolução recomendada:
+                        <strong>1800 px ou mais no lado maior</strong>
+                    </li>
+
+                    <li>
+                        • Mínimo indicado:
+                        <strong>1200 px no lado maior</strong>
+                    </li>
+
+                    <li>
+                        • Tamanho máximo:
+                        <strong>5 MB por fotografia</strong>
+                    </li>
+
+                </ul>
+
+                <p class="admin-tours-recommendations-note">
+                    As fotografias podem ser horizontais ou verticais.
+                    A proporção original será preservada na galeria.
+                </p>
+
+            </div>
+
+            <div id="gallery-container">
+
+                <p
+                    id="no-images"
+                    class="admin-tours-empty-message"
+                >
+                    Ainda não existem imagens.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <template id="gallery-image-template">
+
+            <div class="gallery-row admin-tours-gallery-row">
+
+                <div>
+
+                    <label class="admin-tours-form-label">
+                        Imagem
+                    </label>
+
+                    <input
+                        type="file"
+                        name="gallery_images[]"
+                        class="admin-tours-file-input gallery-image-input"
+                        accept="image/jpeg,image/png,image/webp"
+                    >
+
+                    <div class="gallery-image-info admin-tours-image-info hidden">
+
+                        <div class="gallery-image-details admin-tours-image-details"></div>
+
+                    </div>
+
+                </div>
+
+                <button
+                    type="button"
+                    class="admin-btn-danger remove-image"
+                >
                     Remover
-
                 </button>
 
             </div>
 
-        </div>
-
-    </template>
+        </template>
 
 
-    {{-- Galeria --}}
+        <div class="admin-tours-form-actions">
 
-    <div class="bg-white rounded-lg shadow p-8 mb-8">
-
-        <div class="flex items-center justify-between mb-6">
-
-            <div>
-
-                <h2 class="text-xl font-semibold">
-                    Galeria
-                </h2>
-
-                <p class="text-sm text-gray-500 mt-1">
-                    Fotografias adicionais deste passeio.
-                </p>
-
-            </div>
+            <a
+                href="{{ route('admin.tours.index') }}"
+                class="admin-btn-secondary"
+            >
+                Cancelar
+            </a>
 
             <button
-                type="button"
-                id="add-image"
-                class="admin-btn-primary">
-
-                + Adicionar Imagem
-
+                type="submit"
+                class="admin-btn-primary"
+            >
+                Guardar Passeio
             </button>
 
         </div>
 
-        <div class="mb-6 rounded-lg border border-blue-200 bg-blue-50 p-4">
+    </form>
 
-            <p class="font-semibold text-blue-900">
-                Recomendações para as fotografias
-            </p>
-
-            <ul class="mt-2 space-y-1 text-sm text-blue-800">
-
-                <li>
-                    • Horizontal:
-                    <strong>3:2</strong>
-                </li>
-
-                <li>
-                    • Vertical:
-                    <strong>2:3</strong> ou <strong>4:5</strong>
-                </li>
-
-                <li>
-                    • Resolução recomendada:
-                    <strong>1800 px ou mais no lado maior</strong>
-                </li>
-
-                <li>
-                    • Mínimo indicado:
-                    <strong>1200 px no lado maior</strong>
-                </li>
-
-                <li>
-                    • Tamanho máximo:
-                    <strong>5 MB por fotografia</strong>
-                </li>
-
-            </ul>
-
-            <p class="mt-3 text-xs text-blue-700">
-                As fotografias podem ser horizontais ou verticais.
-                A proporção original será preservada na galeria.
-            </p>
-
-        </div>
-
-        <div id="gallery-container">
-
-            <p
-                id="no-images"
-                class="text-gray-500">
-
-                Ainda não existem imagens.
-
-            </p>
-
-        </div>
-
-    </div>
-
-
-    <template id="gallery-image-template">
-
-        <div class="gallery-row mb-6 rounded-lg border border-gray-200 bg-gray-50 p-4">
-
-            <div>
-
-                <label class="form-label">
-                    Imagem
-                </label>
-
-                <input
-                    type="file"
-                    name="gallery_images[]"
-                    class="form-input gallery-image-input"
-                    accept="image/jpeg,image/png,image/webp">
-
-                <div
-                    class="gallery-image-info mt-3 hidden rounded-lg border border-gray-200 bg-white p-3">
-
-                    <div class="gallery-image-details text-sm text-gray-600"></div>
-
-                </div>
-
-            </div>
-
-            <button
-                type="button"
-                class="admin-btn-danger remove-image mt-4">
-
-                Remover
-
-            </button>
-
-        </div>
-
-    </template>
-
-
-    <div class="flex justify-end gap-4">
-
-        <a
-            href="{{ route('admin.tours.index') }}"
-            class="admin-btn-secondary">
-
-            Cancelar
-
-        </a>
-
-        <button
-            type="submit"
-            class="admin-btn-primary">
-
-            Guardar Passeio
-
-        </button>
-
-    </div>
-
-</form>
+</div>
 
 
 <script>
@@ -808,7 +793,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             emptyMessage.id = 'no-images';
 
-            emptyMessage.className = 'text-gray-500';
+            emptyMessage.className = 'admin-tours-empty-message';
 
             emptyMessage.textContent = 'Ainda não existem imagens.';
 

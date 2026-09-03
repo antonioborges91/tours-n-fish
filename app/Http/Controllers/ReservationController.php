@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use App\Mail\ReservationCreated;
+use App\Mail\ReservationAdminCreated;
 
 class ReservationController extends Controller
 {
@@ -355,13 +356,25 @@ class ReservationController extends Controller
 
         /*
         |--------------------------------------------------------------------------
-        | Enviar email de confirmação da reserva
+        | Enviar email de confirmação da reserva ao cliente
         |--------------------------------------------------------------------------
         */
 
         Mail::to($reservation->customer_email)
             ->send(
                 new ReservationCreated($reservation)
+            );
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Enviar cópia da nova reserva à administração
+        |--------------------------------------------------------------------------
+        */
+
+        Mail::to('book@toursnfishazores.pt')
+            ->send(
+                new ReservationAdminCreated($reservation)
             );
 
 

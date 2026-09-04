@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>{{ config('app.name') }} - Administração</title>
 
     @vite([
@@ -11,7 +12,7 @@
     ])
 </head>
 
-<body class="bg-gray-100">
+<body class="bg-gray-100 overflow-x-hidden">
 
 <div class="min-h-screen flex">
 
@@ -27,11 +28,12 @@
         id="admin-sidebar"
         class="
             fixed inset-y-0 left-0 z-50
-            w-64
+            w-[min(82vw,16rem)]
             bg-slate-900 text-white
             transform -translate-x-full
             transition-transform duration-300 ease-in-out
-            lg:static lg:translate-x-0
+            lg:static
+            lg:translate-x-0
             lg:flex-shrink-0
         "
     >
@@ -143,39 +145,22 @@
         <!-- Header -->
         <header class="bg-white border-b">
 
-            <div class="px-4 sm:px-6 lg:px-8 py-4 sm:py-5">
+            <div
+                class="
+                    relative
+                    px-4 sm:px-6 lg:px-8
+                    py-4 sm:py-5
+                "
+            >
 
-                <div class="flex items-center justify-between gap-4">
-
-                    <!-- Botão menu mobile -->
-                    <button
-                        type="button"
-                        id="admin-menu-open"
-                        class="
-                            lg:hidden
-                            inline-flex
-                            items-center
-                            justify-center
-                            w-10
-                            h-10
-                            rounded-md
-                            border
-                            border-gray-200
-                            text-gray-700
-                            hover:bg-gray-100
-                        "
-                        aria-label="Abrir menu"
-                        aria-expanded="false"
-                    >
-                        <span class="text-xl leading-none">☰</span>
-                    </button>
+                <!-- Header desktop -->
+                <div class="hidden lg:flex items-center justify-between gap-4">
 
                     <h2 class="text-lg sm:text-xl font-semibold">
                         Administração
                     </h2>
 
-                    <!-- Informação do admin desktop -->
-                    <div class="hidden lg:flex items-center gap-4">
+                    <div class="flex items-center gap-4">
 
                         <span>
                             {{ Auth::user()->name }}
@@ -194,14 +179,52 @@
 
                     </div>
 
-                    <!-- Espaço para equilibrar o header no mobile -->
-                    <div class="lg:hidden w-10"></div>
-
                 </div>
 
-                <!-- Admin mobile -->
-                <div class="lg:hidden mt-1 ml-14 text-sm text-gray-500">
-                    {{ Auth::user()->name }}
+                <!-- Header mobile -->
+                <div class="lg:hidden">
+
+                    <!-- Hamburger -->
+                    <button
+                        type="button"
+                        id="admin-menu-open"
+                        class="
+                            absolute
+                            left-4
+                            top-4
+                            inline-flex
+                            items-center
+                            justify-center
+                            w-10
+                            h-10
+                            rounded-md
+                            border
+                            border-gray-200
+                            text-gray-700
+                            hover:bg-gray-100
+                        "
+                        aria-label="Abrir menu"
+                        aria-expanded="false"
+                        aria-controls="admin-sidebar"
+                    >
+                        <span class="text-xl leading-none">
+                            ☰
+                        </span>
+                    </button>
+
+                    <!-- Título -->
+                    <div class="text-center">
+
+                        <h2 class="text-lg font-semibold">
+                            Administração
+                        </h2>
+
+                        <div class="mt-1 text-sm text-gray-500">
+                            {{ Auth::user()->name }}
+                        </div>
+
+                    </div>
+
                 </div>
 
             </div>
@@ -209,7 +232,7 @@
         </header>
 
         <!-- Conteúdo da página -->
-        <div class="p-4 sm:p-6 lg:p-8">
+        <div class="p-4 sm:p-6 lg:p-8 min-w-0">
             @yield('content')
         </div>
 
@@ -224,6 +247,10 @@
         const overlay = document.getElementById('admin-menu-overlay');
         const openButton = document.getElementById('admin-menu-open');
         const closeButton = document.getElementById('admin-menu-close');
+
+        if (!sidebar || !overlay) {
+            return;
+        }
 
         function openMenu() {
             sidebar.classList.remove('-translate-x-full');
@@ -255,9 +282,7 @@
             closeButton.addEventListener('click', closeMenu);
         }
 
-        if (overlay) {
-            overlay.addEventListener('click', closeMenu);
-        }
+        overlay.addEventListener('click', closeMenu);
 
         /*
          * Fecha o menu ao escolher uma página.
@@ -267,19 +292,23 @@
         });
 
         /*
-         * Se a janela passar novamente para desktop,
-         * garante que o estado mobile não fica preso.
+         * Se voltar para desktop,
+         * repõe o estado normal.
          */
         window.addEventListener('resize', function () {
+
             if (window.innerWidth >= 1024) {
+
                 overlay.classList.add('hidden');
                 sidebar.classList.remove('-translate-x-full');
+
                 document.body.classList.remove('overflow-hidden');
 
                 if (openButton) {
                     openButton.setAttribute('aria-expanded', 'false');
                 }
             }
+
         });
 
     });

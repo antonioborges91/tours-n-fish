@@ -512,6 +512,7 @@
         text-transform: uppercase;
         letter-spacing: .04em;
         content: "Ações";
+        text-align: center;
     }
 
     .admin-blocked-actions {

@@ -228,9 +228,11 @@
 
     </div>
 
+
     <div class="admin-reservations-table-card">
 
         <div class="admin-reservations-table-wrap">
+
             <table class="admin-reservations-table">
 
                 <thead>
@@ -248,6 +250,7 @@
                 </thead>
 
                 <tbody>
+
                 @forelse($reservations as $reservation)
 
                     @php
@@ -267,21 +270,21 @@
                             ?? $reservation->status;
                     @endphp
 
-                    <tr>
+                    <tr class="admin-reservation-row">
 
-                        <td>
+                        <td data-label="Reserva">
                             <strong class="admin-reservation-number">
                                 #{{ $reservation->reservation_number }}
                             </strong>
                         </td>
 
-                        <td>
+                        <td data-label="Data">
                             <strong>
                                 {{ $reservation->booking_date?->format('d/m/Y') ?? '—' }}
                             </strong>
                         </td>
 
-                        <td>
+                        <td data-label="Passeio">
                             <div class="admin-table-primary">
                                 {{ $tourTranslation?->name ?? 'Passeio' }}
                             </div>
@@ -293,13 +296,13 @@
                             @endif
                         </td>
 
-                        <td>
+                        <td data-label="Horário">
                             {{ \Carbon\Carbon::parse($reservation->start_at)->format('H:i') }}
                             -
                             {{ \Carbon\Carbon::parse($reservation->end_at)->format('H:i') }}
                         </td>
 
-                        <td>
+                        <td data-label="Cliente">
                             <div class="admin-table-primary">
                                 {{ $reservation->customer_name }}
                             </div>
@@ -309,23 +312,35 @@
                             </div>
                         </td>
 
-                        <td class="is-center">
+                        <td
+                            data-label="Pessoas"
+                            class="is-center"
+                        >
                             {{ $reservation->participants }}
                         </td>
 
-                        <td class="is-right">
+                        <td
+                            data-label="Valor"
+                            class="is-right"
+                        >
                             <strong>
                                 € {{ number_format($reservation->total_amount, 2, ',', '.') }}
                             </strong>
                         </td>
 
-                        <td class="is-center">
+                        <td
+                            data-label="Estado"
+                            class="is-center"
+                        >
                             <span class="admin-status admin-status-{{ $reservation->status }}">
                                 {{ $statusLabel }}
                             </span>
                         </td>
 
-                        <td class="is-right">
+                        <td
+                            data-label="Ações"
+                            class="is-right admin-reservation-mobile-action"
+                        >
                             <a
                                 href="{{ route('admin.reservations.show', $reservation) }}"
                                 class="admin-reservation-action"
@@ -339,7 +354,10 @@
                 @empty
 
                     <tr>
-                        <td colspan="9" class="admin-reservations-empty">
+                        <td
+                            colspan="9"
+                            class="admin-reservations-empty"
+                        >
                             @if(request()->hasAny([
                                 'search',
                                 'date_from',
@@ -354,9 +372,11 @@
                     </tr>
 
                 @endforelse
+
                 </tbody>
 
             </table>
+
         </div>
 
         @if($reservations->hasPages())

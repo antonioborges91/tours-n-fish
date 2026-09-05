@@ -6,6 +6,7 @@
 
 .admin-dashboard {
     width: 100%;
+    min-width: 0;
 }
 
 
@@ -126,6 +127,7 @@
     display: flex;
     flex-direction: column;
     min-height: 145px;
+    min-width: 0;
     padding: 1.4rem;
     border: 1px solid #e4e9ef;
     border-radius: 1rem;
@@ -174,6 +176,7 @@
 
 .admin-dashboard-section,
 .admin-dashboard-panel {
+    min-width: 0;
     border: 1px solid #e4e9ef;
     border-radius: 1rem;
     background: #fff;
@@ -251,6 +254,7 @@
     flex-direction: column;
     justify-content: space-between;
     min-height: 86px;
+    min-width: 0;
     padding: 1rem;
     border: 1px solid #e7ebf0;
     border-radius: .8rem;
@@ -312,7 +316,6 @@
 }
 
 .admin-dashboard-panel {
-    min-width: 0;
     padding: 1.4rem;
 }
 
@@ -332,6 +335,7 @@
     display: flex;
     align-items: center;
     gap: 1rem;
+    min-width: 0;
     padding: .9rem 0;
     border-top: 1px solid #edf0f3;
     color: inherit;
@@ -513,7 +517,7 @@
 
 /*
 |--------------------------------------------------------------------------
-| Latest
+| Latest Reservations
 |--------------------------------------------------------------------------
 */
 
@@ -522,14 +526,22 @@
 }
 
 .admin-dashboard-latest-list {
-    overflow-x: auto;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
 }
 
 .admin-dashboard-latest-row {
     display: grid;
-    grid-template-columns: 90px minmax(120px, 1fr) minmax(130px, 1fr) 130px 170px;
+    grid-template-columns:
+        90px
+        minmax(120px, 1fr)
+        minmax(130px, 1fr)
+        130px
+        170px;
     align-items: center;
     gap: 1rem;
+    min-width: 0;
     padding: .85rem 0;
     border-top: 1px solid #edf0f3;
     color: inherit;
@@ -553,6 +565,7 @@
 .admin-dashboard-latest-tour,
 .admin-dashboard-latest-customer,
 .admin-dashboard-latest-date {
+    min-width: 0;
     overflow: hidden;
     color: var(--color-text-light);
     font-size: .76rem;
@@ -591,6 +604,15 @@
         grid-template-columns: 1fr;
     }
 
+    .admin-dashboard-latest-row {
+        grid-template-columns:
+            90px
+            minmax(120px, 1fr)
+            minmax(130px, 1fr)
+            120px
+            150px;
+    }
+
 }
 
 
@@ -602,6 +624,10 @@
 
 @media (max-width: 700px) {
 
+    .admin-page-header {
+        margin-bottom: 1.5rem;
+    }
+
     .admin-page-title {
         font-size: 1.65rem;
     }
@@ -609,16 +635,18 @@
     .admin-dashboard-alert {
         align-items: flex-start;
         flex-wrap: wrap;
+        gap: .8rem;
     }
 
     .admin-dashboard-alert-action {
         width: 100%;
-        margin-left: 52px;
+        margin-left: 44px;
     }
 
     .admin-dashboard-stats {
         grid-template-columns: 1fr 1fr;
         gap: .75rem;
+        margin-bottom: 1.25rem;
     }
 
     .admin-dashboard-stat {
@@ -639,9 +667,15 @@
         padding: 1rem;
     }
 
+    .admin-dashboard-section-header,
+    .admin-dashboard-panel-header {
+        align-items: flex-start;
+    }
+
     .admin-dashboard-reservation {
         align-items: flex-start;
         flex-wrap: wrap;
+        gap: .75rem;
     }
 
     .admin-dashboard-reservation-meta {
@@ -653,8 +687,173 @@
         margin-left: 62px;
     }
 
+    /*
+    |--------------------------------------------------------------------------
+    | Latest - mobile cards
+    |--------------------------------------------------------------------------
+    */
+
+    .admin-dashboard-latest-list {
+        gap: .65rem;
+    }
+
     .admin-dashboard-latest-row {
-        min-width: 620px;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: .35rem .75rem;
+        padding: .85rem;
+        border: 1px solid #edf0f3;
+        border-radius: .75rem;
+        background: #fafbfc;
+    }
+
+    .admin-dashboard-latest-row:first-child {
+        border-top: 1px solid #edf0f3;
+    }
+
+    .admin-dashboard-latest-number {
+        grid-column: 1;
+        grid-row: 1;
+    }
+
+    .admin-dashboard-latest-tour {
+        grid-column: 1;
+        grid-row: 2;
+        font-size: .82rem;
+    }
+
+    .admin-dashboard-latest-customer {
+        grid-column: 1;
+        grid-row: 3;
+        font-size: .74rem;
+    }
+
+    .admin-dashboard-latest-date {
+        grid-column: 1;
+        grid-row: 4;
+        text-align: left;
+        font-size: .72rem;
+    }
+
+    .admin-dashboard-latest-row .admin-status {
+        grid-column: 2;
+        grid-row: 1;
+        align-self: start;
+        justify-self: end;
+        max-width: 100%;
+    }
+
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| Small mobile
+|--------------------------------------------------------------------------
+*/
+
+@media (max-width: 480px) {
+
+    .admin-page-title {
+        font-size: 1.5rem;
+    }
+
+    .admin-page-description {
+        font-size: .88rem;
+    }
+
+    .admin-dashboard-alert {
+        padding: .9rem;
+    }
+
+    .admin-dashboard-alert-icon {
+        width: 32px;
+        height: 32px;
+        flex-basis: 32px;
+    }
+
+    .admin-dashboard-alert-action {
+        margin-left: 40px;
+    }
+
+    .admin-dashboard-stats {
+        gap: .6rem;
+    }
+
+    .admin-dashboard-stat {
+        min-height: 115px;
+        padding: .85rem;
+        border-radius: .85rem;
+    }
+
+    .admin-dashboard-stat-label {
+        font-size: .76rem;
+    }
+
+    .admin-dashboard-stat-value {
+        font-size: 1.7rem;
+    }
+
+    .admin-dashboard-stat-link {
+        font-size: .7rem;
+    }
+
+    .admin-dashboard-status-grid {
+        gap: .6rem;
+    }
+
+    .admin-dashboard-status-card {
+        min-height: 78px;
+        padding: .8rem;
+    }
+
+    .admin-dashboard-status-card span {
+        font-size: .7rem;
+    }
+
+    .admin-dashboard-status-card strong {
+        font-size: 1.3rem;
+    }
+
+    .admin-dashboard-section,
+    .admin-dashboard-panel {
+        padding: .9rem;
+        border-radius: .9rem;
+    }
+
+    .admin-dashboard-section-header,
+    .admin-dashboard-panel-header {
+        gap: .75rem;
+    }
+
+    .admin-dashboard-section h2,
+    .admin-dashboard-panel h2 {
+        font-size: 1rem;
+    }
+
+    .admin-dashboard-section-link {
+        font-size: .74rem;
+    }
+
+    .admin-dashboard-reservation-main strong {
+        font-size: .8rem;
+    }
+
+    .admin-dashboard-reservation-main span {
+        font-size: .76rem;
+    }
+
+    .admin-dashboard-reservation-main small {
+        font-size: .7rem;
+    }
+
+    .admin-dashboard-latest-row {
+        padding: .75rem;
+    }
+
+    .admin-dashboard-latest-row .admin-status {
+        font-size: .62rem;
+        padding: .28rem .45rem;
     }
 
 }
